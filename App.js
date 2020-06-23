@@ -48,6 +48,7 @@ const Navigator = createBottomTabNavigator({
 
 const Main = createAppContainer(Navigator);
 
+
 export default function App() {
   return (
     <Provider store={store}>
@@ -58,3 +59,10 @@ export default function App() {
     </Provider>
   );
 };
+
+// Redux Persist explained
+//https://itnext.io/react-native-why-you-should-be-using-redux-persist-8ad1d68fa48b
+
+// TODO:
+// Style the DrinkListView Component
+// Style the DetailScreen page
