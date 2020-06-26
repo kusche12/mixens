@@ -11,9 +11,6 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
     const [showPicker, setShowPicker] = useState(false);
     const [type, setType] = useState(item.ingredient);
     
-    console.log('HELLOOOOOOOOOOO')
-    console.log(item);
-    
     // Handle update for the amount and unit of the ingredient
     const onPickerConfirm = ( selections ) => {
         let newAmount = selections.column1.label;

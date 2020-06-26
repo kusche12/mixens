@@ -8,7 +8,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { YellowBox } from 'react-native'
 
-
 import ListScreen from './src/screens/ListScreen';
 import DetailScreen from './src/screens/DetailScreen';
 import CreateScreen from './src/screens/CreateScreen';
@@ -18,7 +17,7 @@ import AuthScreen from './src/screens/AuthScreen';
 
 // TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
 YellowBox.ignoreWarnings([
-  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+  'VirtualizedLists should never be nested'
 ])
 
 // Move between list and singular drink
@@ -74,9 +73,6 @@ export default function App() {
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 
-// 2. Add the Name component
-// 3. Add the instructions component
-// 4. Add the tags component
 // 5. Add to favorites component
 // 6. Delete Mix component
 
@@ -85,6 +81,7 @@ export default function App() {
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
+// 
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress

@@ -7,6 +7,7 @@ import { store } from '../store/store';
 import EditImage from '../components/EditImage';
 import EditInstructions from '../components/EditInstructions';
 import EditList from '../components/EditList';
+import EditFavorite from '../components/EditFavorite'
 import KeyboardShift from '../components/KeyboardShift';
 import EditDrinkName from '../components/EditDrinkName';
 
@@ -95,10 +96,11 @@ class CreateScreen extends React.Component {
                     <View style={{ marginBottom: 40}} />
                     <EditList 
                         list={this.state.tags}
-                        updateTags={this.updateTags}
+                        updateList={this.updateTags}
                         addItem={this.addItem}
                         type="TAG"
                     />
+                    <EditFavorite />
                 </View>
             </ScrollView>
             )}
@@ -114,6 +116,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         paddingTop: 30,
+        paddingBottom: 50,
     },  
 });
 

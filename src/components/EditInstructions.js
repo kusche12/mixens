@@ -10,6 +10,7 @@ const EditInstructions = ({ instructions, handleTextInput }) => {
                 style={styles.input}
                 value={instructions}
                 multiline={true}
+                scrollEnabled={false}
                 onChangeText={value => handleTextInput(value, 'instructions')}
             />
         </View>

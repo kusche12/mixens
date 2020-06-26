@@ -1,12 +1,35 @@
-import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Dimensions } from 'react-native';
+const WIDTH = Dimensions.get('window').width;
 
-const EditSingleTag = ({item}) => {
+const EditSingleTag = ({item, index, updateTag}) => {
+    const [tag, setTag] = useState(item);
     return (
-        <View>
-            <Text>FUCK</Text>
+        <View style={styles.container}>
+            <TextInput 
+                style={styles.text} 
+                autoCapitalize="words" 
+                value={tag} 
+                onChangeText={text => setTag(text)}
+                onEndEditing={word => updateTag(word, index)}
+            />
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        width: WIDTH * .9,
+        borderTopWidth: 1,
+        borderTopColor: '#C4C4C4',
+    },
+    text: {
+        fontSize: 20,
+        fontStyle: 'italic',
+        color: '#C4C4C4',
+        paddingVertical: 5,
+        paddingLeft: 10
+    },
+});
 
 export default EditSingleTag;
