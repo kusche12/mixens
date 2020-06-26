@@ -1,12 +1,14 @@
 import React from 'react'
-import { View, Button, StyleSheet, Text, ScrollView } from 'react-native';
+import { View, Button, StyleSheet, Text, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions/drinkActions';
 import { store } from '../store/store';
 
 import EditImage from '../components/EditImage';
-import EditIngredients from '../components/EditIngredients';
-
+import EditInstructions from '../components/EditInstructions';
+import EditList from '../components/EditList';
+import KeyboardShift from '../components/KeyboardShift';
+import EditDrinkName from '../components/EditDrinkName';
 
 class CreateScreen extends React.Component {
     static navigationOptions = {
@@ -45,27 +47,63 @@ class CreateScreen extends React.Component {
         this.setState({ ingredients: newIngredients });
     };
 
+    // Update tags due to text input
+    updateTags = (tag, index) => {
+        let newTags = [...this.state.tags];
+        newTags[index] = tag;
+        this.setState({ tags: newTags });
+    }
+
     // Add item to either the ingredients list or tags list
     addItem = (list) => {
-        if (list === 'ingredients') {
+        if (list === 'INGREDIENT') {
             let newIngredients = this.state.ingredients.concat({ amount: '0', amount2: ' ', unit: ' ', ingredient: '' });
             this.setState({ ingredients: newIngredients });
+        } else if (list === 'TAG') {
+            let newTags = this.state.tags.concat('');
+            this.setState({ tags: newTags });
+        }
+    };
+
+    handleTextInput = (value, type) => {
+        if (type === 'title') {
+            this.setState({ title: value });
+        } else if (type === 'instructions') {
+            this.setState({ instructions: value });
         }
     };
 
     render() {
         return (
+            <KeyboardShift>
+            {() => (
+
             <ScrollView>
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
-                    <View style={{ marginBottom: 20 }} />
-                    <EditIngredients 
-                        ingredients={this.state.ingredients} 
-                        updateIngredient={this.updateIngredient} 
+                    <View style={{ marginBottom: 20}} />
+                    <EditDrinkName title={this.state.title} handleTextInput={this.handleTextInput} />
+                    <View style={{ marginBottom: 40}} />
+                    <EditList 
+                        list={this.state.ingredients} 
+                        updateList={this.updateIngredient} 
                         addItem={this.addItem}
+                        type="INGREDIENT"
+                    />
+                    <View style={{ marginBottom: 40}} />
+                    <EditInstructions instructions={this.state.instructions} handleTextInput={this.handleTextInput} />
+                    <View style={{ marginBottom: 40}} />
+                    <EditList 
+                        list={this.state.tags}
+                        updateTags={this.updateTags}
+                        addItem={this.addItem}
+                        type="TAG"
                     />
                 </View>
             </ScrollView>
+            )}
+
+            </KeyboardShift>
         );
     };
 };
@@ -76,8 +114,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         paddingTop: 30,
-        paddingLeft: 50,
-        paddingRight: 50,
     },  
 });
 

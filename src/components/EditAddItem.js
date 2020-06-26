@@ -7,7 +7,7 @@ const WIDTH = Dimensions.get('window').width;
 const EditAddItem = ({ item, addItem }) => {
     return (   
         <View>
-            <TouchableOpacity onPress={() => addItem('ingredients')}> 
+            <TouchableOpacity onPress={() => addItem(item)}> 
                 <View style={styles.add}>
                     <AntDesign name="pluscircleo" size={22} color='#C4C4C4' />
                     <Text style={styles.addText}>ADD {item}</Text>

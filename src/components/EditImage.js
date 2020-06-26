@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 
@@ -39,12 +39,33 @@ const EditImage = ({ img, updateImage }) => {
             }
         }
     };
+    
+    const sendAlert = () => {
+        Alert.alert(
+            "Choose Image",
+            null,
+            [
+                {
+                    text: "Take a Picture",
+                    onPress: () => takeImage()
+                },
+                {
+                    text: "Choose from Camera Roll",
+                    onPress: () => chooseImage()
+                },
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+            ],
+        );
+    }
 
     return (
         <View style={{ alignItems: 'center' }}>
             <Image source={{ uri: img }} style={styles.image} />
-            <TouchableOpacity onPress={takeImage}><Text style={styles.text}>Take a Picture</Text></TouchableOpacity>
-            <TouchableOpacity onPress={chooseImage}><Text style={styles.text}>Upload from Camera Roll</Text></TouchableOpacity>
+            <TouchableOpacity onPress={sendAlert}><Text style={styles.text}>Change Image</Text></TouchableOpacity>
         </View>
     );
 };
@@ -53,10 +74,13 @@ const styles = StyleSheet.create({
     image: {
         height: 125,
         width: 125,
-        borderRadius: 10
+        borderRadius: 10,
+
     },
     text: {
-        color: '#888888'
+        color: '#888888',
+        fontWeight: '500',
+        fontSize: 14
     }
 });
 

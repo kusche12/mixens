@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, SafeAreaView, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
 import EditAddItem from './EditAddItem';
 import EditSingleIngredient from './EditSingleIngredient';
 
 const EditIngredients = ({ ingredients, updateIngredient, addItem }) => {
     return (   
-        <SafeAreaView>
-            <Text style={{ paddingLeft: 20, color: '#888888', fontWeight: "500" }}>INGREDIENTS</Text>
+        <View>
+            <Text style={styles.title}>INGREDIENTS</Text>
             <FlatList
                 style={{ flexGrow: 0 }}
                 data={ingredients}
@@ -19,8 +19,17 @@ const EditIngredients = ({ ingredients, updateIngredient, addItem }) => {
                 scrollEnabled={false}
             />
             <EditAddItem item="INGREDIENT" addItem={addItem} />
-        </SafeAreaView>
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    title: {
+        paddingLeft: 20,
+        fontSize: 14,
+        color: '#888888',
+        fontWeight: "500"
+    }
+});
 
 export default EditIngredients;

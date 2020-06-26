@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Dimensions, TouchableWithoutFeedback, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Col, Grid } from 'react-native-easy-grid';
 import SegmentedPicker from 'react-native-segmented-picker';
 import PickerOptions from '../api/PickerOptions';
@@ -10,6 +10,9 @@ const WIDTH = Dimensions.get('window').width;
 const EditSingleIngredient = ({ item, updateIngredient, index }) => {
     const [showPicker, setShowPicker] = useState(false);
     const [type, setType] = useState(item.ingredient);
+    
+    console.log('HELLOOOOOOOOOOO')
+    console.log(item);
     
     // Handle update for the amount and unit of the ingredient
     const onPickerConfirm = ( selections ) => {
@@ -22,7 +25,6 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
     }
 
     return (
-        <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
         <View style={styles.container}>
             <Grid>
                 {/* Amount and Unit */}
@@ -63,7 +65,6 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
                 confirmTextColor="white"
             />
         </View>
-        </KeyboardAvoidingView>
     );
 };
 

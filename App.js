@@ -74,7 +74,6 @@ export default function App() {
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 
-// 1. Move keyboard out of way from text inputs on EditSingleIngredient
 // 2. Add the Name component
 // 3. Add the instructions component
 // 4. Add the tags component
