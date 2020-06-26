@@ -6,6 +6,8 @@ import { store, persistor } from './src/store/store';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { YellowBox } from 'react-native'
+
 
 import ListScreen from './src/screens/ListScreen';
 import DetailScreen from './src/screens/DetailScreen';
@@ -13,18 +15,12 @@ import CreateScreen from './src/screens/CreateScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import UserScreen from './src/screens/UserScreen';
 import AuthScreen from './src/screens/AuthScreen';
-/*
-// Move between singular drink and edit drink
-const drinkFlow = createStackNavigator({
-  Detail: DetailScreen,
-  Create: CreateScreen
-});*/
-/*
-drinkFlow.navigationOptions = {
-  title: 'My Mixes',
-  headerRight: () => <TouchableOpacity onPress={() => {}}><FontAwesome5 name="edit" size={24} /></TouchableOpacity>
-}
-*/
+
+// TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
+YellowBox.ignoreWarnings([
+  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+])
+
 // Move between list and singular drink
 const detailFlow = createStackNavigator({
   List: ListScreen,
@@ -90,7 +86,6 @@ export default function App() {
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
-// App doesn't like scrollview over the editingredients flatlist. Fix this.
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress

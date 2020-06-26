@@ -55,6 +55,7 @@ class CreateScreen extends React.Component {
 
     render() {
         return (
+            <ScrollView>
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20 }} />
@@ -64,6 +65,7 @@ class CreateScreen extends React.Component {
                         addItem={this.addItem}
                     />
                 </View>
+            </ScrollView>
         );
     };
 };
