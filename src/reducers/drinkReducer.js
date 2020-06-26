@@ -1,32 +1,41 @@
+import _ from 'lodash'
+
 const initialState = {
     drinks: [
         {
+            id: '1',
             title: 'Strawberry Daquiri',
             instructions: 'In a blender, combine ice, sugar and strawberries. Pour in lime juice, lemon juice, rum and lemon-lime soda. Blend until smooth. Pour into glasses and serve.',
             ingredients: [
                 {
-                    unit: 'cup',
-                    amount: 1,
+                    unit: 'CUP',
+                    amount: '1',
+                    amount2: ' ',
                     ingredient: 'Ice'
                 }, {
-                    unit: 'tbsp',
-                    amount: 1,
+                    unit: 'TBSP',
+                    amount: '1',
+                    amount2: ' ',
                     ingredient: 'Sugar'
                 }, {
-                    unit: 'oz',
-                    amount: .5,
+                    unit: 'OZ',
+                    amount: '0',
+                    amount2: '1/2',
                     ingredient: 'Frozen Strawberries'
                 }, {
-                    unit: 'tsp',
-                    amount: 1,
+                    unit: 'TSP',
+                    amount: '1',
+                    amount2: ' ',
                     ingredient: 'Lime Juice'
                 }, {
-                    unit: 'tsp',
-                    amount: 1,
+                    unit: 'TSP',
+                    amount: '1',
+                    amount2: ' ',
                     ingredient: 'Lemon Juice'
                 }, {
-                    unit: 'tbsp',
-                    amount: 1.5,
+                    unit: 'TBSP',
+                    amount: '1',
+                    amount2: '1/2',
                     ingredient: 'White Rum'
                 },
             ],
@@ -40,6 +49,8 @@ const initialState = {
 
 const drinkReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'IMAGE_UPLOAD':
+            return { ...state, img: action.payload }
         default:
             return state;
     }

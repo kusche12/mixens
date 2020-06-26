@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { store, persistor } from './src/store/store';
@@ -14,23 +13,28 @@ import CreateScreen from './src/screens/CreateScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import UserScreen from './src/screens/UserScreen';
 import AuthScreen from './src/screens/AuthScreen';
-
+/*
 // Move between singular drink and edit drink
 const drinkFlow = createStackNavigator({
   Detail: DetailScreen,
   Create: CreateScreen
-});
-
+});*/
+/*
+drinkFlow.navigationOptions = {
+  title: 'My Mixes',
+  headerRight: () => <TouchableOpacity onPress={() => {}}><FontAwesome5 name="edit" size={24} /></TouchableOpacity>
+}
+*/
 // Move between list and singular drink
 const detailFlow = createStackNavigator({
   List: ListScreen,
-  drinkFlow
+  Detail: DetailScreen
 });
 
 // Move between search and singular drink
 const searchFlow = createStackNavigator({
   Search: SearchScreen,
-  drinkFlow
+  Detail: DetailScreen
 });
 
 // Move between user settings and authentication
@@ -41,7 +45,9 @@ const authFlow = createStackNavigator({
 
 const Navigator = createBottomTabNavigator({
   detailFlow,
-  Create: CreateScreen,
+  createFlow: createStackNavigator({
+    Create: CreateScreen
+  }),
   searchFlow,
   authFlow
 });
@@ -63,6 +69,28 @@ export default function App() {
 // Redux Persist explained
 //https://itnext.io/react-native-why-you-should-be-using-redux-persist-8ad1d68fa48b
 
-// TODO:
-// Style the DrinkListView Component
-// Style the DetailScreen page
+// TODO STYLE:
+// Style the navbar: https://reactnavigation.org/docs/headers/
+// Style the footer
+// Style every other Drink in DrinkList to alternate between white and lightgray
+// Create a default image for the CreateDrink. Save this within the assets so that the app can use it at any time
+
+// TODO DEV:
+// Navigate from Tag in DetailScreen to specific query of all drinks with that tag
+
+// 1. Move keyboard out of way from text inputs on EditSingleIngredient
+// 2. Add the Name component
+// 3. Add the instructions component
+// 4. Add the tags component
+// 5. Add to favorites component
+// 6. Delete Mix component
+
+
+
+
+// CAUTION:
+// Picker default options has an occasional glitch where it does not work. Keep a watch on this.
+// App doesn't like scrollview over the editingredients flatlist. Fix this.
+
+// STRETCH:
+// Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress

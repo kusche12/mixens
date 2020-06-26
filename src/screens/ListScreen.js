@@ -7,11 +7,10 @@ class ListScreen extends React.Component {
     render() {
         return (
             <View>
-                <Button title="Detail" style={styles.button} onPress={() => this.props.navigation.navigate('Detail')} />
                 <FlatList
                     data={this.props.drinks}
-                    keyExtractor={drink => drink.img}
-                    renderItem={(drink) => <DrinkListView drink={drink} />}
+                    keyExtractor={drink => drink.id}
+                    renderItem={drink => <DrinkListView drink={drink} navigation={this.props.navigation}/>}
                 />
 
             </View>
@@ -19,12 +18,7 @@ class ListScreen extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    button: {
-        backgroundColor: 'blue',
-        width: 50
-    }
-});
+const styles = StyleSheet.create({});
 
 // Redux Store Passes State To Component
 const mapStateToProps = (state) => {
