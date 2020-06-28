@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     title: {
         paddingLeft: 20,
         fontSize: 14,
-        color: '#888888',
-        fontWeight: "500"
+        color: '#666666',
+        fontWeight: "600"
     }
 });
 

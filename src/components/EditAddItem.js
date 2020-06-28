@@ -9,7 +9,7 @@ const EditAddItem = ({ item, addItem }) => {
         <View>
             <TouchableOpacity onPress={() => addItem(item)}> 
                 <View style={styles.add}>
-                    <AntDesign name="pluscircleo" size={22} color='#C4C4C4' />
+                    <AntDesign name="pluscircleo" size={20} color='#C4C4C4' />
                     <Text style={styles.addText}>ADD {item}</Text>
                 </View>
             </TouchableOpacity>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
     addText: {
         marginLeft: 20,
-        fontSize: 20,
+        fontSize: 18,
         fontStyle: 'italic',
         color: '#C4C4C4'
     }

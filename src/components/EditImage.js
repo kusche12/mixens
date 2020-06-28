@@ -42,8 +42,8 @@ const EditImage = ({ img, updateImage }) => {
     
     const sendAlert = () => {
         Alert.alert(
-            "Choose Image",
-            null,
+            "Upload Image",
+            "Take a pic of your Mix!",
             [
                 {
                     text: "Take a Picture",
@@ -56,15 +56,18 @@ const EditImage = ({ img, updateImage }) => {
                 {
                     text: "Cancel",
                     onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                  },
+                },
             ],
         );
     }
 
     return (
         <View style={{ alignItems: 'center' }}>
-            <Image source={{ uri: img }} style={styles.image} />
+
+            { img 
+            ? <Image source={{ uri: img }} style={styles.image} />
+            : <Image source={require('./cocktail.png')} style={styles.image} />
+            }
             <TouchableOpacity onPress={sendAlert}><Text style={styles.text}>Change Image</Text></TouchableOpacity>
         </View>
     );
@@ -78,8 +81,8 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        color: '#888888',
-        fontWeight: '500',
+        color: '#666666',
+        fontWeight: '600',
         fontSize: 14
     }
 });

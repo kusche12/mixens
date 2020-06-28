@@ -7,6 +7,7 @@ const EditDrinkName = ({ title, handleTextInput }) => {
         <View style={styles.container}>
             <Text style={styles.title}>NAME</Text>
             <TextInput 
+                placeholder="Mix Name"
                 style={styles.input}
                 value={title}
                 autoCapitalize="words" 
@@ -22,13 +23,13 @@ const styles = StyleSheet.create({
         paddingLeft: 20
     },
     title: {
-        color: '#888888',
+        color: '#666666',
         fontSize: 14,
-        fontWeight: "500"
+        fontWeight: "600"
     },  
     input: {
         color: '#C4C4C4',
-        fontSize: 24,
+        fontSize: 22,
     }
 })
 

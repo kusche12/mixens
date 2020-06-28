@@ -7,6 +7,7 @@ const EditInstructions = ({ instructions, handleTextInput }) => {
         <View style={styles.container}>
             <Text style={styles.title}>INSTRUCTIONS</Text>
             <TextInput 
+                placeholder="How do you make this mix?"
                 style={styles.input}
                 value={instructions}
                 multiline={true}
@@ -24,9 +25,9 @@ const styles = StyleSheet.create({
         paddingRight: 50,
     },
     title: {
-        color: '#888888',
+        color: '#666666',
         fontSize: 14,
-        fontWeight: "500"
+        fontWeight: "600"
     },  
     input: {
         color: '#C4C4C4',

@@ -49,8 +49,11 @@ const initialState = {
 
 const drinkReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'IMAGE_UPLOAD':
-            return { ...state, img: action.payload }
+        case 'UPDATE_MIX':
+            return { ...state, img: action.payload };
+        case 'TEST':
+            console.log('TEST RUNS');
+            return state;
         default:
             return state;
     }

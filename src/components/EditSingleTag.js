@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
         borderTopColor: '#C4C4C4',
     },
     text: {
-        fontSize: 20,
+        fontSize: 18,
         fontStyle: 'italic',
         color: '#C4C4C4',
         paddingVertical: 5,
-        paddingLeft: 10
+        paddingLeft: 20
     },
 });
 

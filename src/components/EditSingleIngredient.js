@@ -25,12 +25,13 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
         <View style={styles.container}>
             <Grid>
                 {/* Amount and Unit */}
-                <Col size={1}>
+                <Col size={2}>
                     <TouchableWithoutFeedback onPress={() => setShowPicker(!showPicker)}>
                         <View style={styles.amount}>
-                        { item.amount !== '0' ? <Text style={styles.font1}>{item.amount}</Text> : null}
-                        <Text style={styles.font2}>{item.amount2}</Text>
-                        <Text> </Text>
+                        { item.amount !== '0' 
+                        ? <><Text style={styles.font1}>{item.amount}</Text><Text style={styles.font2}>{item.amount2}</Text></>
+                        : <Text style={styles.font1}>{item.amount2}</Text>}
+                        <Text style={styles.font2}> </Text>
                         <Text style={styles.font2}>{item.unit}</Text>
                         <Ionicons name="ios-arrow-down" size={16} color="#C4C4C4" style={styles.arrow} />
                         </View>
@@ -38,7 +39,7 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
                 </Col>
 
                 {/* Ingredient type */}
-                <Col size={2}>
+                <Col size={5}>
                     <View style={styles.ingredient}>
                     <TextInput 
                         style={styles.ingredientText} 
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5
     },  
     ingredientText: {
-        fontSize: 20,
+        fontSize: 18,
         fontStyle: 'italic',
         color: '#C4C4C4'
     },
@@ -89,12 +90,12 @@ const styles = StyleSheet.create({
     },
     font1: {
         color: '#C4C4C4',
-        fontSize: 20,
+        fontSize: 18,
         fontStyle: 'italic'
     },
     font2: {
         color: '#C4C4C4',
-        fontSize: 16,
+        fontSize: 12,
         fontStyle: 'italic',
     },
     arrow: {

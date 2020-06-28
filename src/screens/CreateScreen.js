@@ -1,30 +1,36 @@
 import React from 'react'
-import { View, Button, StyleSheet, Text, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import * as actions from '../actions/drinkActions';
+import { reducerTest, updateMix } from '../actions/drinkActions';
 import { store } from '../store/store';
 
 import EditImage from '../components/EditImage';
 import EditInstructions from '../components/EditInstructions';
 import EditList from '../components/EditList';
 import EditFavorite from '../components/EditFavorite'
-import KeyboardShift from '../components/KeyboardShift';
 import EditDrinkName from '../components/EditDrinkName';
+import DeleteMix from '../components/DeleteMix';
+import KeyboardShift from '../components/KeyboardShift';
 
 class CreateScreen extends React.Component {
-    static navigationOptions = {
-        title: '',
-        headerLeft:() => <Button title="Cancel" onPress={() => console.log('hello')}  />,
-        headerRight: () => <Button title="Done" onPress={() => console.log('done')}/>
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Create Mix',
+            headerMode: 'screen',
+            cardStyle: { backgroundColor: '#FFFFFF' },
+            headerLeft:() => <Button title="Cancel" onPress={() => cancel(navigation)} />,
+            headerRight: () => <Button title="Done" onPress={() => submit(navigation)} />
+        }
     };
+
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
+            id: null,
             title: '',
             instructions: '',
             ingredients: [],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/1200px-Question_mark_%28black%29.svg.png',
+            img: null,
             tags: [],
             favorited: false
         };
@@ -100,11 +106,16 @@ class CreateScreen extends React.Component {
                         addItem={this.addItem}
                         type="TAG"
                     />
-                    <EditFavorite />
+                    <View style={{ marginBottom: 20}} />
+                    <EditFavorite 
+                        favorited={this.state.favorited} 
+                        handleFavorited={() => this.setState({ favorited: !this.state.favorited})}
+                    />
+                    <View style={{ marginBottom: 40}} />
+                    <DeleteMix navigation={this.props.navigation} />
                 </View>
             </ScrollView>
             )}
-
             </KeyboardShift>
         );
     };
@@ -120,4 +131,50 @@ const styles = StyleSheet.create({
     },  
 });
 
-export default connect(null, actions)(CreateScreen);
+// Cancel all changes and return to detail screen
+const cancel = (navigation) => {
+    Alert.alert(
+        "Discard Changes",
+        "Changes to your Mix will not be saved. Do you want to proceed?",
+        [
+            {
+                text: "Discard changes",
+                onPress: () => navigation.goBack()
+            },
+            {
+                text: "Continue editing",
+                onPress: () => console.log("Cancel Pressed")
+            },
+        ]
+    );
+};
+
+// Confirm all changes
+const submit = (navigation) => {
+    Alert.alert(
+        "Submit my Mix",
+        "Are you sure you are done making edits to your Mix?",
+        [
+            {
+                text: "Submit my Mix",
+                onPress: () => submitHandler(navigation)
+            },
+            {
+                text: "Continue editing",
+                onPress: () => console.log("Cancel Pressed")
+            },
+        ]
+    );
+};
+
+// Save all changes in state to the new component
+const submitHandler = (navigation) => {
+    console.log('saving mix...')
+}
+
+const mapDispatchToProps = {
+    reducerTest,
+};
+
+
+export default connect(null, mapDispatchToProps)(CreateScreen);

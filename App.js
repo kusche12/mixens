@@ -23,7 +23,8 @@ YellowBox.ignoreWarnings([
 // Move between list and singular drink
 const detailFlow = createStackNavigator({
   List: ListScreen,
-  Detail: DetailScreen
+  Detail: DetailScreen,
+  Create: CreateScreen
 });
 
 // Move between search and singular drink
@@ -67,21 +68,21 @@ export default function App() {
 // TODO STYLE:
 // Style the navbar: https://reactnavigation.org/docs/headers/
 // Style the footer
-// Style every other Drink in DrinkList to alternate between white and lightgray
-// Create a default image for the CreateDrink. Save this within the assets so that the app can use it at any time
+// Style Drinks in DrinkList to alternate between white and lightgray
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
+// DELETE MIX. Learn how to permanently change the user's AsyncStorage by deleting the specific mix.
 
-// 5. Add to favorites component
-// 6. Delete Mix component
-
+// DONE. Save the new edits into the Redux store !!
+//    This will be difficult because the navigation button needs access to the Screen's current state and
+//    to the actions that will update the Redux state with the drink's changes. Not sure how this is done yet.
 
 
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
-// 
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
+// Add a handful of pictures within assets that the user can use to choose a fill-in for one of their pictures
