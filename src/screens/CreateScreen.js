@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { reducerTest, updateMix } from '../actions/drinkActions';
+import * as actions from '../actions';
 import { store } from '../store/store';
 
 import EditImage from '../components/EditImage';
@@ -23,46 +23,32 @@ class CreateScreen extends React.Component {
         }
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: null,
-            title: '',
-            instructions: '',
-            ingredients: [],
-            img: null,
-            tags: [],
-            favorited: false
-        };
-    };
-
-    // If it is an edit, update state to correct drink. 
+    // If it is an edit, update store to correct mix. 
     componentDidMount() {
         const drink = this.props.navigation.getParam('drink');
         if (drink) {
-            this.setState({ title: drink.title, instructions: drink.instructions, 
-                ingredients: drink.ingredients, img: drink.img, tags: drink.tags, 
-                favorited: drink.favorited 
-            });
+            this.props.importMix(drink);
         }
     };
 
     // Update ingredient amount due to picker and text input
-    updateIngredient = (newA, newA2, newU, type, index, newId) => {
-        let newIngredients = [...this.state.ingredients];
-        newIngredients[index] = { amount: newA, amount2: newA2, unit: newU, ingredient: type, id: newId };
-        this.setState({ ingredients: newIngredients });
+    updateIngredient = (newA, newA2, newU, newText, index, newId) => {
+        let newIngredient = { amount: newA, amount2: newA2, unit: newU, ingredient: newText, id: newId };
+        let allIngredients = this.props.ingredients;
+        allIngredients[index] = newIngredient;
+        this.props.updateIngredient(allIngredients);
     };
-
+/*
     // Update tags due to text input
     updateTags = (tag, index, id) => {
         let newTags = [...this.state.tags];
         newTags[index] = { title: tag, id: id };
         this.setState({ tags: newTags });
     }
-
+*/
     // Add item to either the ingredients list or tags list
     addItem = (list) => {
+        /*
         if (list === 'INGREDIENT') {
             let newId = (this.state.ingredients.length+1).toString();
             let newIngredients = this.state.ingredients.concat({ id: newId, amount: '0', amount2: ' ', unit: ' ', ingredient: '' });
@@ -71,14 +57,15 @@ class CreateScreen extends React.Component {
             let newId = (this.state.tags.length+1).toString();
             let newTags = this.state.tags.concat({ id: newId, title: '' });
             this.setState({ tags: newTags });
-        }
+        } */
+        console.log('temporary');
     };
 
     handleTextInput = (value, type) => {
         if (type === 'title') {
-            this.setState({ title: value });
+            this.props.updateName(value);
         } else if (type === 'instructions') {
-            this.setState({ instructions: value });
+            this.props.updateInstructions(value);
         }
     };
 
@@ -89,32 +76,34 @@ class CreateScreen extends React.Component {
 
             <ScrollView>
                 <View style={styles.container}>
-                    <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
+                    <EditImage img={this.props.img} updateImage={image => this.props.updateImage(image)} />
                     <View style={{ marginBottom: 20}} />
-                    <EditDrinkName title={this.state.title} handleTextInput={this.handleTextInput} />
+                    <EditDrinkName title={this.props.title} handleTextInput={this.handleTextInput} />
                     <View style={{ marginBottom: 40}} />
                     <EditList 
-                        list={this.state.ingredients} 
+                        list={this.props.ingredients}
                         updateList={this.updateIngredient} 
                         addItem={this.addItem}
                         type="INGREDIENT"
                     />
                     <View style={{ marginBottom: 40}} />
-                    <EditInstructions instructions={this.state.instructions} handleTextInput={this.handleTextInput} />
+                    <EditInstructions instructions={this.props.instructions} handleTextInput={this.handleTextInput} />
                     <View style={{ marginBottom: 40}} />
+                    {/*
                     <EditList 
                         list={this.state.tags}
                         updateList={this.updateTags}
                         addItem={this.addItem}
                         type="TAG"
                     />
+                    
                     <View style={{ marginBottom: 20}} />
                     <EditFavorite 
                         favorited={this.state.favorited} 
                         handleFavorited={() => this.setState({ favorited: !this.state.favorited})}
                     />
                     <View style={{ marginBottom: 40}} />
-                    <DeleteMix navigation={this.props.navigation} />
+                    <DeleteMix navigation={this.props.navigation} /> */}
                 </View>
             </ScrollView>
             )}
@@ -154,8 +143,8 @@ const cancel = (navigation) => {
 // Confirm all changes
 const submit = (navigation) => {
     Alert.alert(
-        "Submit my Mix",
-        "Are you sure you are done making edits to your Mix?",
+        "Submit",
+        "Are you done making edits to your Mix?",
         [
             {
                 text: "Submit my Mix",
@@ -171,12 +160,20 @@ const submit = (navigation) => {
 
 // Save all changes in state to the new component
 const submitHandler = (navigation) => {
-    console.log('saving mix...')
+    store.dispatch(updateMix(/*UPDATED CREATE REDUCER IN HERE*/));
 }
 
-const mapDispatchToProps = {
-    reducerTest,
+const mapStateToProps = (state) => {
+    return { 
+        id: state.createReducer.id,
+        title: state.createReducer.title,
+        instructions: state.createReducer.instructions,
+        ingredients: state.createReducer.ingredients,
+        img: state.createReducer.img,
+        tags: state.createReducer.tags,
+        created: state.createReducer.created,
+        favorited: state.createReducer.favorited
+    };
 };
 
-
-export default connect(null, mapDispatchToProps)(CreateScreen);
+export default connect(mapStateToProps, actions)(CreateScreen);

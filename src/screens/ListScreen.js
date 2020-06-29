@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import DrinkListView from '../components/DrinkListView';
 
