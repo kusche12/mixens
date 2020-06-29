@@ -11,6 +11,14 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
     const [showPicker, setShowPicker] = useState(false);
     const [type, setType] = useState(item.ingredient);
     
+    console.log('-----------------------------------------------------------------------------')
+    console.log('-----------------------------------------------------------------------------')
+    console.log('-----------------------------------------------------------------------------')
+    console.log(item);
+    console.log('-----------------------------------------------------------------------------')
+    console.log('-----------------------------------------------------------------------------')
+    console.log('-----------------------------------------------------------------------------')
+
     // Handle update for the amount and unit of the ingredient
     const onPickerConfirm = ( selections ) => {
         let newAmount = selections.column1.label;
@@ -45,8 +53,8 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
                         style={styles.ingredientText} 
                         autoCapitalize="words" 
                         value={type} 
-                        onChangeText={(text) => setType(text)}
-                        onEndEditing={word => updateIngredient(item.amount, item.amount2, item.unit, word.nativeEvent.text, index, item.id)}
+                        onChangeText={text => setType(text)}
+                        onEndEditing={text => updateIngredient(item.amount, item.amount2, item.unit, text.nativeEvent.text, index, item.id)}
                     />
                     </View>
                 </Col>
