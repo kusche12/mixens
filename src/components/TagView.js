@@ -15,7 +15,7 @@ const TagView = ({ tags, favorited }) => {
         return (
             <TouchableOpacity>
                 <View style={styles.tag}>
-                    <Text style={{ color: 'white' }}>{item}</Text>
+                    <Text style={{ color: 'white' }}>{item.title}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -26,7 +26,7 @@ const TagView = ({ tags, favorited }) => {
         <View style={{ height: 30}}>
             <FlatList 
                 data={tags}
-                keyExtractor={tag => tag}
+                keyExtractor={tag => tag.id}
                 renderItem={tag => renderTag(tag)}
                 horizontal
                 scrollEnabled={false}

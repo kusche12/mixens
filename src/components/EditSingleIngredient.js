@@ -17,7 +17,7 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
         let newAmount2 = selections.column2.label;
         let newUnit = selections.column3.label;
         
-        updateIngredient(newAmount, newAmount2, newUnit, item.ingredient, index);
+        updateIngredient(newAmount, newAmount2, newUnit, item.ingredient, index, item.id);
         setShowPicker(false);
     }
 
@@ -46,7 +46,7 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
                         autoCapitalize="words" 
                         value={type} 
                         onChangeText={(text) => setType(text)}
-                        onEndEditing={word => updateIngredient(item.amount, item.amount2, item.unit, word.nativeEvent.text, index)}
+                        onEndEditing={word => updateIngredient(item.amount, item.amount2, item.unit, word.nativeEvent.text, index, item.id)}
                     />
                     </View>
                 </Col>
