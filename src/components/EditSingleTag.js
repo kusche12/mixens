@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Dimensions } from 'react-native';
 const WIDTH = Dimensions.get('window').width;
 
 const EditSingleTag = ({item, index, updateTag}) => {
-    const [tag, setTag] = useState(item);
+    const [tag, setTag] = useState(item.title);
     return (
         <View style={styles.container}>
             <TextInput 
@@ -11,7 +11,7 @@ const EditSingleTag = ({item, index, updateTag}) => {
                 autoCapitalize="words" 
                 value={tag} 
                 onChangeText={text => setTag(text)}
-                onEndEditing={word => updateTag(word, index)}
+                onEndEditing={word => updateTag(word.nativeEvent.text, index, item.id)}
             />
         </View>
     );

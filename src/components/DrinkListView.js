@@ -9,10 +9,10 @@ const DrinkListView = ({ drink, navigation }) => {
     let tags = "";
     let index = 0;
     while (index < drink.tags.length - 1) {
-        tags += drink.tags[index] + ", ";
+        tags += drink.tags[index].title + ", ";
         index++;
     }
-    tags += drink.tags[index];
+    tags += drink.tags[index].title;
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate('Detail', { drink })}>
