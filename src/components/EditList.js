@@ -18,8 +18,9 @@ const EditList = ({ type, list, updateList, addItem }) => {
             <FlatList
                 style={{ flexGrow: 0 }}
                 data={list}
-                keyExtractor={({ index }) => index}
+                keyExtractor={ item => item.id}
                 renderItem={({item, index}) => renderItem(item, index)}
+                scrollEnabled={false}
             />
             <EditAddItem item={type} addItem={addItem} />
         </View>

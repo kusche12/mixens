@@ -48,26 +48,28 @@ class CreateScreen extends React.Component {
     };
 
     // Update ingredient amount due to picker and text input
-    updateIngredient = (newA, newA2, newU, type, index) => {
+    updateIngredient = (newA, newA2, newU, type, index, newId) => {
         let newIngredients = [...this.state.ingredients];
-        newIngredients[index] = { amount: newA, amount2: newA2, unit: newU, ingredient: type };
+        newIngredients[index] = { amount: newA, amount2: newA2, unit: newU, ingredient: type, id: newId };
         this.setState({ ingredients: newIngredients });
     };
 
     // Update tags due to text input
-    updateTags = (tag, index) => {
+    updateTags = (tag, index, id) => {
         let newTags = [...this.state.tags];
-        newTags[index] = tag;
+        newTags[index] = { title: tag, id: id };
         this.setState({ tags: newTags });
     }
 
     // Add item to either the ingredients list or tags list
     addItem = (list) => {
         if (list === 'INGREDIENT') {
-            let newIngredients = this.state.ingredients.concat({ amount: '0', amount2: ' ', unit: ' ', ingredient: '' });
+            let newId = (this.state.ingredients.length+1).toString();
+            let newIngredients = this.state.ingredients.concat({ id: newId, amount: '0', amount2: ' ', unit: ' ', ingredient: '' });
             this.setState({ ingredients: newIngredients });
         } else if (list === 'TAG') {
-            let newTags = this.state.tags.concat('');
+            let newId = (this.state.tags.length+1).toString();
+            let newTags = this.state.tags.concat({ id: newId, title: '' });
             this.setState({ tags: newTags });
         }
     };
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
 // Cancel all changes and return to detail screen
 const cancel = (navigation) => {
     Alert.alert(
-        "Discard Changes",
+        "Cancel",
         "Changes to your Mix will not be saved. Do you want to proceed?",
         [
             {
