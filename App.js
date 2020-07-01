@@ -72,6 +72,8 @@ export default function App() {
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
+
+// Add and Format ("May 20th, 2020") the date that the user first created the drink and add it to the object
 // DELETE MIX. Learn how to permanently change the user's AsyncStorage by deleting the specific mix.
 
 // DONE. Save the new edits into the Redux store !!
