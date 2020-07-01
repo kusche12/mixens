@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { Col, Grid } from 'react-native-easy-grid';
 import SegmentedPicker from 'react-native-segmented-picker';
@@ -10,21 +10,12 @@ const WIDTH = Dimensions.get('window').width;
 const EditSingleIngredient = ({ item, updateIngredient, index }) => {
     const [showPicker, setShowPicker] = useState(false);
     const [type, setType] = useState(item.ingredient);
-    
-    console.log('-----------------------------------------------------------------------------')
-    console.log('-----------------------------------------------------------------------------')
-    console.log('-----------------------------------------------------------------------------')
-    console.log(item);
-    console.log('-----------------------------------------------------------------------------')
-    console.log('-----------------------------------------------------------------------------')
-    console.log('-----------------------------------------------------------------------------')
 
     // Handle update for the amount and unit of the ingredient
     const onPickerConfirm = ( selections ) => {
         let newAmount = selections.column1.label;
         let newAmount2 = selections.column2.label;
         let newUnit = selections.column3.label;
-        
         updateIngredient(newAmount, newAmount2, newUnit, item.ingredient, index, item.id);
         setShowPicker(false);
     }
