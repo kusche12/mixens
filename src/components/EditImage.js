@@ -63,7 +63,6 @@ const EditImage = ({ img, updateImage }) => {
 
     return (
         <View style={{ alignItems: 'center' }}>
-
             { img 
             ? <Image source={{ uri: img }} style={styles.image} />
             : <Image source={require('./cocktail.png')} style={styles.image} />

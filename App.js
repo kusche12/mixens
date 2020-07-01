@@ -75,10 +75,17 @@ export default function App() {
 
 // Add and Format ("May 20th, 2020") the date that the user first created the drink and add it to the object
 // DELETE MIX. Learn how to permanently change the user's AsyncStorage by deleting the specific mix.
+// DONE. Save the new edits into the Redux store
+// This will be easy once your createReducer is fully updating due to the create screen changes.
+// In order to submit the finalized edits, it should be as easy as passing the createReducer mix into the drinkReducer.
 
-// DONE. Save the new edits into the Redux store !!
-//    This will be difficult because the navigation button needs access to the Screen's current state and
-//    to the actions that will update the Redux state with the drink's changes. Not sure how this is done yet.
+
+// DO THIS TODAY
+// Continue working on the createReducer. Current bug list is: !!
+// Ingredients:
+  // First ingredient text is not displayed in the inputTextBox
+  // Units and amounts are not updated on Redux state change
+
 
 
 
