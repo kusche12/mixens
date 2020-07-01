@@ -1,9 +1,7 @@
 import React from 'react'
-import { View, Button, StyleSheet, ScrollView, Alert } from 'react-native';
-import { connect } from 'react-redux';
-import { reducerTest, updateMix } from '../actions/drinkActions';
-import { store } from '../store/store';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
+import CreateHeader from '../components/CreateHeader';
 import EditImage from '../components/EditImage';
 import EditInstructions from '../components/EditInstructions';
 import EditList from '../components/EditList';
@@ -13,13 +11,10 @@ import DeleteMix from '../components/DeleteMix';
 import KeyboardShift from '../components/KeyboardShift';
 
 class CreateScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = () => {
         return {
-            title: 'Create Mix',
-            headerMode: 'screen',
+            headerShown: false,
             cardStyle: { backgroundColor: '#FFFFFF' },
-            headerLeft:() => <Button title="Cancel" onPress={() => cancel(navigation)} />,
-            headerRight: () => <Button title="Done" onPress={() => submit(navigation)} />
         }
     };
 
@@ -32,17 +27,18 @@ class CreateScreen extends React.Component {
             ingredients: [],
             img: null,
             tags: [],
-            favorited: false
+            favorited: false,
+            created: ''
         };
     };
 
-    // If it is an edit, update state to correct drink. 
     componentDidMount() {
         const drink = this.props.navigation.getParam('drink');
+        // If it is an edit, update state to correct drink.
         if (drink) {
-            this.setState({ title: drink.title, instructions: drink.instructions, 
+            this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
                 ingredients: drink.ingredients, img: drink.img, tags: drink.tags, 
-                favorited: drink.favorited 
+                favorited: drink.favorited, created: drink.created
             });
         }
     };
@@ -88,6 +84,7 @@ class CreateScreen extends React.Component {
             {() => (
 
             <ScrollView>
+                <CreateHeader navigation={this.props.navigation} mix={this.state} />
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20}} />
@@ -133,50 +130,4 @@ const styles = StyleSheet.create({
     },  
 });
 
-// Cancel all changes and return to detail screen
-const cancel = (navigation) => {
-    Alert.alert(
-        "Cancel",
-        "Changes to your Mix will not be saved. Do you want to proceed?",
-        [
-            {
-                text: "Discard changes",
-                onPress: () => navigation.goBack()
-            },
-            {
-                text: "Continue editing",
-                onPress: () => console.log("Cancel Pressed")
-            },
-        ]
-    );
-};
-
-// Confirm all changes
-const submit = (navigation) => {
-    Alert.alert(
-        "Submit my Mix",
-        "Are you sure you are done making edits to your Mix?",
-        [
-            {
-                text: "Submit my Mix",
-                onPress: () => submitHandler(navigation)
-            },
-            {
-                text: "Continue editing",
-                onPress: () => console.log("Cancel Pressed")
-            },
-        ]
-    );
-};
-
-// Save all changes in state to the new component
-const submitHandler = (navigation) => {
-    console.log('saving mix...')
-}
-
-const mapDispatchToProps = {
-    reducerTest,
-};
-
-
-export default connect(null, mapDispatchToProps)(CreateScreen);
+export default CreateScreen;
