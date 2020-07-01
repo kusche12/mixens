@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import DrinkListView from '../components/DrinkListView';
 
@@ -25,12 +25,10 @@ class ListScreen extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({});
-
 // Redux Store Passes State To Component
 const mapStateToProps = (state) => {
   return {
-    drinks: state.drinkReducer.drinks,
+    drinks: state.drinkReducer,
   };
 };
 
