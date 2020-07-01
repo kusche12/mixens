@@ -23,7 +23,7 @@ class CreateScreen extends React.Component {
         }
     };
 
-    // If it is an edit, update store to correct mix. 
+    // If it is an edit, update store to the correct mix. 
     componentDidMount() {
         const drink = this.props.navigation.getParam('drink');
         if (drink) {
@@ -32,8 +32,8 @@ class CreateScreen extends React.Component {
     };
 
     // Update ingredient amount due to picker and text input
-    updateIngredient = (newA, newA2, newU, newText, index, newId) => {
-        let newIngredient = { amount: newA, amount2: newA2, unit: newU, ingredient: newText, id: newId };
+    updateIngredient = (newA, newA2, newU, newT, index, newId) => {
+        let newIngredient = { amount: newA, amount2: newA2, unit: newU, ingredient: newT, id: newId };
         let allIngredients = this.props.ingredients;
         allIngredients[index] = newIngredient;
         this.props.updateIngredient(allIngredients);
