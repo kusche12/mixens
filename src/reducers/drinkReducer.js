@@ -1,6 +1,7 @@
 import _ from 'lodash'
 
-const initialState = [
+const initialState = [];
+const initialStateDEVBUILD = [
     {
         id: '1',
         title: 'Strawberry Daquiri',
@@ -66,7 +67,7 @@ const initialState = [
 
 const newDrink = {
     id: '1',
-    title: 'Strawberry Daquiri',
+    title: 'BLUEBERRY PIE',
     instructions: 'In a blender, combine ice, sugar and strawberries. Pour in lime juice, lemon juice, rum and lemon-lime soda. Blend until smooth. Pour into glasses and serve.',
     ingredients: [
         {
@@ -126,12 +127,13 @@ const newDrink = {
     favorited: true   
 };
 
-const drinkReducer = (state = initialState, action) => {
+const drinkReducer = (state = initialStateDEVBUILD, action) => {
     switch (action.type) {
         case 'UPDATE_MIX':
             let updateState = state;
             let index = _.findIndex(updateState, { id: action.payload.id });
-            updateState.splice(index, newDrink);
+            //updateState[index] = action.payload;
+            updateState[index] = newDrink;
             return updateState;
         default:
             return state;

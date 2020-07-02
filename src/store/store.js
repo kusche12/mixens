@@ -28,6 +28,7 @@ const store = createStore(
 
 // Middleware: Redux Persist Persister
 let persistor = persistStore(store); // IMPORTANT: .purge() is temporary. It dumps local storage every refresh, used for development only
+//persistor.purge();
 
 // Exports
 export { store, persistor };
