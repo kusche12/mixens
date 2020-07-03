@@ -74,5 +74,8 @@ export default options = {
         { label: 'DASH' },
         { label: 'DROP' },
         { label: 'PINCH' },
+        { label: 'SLICES' },
+        { label: 'WEDGES' },
+        { label: 'PIECES' },
     ]
 }

@@ -19,10 +19,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 // Redux: Store
 const store = createStore(
-  persistedReducer,
+  persistedReducer/*,
   applyMiddleware(
     createLogger(),
-  ),
+  ),*/
 );
 
 // Middleware: Redux Persist Persister
