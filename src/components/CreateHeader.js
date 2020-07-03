@@ -3,7 +3,7 @@ import { Button, Text, View, StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-const CreateHeader = ({ navigation, mix, updateMix }) => {
+const CreateHeader = ({ navigation, mix, updateMix, createMix }) => {
     // Cancel all changes and return to detail screen
     const cancel = () => {
         Alert.alert(
@@ -43,6 +43,12 @@ const CreateHeader = ({ navigation, mix, updateMix }) => {
     // Push changes from state to redux storage
     const submitHandler = () => {
         updateMix(mix);
+        navigation.navigate('List');
+    };
+
+    // Push changes from state to redux storage
+    const createHandler = () => {
+        createMix(mix);
         navigation.navigate('List');
     };
 
