@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import _ from 'lodash';
+
 
 const initialState = [];
 const initialStateDEVBUILD = [
@@ -66,9 +67,9 @@ const initialStateDEVBUILD = [
 ];
 
 const newDrink = {
-    id: '1',
+    id: '2',
     title: 'BLUEBERRY PIE',
-    instructions: 'In a blender, combine ice, sugar and strawberries. Pour in lime juice, lemon juice, rum and lemon-lime soda. Blend until smooth. Pour into glasses and serve.',
+    instructions: 'BLUEBERRY PIE BLUEBERRY PIE BLUEBERRY PIEBLUEBERRY PIEBLUEBERRY PIEBLUEBERRY PIE BLUEBERRY PIE',
     ingredients: [
         {
             id: '1',
@@ -130,11 +131,19 @@ const newDrink = {
 const drinkReducer = (state = initialStateDEVBUILD, action) => {
     switch (action.type) {
         case 'UPDATE_MIX':
-            let updateState = state;
+            let updateState = [...state];
             let index = _.findIndex(updateState, { id: action.payload.id });
-            //updateState[index] = action.payload;
-            updateState[index] = newDrink;
+            updateState[index] = action.payload;
             return updateState;
+        case 'DELETE_MIX':
+            let deleteState = [...state];
+            let id = _.findIndex(deleteState, { id: action.payload.id });
+            deleteState.splice(id, 1);
+            return deleteState;
+        case 'CREATE_MIX': 
+            let createState = [...state];
+            state.append(action.payload);
+            return createState
         default:
             return state;
     }

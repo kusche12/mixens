@@ -75,10 +75,6 @@ export default function App() {
 // Add and Format ("May 20th, 2020") the date that the user first created the drink and add it to the object
 // Handle the Delete Mix component. Learn how to permanently change the user's AsyncStorage by deleting the specific mix.
 
-// !! Figure out how to update the overall Redux state. Figure out where the data that is being shown on
-// the app is truly coming from !!
-
-
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
 
