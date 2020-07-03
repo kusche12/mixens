@@ -8,16 +8,23 @@ const DrinkListView = ({ drink, navigation }) => {
     // Format tags
     let tags = "";
     let index = 0;
-    while (index < drink.tags.length - 1) {
-        tags += drink.tags[index].title + ", ";
-        index++;
+    if (drink.tags.length == 1) {
+        tags += drink.tags[index].title;
+    } else if (drink.tags.length > 1) {
+        while (index < drink.tags.length - 1) {
+            tags += drink.tags[index].title + ", ";
+            index++;
+        }
+        tags += drink.tags[index].title;
     }
-    tags += drink.tags[index].title;
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate('Detail', { drink })}>
             <View style={styles.container}>
-                <Image source={{uri: drink.img}} style={styles.image} /> 
+            { drink.img 
+            ? <Image source={{ uri: drink.img }} style={styles.image} />
+            : <Image source={require('./cocktail.png')} style={styles.image} />
+            }
                 <View style={styles.text_container}>
                     <Text style={styles.title}>{drink.title}</Text>
                     <Text style={styles.desc}>{tags}</Text>
@@ -34,9 +41,7 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         paddingBottom: 8,
         borderBottomWidth: 1,
-        borderTopWidth: 1,
         borderColor: "#C4C4C4",
-
         display: 'flex',
         flexDirection: 'row',
     },

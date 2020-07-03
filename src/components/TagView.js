@@ -6,7 +6,9 @@ const TagView = ({ tags, favorited }) => {
     const renderStar = () => {
         return (
             <TouchableOpacity>
-                <FontAwesome name="star" size={28} color="#C4C4C4" style={styles.star} />
+                <View style={styles.tag}>
+                <FontAwesome name="star" size={16} color="#FFFFFF" style={styles.star} />
+                </View>
             </TouchableOpacity>
         );
     };
@@ -39,7 +41,7 @@ const TagView = ({ tags, favorited }) => {
 
 const styles = StyleSheet.create({
     tag: {
-        backgroundColor: '#C4C4C4',
+        backgroundColor: '#AEAEAE',
         borderRadius: 10,
         paddingHorizontal: 12,
         paddingVertical: 6,
@@ -47,8 +49,8 @@ const styles = StyleSheet.create({
         marginLeft: 6
     },
     star: {
-        marginLeft: 6
-    }
+        marginHorizontal: 8
+    },
 });
 
 export default TagView;
