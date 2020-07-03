@@ -1,5 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { connect } from 'react-redux'
+import {NavigationEvents} from 'react-navigation';
 
 import CreateHeader from '../components/CreateHeader';
 import EditImage from '../components/EditImage';
@@ -24,23 +26,41 @@ class CreateScreen extends React.Component {
             id: null,
             title: '',
             instructions: '',
-            ingredients: [],
+            ingredients: [{
+                id: '1',
+                unit: ' ',
+                amount: '0',
+                amount2: ' ',
+                ingredient: ''
+            }],
             img: null,
-            tags: [],
+            tags: [{ id: '1', title: '' }],
             favorited: false,
             created: ''
         };
     };
 
+    // Drink is an edit
     componentDidMount() {
         const drink = this.props.navigation.getParam('drink');
-        // If it is an edit, update state to correct drink.
-        if (drink) {
+        if (drink) { // If it is an edit, update state to correct drink
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
                 ingredients: drink.ingredients, img: drink.img, tags: drink.tags, 
-                favorited: drink.favorited, created: drink.created
-            });
+                favorited: drink.favorited, created: drink.created});
         }
+    }
+
+    // Drink is a creation
+    resetDrinkState = () => {
+        let newId = 0;
+        if (this.props.drinks.length > 1) {
+            let drinks = this.props.drinks;
+            newId = parseInt(drinks[drinks.length - 1].id) + 1;
+        } else {
+            newId = 0;
+        }
+        newId = '' + newId;
+        this.setState({ id: newId });
     };
 
     // Update ingredient amount due to picker and text input
@@ -82,9 +102,13 @@ class CreateScreen extends React.Component {
         return (
             <KeyboardShift>
             {() => (
-
             <ScrollView>
-                <CreateHeader navigation={this.props.navigation} mix={this.state} />
+                { this.state.created == ''
+                ? <NavigationEvents onDidFocus={this.resetDrinkState} />
+                : null
+                }
+                
+                <CreateHeader navigation={this.props.navigation} mix={this.state} created={this.state.created} resetState={this.resetState} />
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20}} />
@@ -130,4 +154,11 @@ const styles = StyleSheet.create({
     },  
 });
 
-export default CreateScreen;
+// Redux Store Passes State To Component
+const mapStateToProps = (state) => {
+    return {
+      drinks: state.drinkReducer,
+    };
+  };
+
+export default connect(mapStateToProps)(CreateScreen);

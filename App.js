@@ -41,15 +41,12 @@ const authFlow = createStackNavigator({
 
 const Navigator = createBottomTabNavigator({
   detailFlow,
-  createFlow: createStackNavigator({
-    Create: CreateScreen
-  }),
+  Create: CreateScreen,
   searchFlow,
   authFlow
 });
 
 const Main = createAppContainer(Navigator);
-
 
 export default function App() {
   return (
@@ -62,9 +59,6 @@ export default function App() {
   );
 };
 
-// Redux Persist explained
-//https://itnext.io/react-native-why-you-should-be-using-redux-persist-8ad1d68fa48b
-
 // TODO STYLE:
 // Style the navbar: https://reactnavigation.org/docs/headers/
 // Style the footer
@@ -72,8 +66,8 @@ export default function App() {
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
-// Add and Format ("May 20th, 2020") the date that the user first created the drink and add it to the object
-// Handle the Delete Mix component. Learn how to permanently change the user's AsyncStorage by deleting the specific mix.
+// TEST THE DIFFERENCES BETWEEN CREATING AND EDITING A DRINK
+// USE THE NavigationEvents component for this :)
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.

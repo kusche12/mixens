@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import IngredientsView from '../components/IngredientsView';
 import TagView from '../components/TagView';
@@ -22,15 +22,31 @@ class DetailScreen extends React.Component {
     render() {
         const drink = this.props.navigation.getParam('drink');
         return (
+            <ScrollView>
             <View style={styles.container}>
-                <Image source={{uri: drink.img}} style={styles.image} /> 
+            
+                { drink.img 
+                ? <Image source={{ uri: drink.img }} style={styles.image} />
+                : <Image source={require('./cocktail.png')} style={styles.image} />
+                }
+
                 <Text style={styles.title}>{drink.title}</Text>
                 <View style={styles.line} />
                 <IngredientsView ingredients={drink.ingredients} style={styles.ingredient} />
-                <Text style={{marginTop: 24, marginBottom: 48}}>{drink.instructions}</Text>
-                <TagView tags={drink.tags} favorited={drink.favorited} />
+
+                { drink.instructions != ''
+                ? <Text style={{marginTop: 24, marginBottom: 48}}>{drink.instructions}</Text> 
+                : null
+                }
+
+                { drink.tags.length > 1 || drink.favorited
+                ? <TagView tags={drink.tags} favorited={drink.favorited} /> 
+                : null
+                }
+
                 <Text style={styles.created}>Created on {drink.created}</Text>
             </View>
+            </ScrollView>
         )
     }
 }
@@ -60,7 +76,8 @@ const styles = StyleSheet.create({
         color: '#C4C4C4',
         fontSize: 14,
         fontStyle: 'italic',
-        marginTop: 12
+        marginTop: 12,
+        marginBottom: 10
     },
     line: {
         borderBottomColor: '#C4C4C4',
