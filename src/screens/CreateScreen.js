@@ -111,7 +111,7 @@ class CreateScreen extends React.Component {
                         handleFavorited={() => this.setState({ favorited: !this.state.favorited})}
                     />
                     <View style={{ marginBottom: 40}} />
-                    <DeleteMix navigation={this.props.navigation} />
+                    <DeleteMix navigation={this.props.navigation} mix={this.state} />
                 </View>
             </ScrollView>
             )}

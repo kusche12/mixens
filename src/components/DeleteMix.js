@@ -1,8 +1,11 @@
 import React from 'react';
 import { Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
-const DeleteMix = ({ navigation }) => {
+const DeleteMix = ({ navigation, deleteMix, mix }) => {
     const deleteDrink = () => {
+        deleteMix(mix);
         navigation.navigate('List');
     }
 
@@ -42,4 +45,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DeleteMix;
+export default connect(null, actions)(DeleteMix);

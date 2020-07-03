@@ -1,7 +1,9 @@
 import React from 'react'
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Button } from 'react-native';
 import { connect } from 'react-redux';
 import DrinkListView from '../components/DrinkListView';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 class ListScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -11,9 +13,30 @@ class ListScreen extends React.Component {
             cardStyle: { backgroundColor: '#FFFFFF' },
         }
     }
+
+    // DEVELOPMENT ONLY
+    showStorage = () => {
+        console.log('Current ASYNCSTORAGE: ');
+        AsyncStorage.getAllKeys((err, keys) => {
+            AsyncStorage.multiGet(keys, (error, stores) => {
+              stores.map((result, i, store) => {
+                console.log({ [store[i][0]]: store[i][1] });
+                return true;
+              });
+            });
+          });
+    }
+    // DEVELOPMENT ONLY
+    showState = () => {
+        console.log(this.props.drinks)
+    }
+
     render() {
         return (
             <View>
+                {/* DEVELOPMENT ONLY */}
+                <Button title="CURRENT ASYNCSTORAGE" onPress={this.showStorage} />
+                <Button title="CURRENT REDUX STATE" onPress={this.showState} />                
                 <FlatList
                     data={this.props.drinks}
                     keyExtractor={drink => drink.id}
