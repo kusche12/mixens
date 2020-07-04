@@ -2,6 +2,7 @@ import React from 'react'
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux'
 import {NavigationEvents} from 'react-navigation';
+import { FontAwesome5 } from '@expo/vector-icons'; 
 
 import CreateHeader from '../components/CreateHeader';
 import EditImage from '../components/EditImage';
@@ -17,6 +18,18 @@ class CreateScreen extends React.Component {
         return {
             headerShown: false,
             cardStyle: { backgroundColor: '#FFFFFF' },
+            tabBarIcon: ({ focused, color, size }) => {
+                let iconColor = 'gray';
+                if (focused) {
+                    iconColor = '#64CAF6';
+                }
+                
+                return <FontAwesome5 name="glass-martini-alt" size={26} color={iconColor} />;
+            },
+            tabBarOptions: {
+                activeTintColor: '#64CAF6',
+                inactiveTintColor: 'gray'
+            }
         }
     };
 
@@ -42,7 +55,7 @@ class CreateScreen extends React.Component {
 
     // Drink is an edit
     componentDidMount() {
-        console.log('COMPONENTDIDMOUNT')
+        console.log('COMPONENTDIDMOUNT');
         const drink = this.props.navigation.getParam('drink');
         if (drink) { // If it is an edit, update state to correct drink
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
@@ -51,14 +64,11 @@ class CreateScreen extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        console.log('COMPOENENTWILLUNMOUNT')
-    }
-
     // Drink is a creation
     createDrinkState = () => {
-        console.log('ONDIDFOCUS');
+        console.log('CREATEDRINKSTATE');
         let newId = 0;
+        console.log(this.props.drinks.length);
         if (this.props.drinks.length > 0) {
             let drinks = this.props.drinks;
             newId = parseInt(drinks[drinks.length - 1].id) + 1;
@@ -67,12 +77,7 @@ class CreateScreen extends React.Component {
         }
         newId = '' + newId;
         this.setState({ id: newId });
-        console.log(newId);
     };
-
-    resetDrinkState = () => {
-        console.log('ONDIDBLUR');
-    }
 
     // Update ingredient amount due to picker and text input
     updateIngredient = (newA, newA2, newU, type, index, newId) => {
@@ -116,7 +121,8 @@ class CreateScreen extends React.Component {
             <ScrollView>
                 {/* Sets the state to be a new creation */}
                 { this.state.created == ''
-                ? <NavigationEvents onDidFocus={this.createDrinkState} />
+                ? <NavigationEvents onDidFocus={this.createDrinkState}
+                                    onDidBlur={() => console.log('ONDDIDBLUR')} />
                 : null
                 }
                 
@@ -147,7 +153,10 @@ class CreateScreen extends React.Component {
                         handleFavorited={() => this.setState({ favorited: !this.state.favorited})}
                     />
                     <View style={{ marginBottom: 40}} />
-                    <DeleteMix navigation={this.props.navigation} mix={this.state} />
+                    { this.state.created != '' 
+                    ? <DeleteMix navigation={this.props.navigation} mix={this.state} />
+                    : null
+                    }
                 </View>
             </ScrollView>
             )}
