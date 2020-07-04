@@ -41,7 +41,9 @@ const authFlow = createStackNavigator({
 
 const Navigator = createBottomTabNavigator({
   detailFlow,
-  Create: CreateScreen,
+  createFlow: createStackNavigator({
+    Create: CreateScreen,
+  }),
   searchFlow,
   authFlow
 });
@@ -67,7 +69,10 @@ export default function App() {
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // TEST THE DIFFERENCES BETWEEN CREATING AND EDITING A DRINK
-// USE THE NavigationEvents component for this :)
+
+//    Currently, when the user submits a new drink, the navigation does not recognize this as a 
+//    blur effect. This means that it will never understand onDidFocus again after 1 creation
+//    Register the "Submit" as a ondidblur or a componentwillunmount
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.

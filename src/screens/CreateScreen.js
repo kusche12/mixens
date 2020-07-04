@@ -42,6 +42,7 @@ class CreateScreen extends React.Component {
 
     // Drink is an edit
     componentDidMount() {
+        console.log('COMPONENTDIDMOUNT')
         const drink = this.props.navigation.getParam('drink');
         if (drink) { // If it is an edit, update state to correct drink
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
@@ -50,10 +51,15 @@ class CreateScreen extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        console.log('COMPOENENTWILLUNMOUNT')
+    }
+
     // Drink is a creation
-    resetDrinkState = () => {
+    createDrinkState = () => {
+        console.log('ONDIDFOCUS');
         let newId = 0;
-        if (this.props.drinks.length > 1) {
+        if (this.props.drinks.length > 0) {
             let drinks = this.props.drinks;
             newId = parseInt(drinks[drinks.length - 1].id) + 1;
         } else {
@@ -61,7 +67,12 @@ class CreateScreen extends React.Component {
         }
         newId = '' + newId;
         this.setState({ id: newId });
+        console.log(newId);
     };
+
+    resetDrinkState = () => {
+        console.log('ONDIDBLUR');
+    }
 
     // Update ingredient amount due to picker and text input
     updateIngredient = (newA, newA2, newU, type, index, newId) => {
@@ -103,12 +114,13 @@ class CreateScreen extends React.Component {
             <KeyboardShift>
             {() => (
             <ScrollView>
+                {/* Sets the state to be a new creation */}
                 { this.state.created == ''
-                ? <NavigationEvents onDidFocus={this.resetDrinkState} />
+                ? <NavigationEvents onDidFocus={this.createDrinkState} />
                 : null
                 }
                 
-                <CreateHeader navigation={this.props.navigation} mix={this.state} created={this.state.created} resetState={this.resetState} />
+                <CreateHeader navigation={this.props.navigation} mix={this.state} created={this.state.created} />
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20}} />
