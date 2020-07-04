@@ -7,6 +7,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { YellowBox } from 'react-native'
+import { MaterialCommunityIcons, Ionicons, FontAwesome5 } from '@expo/vector-icons'; 
 
 import ListScreen from './src/screens/ListScreen';
 import DetailScreen from './src/screens/DetailScreen';
@@ -26,18 +27,66 @@ const detailFlow = createStackNavigator({
   Detail: DetailScreen,
   Create: CreateScreen
 });
+detailFlow.navigationOptions = () => {
+  return {
+    title: 'Home',
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <MaterialCommunityIcons name="notebook" size={30} color={iconColor} />;
+    },
+    tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+    },
+  }
+}
 
 // Move between search and singular drink
 const searchFlow = createStackNavigator({
   Search: SearchScreen,
   Detail: DetailScreen
 });
+searchFlow.navigationOptions = () => {
+  return {
+    title: 'Search',
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <Ionicons name="md-search" size={40} color={iconColor} style={{ bottom: 2 }}/>;
+    },
+    tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+    }
+  }
+}
 
 // Move between user settings and authentication
 const authFlow = createStackNavigator({
   User: UserScreen,
   Auth: AuthScreen
 });
+authFlow.navigationOptions = () => {
+  return {
+    title: 'Profile',
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <FontAwesome5 name="user-alt" size={30} color={iconColor} style={{ top: 1 }} />;
+    },
+    tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+    }
+  }
+}
 
 const Navigator = createBottomTabNavigator({
   detailFlow,
@@ -61,13 +110,14 @@ export default function App() {
 
 // TODO STYLE:
 // Style the navbar: https://reactnavigation.org/docs/headers/
-// Style the footer
-// Style Drinks in DrinkList to alternate between white and lightgray
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
-// TEST THE DIFFERENCES BETWEEN CREATING AND EDITING A DRINK
-// USE THE NavigationEvents component for this :)
+
+//    Currently, when the user submits a new drink, the navigation does not recognize this as a 
+//    blur effect. This means that it will never understand onDidFocus again after 1 creation
+//    Register the "Submit" as a ondidblur or a componentwillunmount so that the user can make multiple drinks 
+//    at a time
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
