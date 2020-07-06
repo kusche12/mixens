@@ -16,10 +16,13 @@ import KeyboardShift from '../components/KeyboardShift';
 class CreateScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerShown: true,
             cardStyle: { backgroundColor: '#FFFFFF' },
-            headerLeft:() => <Button title="Cancel" onPress={navigation.getParam('cancel')} />,
-            headerRight: () => <Button title="Done" onPress={navigation.getParam('submit')} />,
+            headerStyle: {
+                backgroundColor: '#64CAF6'
+            },
+            headerTintColor: '#FCFEFF',
+            headerLeft:() => <Button title="Cancel" onPress={navigation.getParam('cancel')} color="#FCFEFF" />,
+            headerRight: () => <Button title="Done" onPress={navigation.getParam('submit')} color="#FCFEFF" />,
         }
     };
 
