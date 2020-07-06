@@ -16,7 +16,7 @@ class ListScreen extends React.Component {
             headerTintColor: '#FCFEFF'
         }
     }
-
+    
     // DEVELOPMENT ONLY
     showStorage = () => {
         console.log('Current ASYNCSTORAGE: ');
@@ -37,9 +37,9 @@ class ListScreen extends React.Component {
         return (
             <ScrollView>
                 {/* DEVELOPMENT ONLY */}
-                
+                {/*}
                 <Button title="CURRENT ASYNCSTORAGE" onPress={this.showStorage} />
-                <Button title="CURRENT REDUX STATE" onPress={this.showState} />   
+                <Button title="CURRENT REDUX STATE" onPress={this.showState} />    */}
                 <FlatList
                     data={this.props.drinks}
                     keyExtractor={drink => drink.id}
