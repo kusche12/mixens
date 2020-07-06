@@ -89,9 +89,24 @@ authFlow.navigationOptions = () => {
 }
 
 const createFlow = createStackNavigator({
-  Create: CreateScreen,
-  detailFlow
+  Create: CreateScreen
 });
+createFlow.navigationOptions = () => {
+  return {
+    title: 'Create',
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <FontAwesome5 name="glass-martini-alt" size={26} color={iconColor} />;
+  },
+  tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+  }
+  }
+}
 
 const Navigator = createBottomTabNavigator({
   detailFlow,
@@ -120,10 +135,9 @@ export default function App() {
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // BUG The first ingredient text and tag text inputs are not rendered in Create Mix
 
-//    Currently, when the user submits a new drink, the navigation does not recognize this as a 
-//    blur effect. This means that it will never understand onDidFocus again after 1 creation
-//    Register the "Submit" as a ondidblur or a componentwillunmount so that the user can make multiple drinks 
-//    at a time
+//    Create an OnDidBlur handler that passes in whether it is a submit or not.
+//    If submit, then reset the drink data
+//    If not, do nothing
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.

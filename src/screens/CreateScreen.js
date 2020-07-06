@@ -1,10 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Button, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import {NavigationEvents} from 'react-navigation';
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import dateFormat from 'dateformat';
 
-import CreateHeader from '../components/CreateHeader';
 import EditImage from '../components/EditImage';
 import EditInstructions from '../components/EditInstructions';
 import EditList from '../components/EditList';
@@ -14,22 +13,12 @@ import DeleteMix from '../components/DeleteMix';
 import KeyboardShift from '../components/KeyboardShift';
 
 class CreateScreen extends React.Component {
-    static navigationOptions = () => {
+    static navigationOptions = ({ navigation }) => {
         return {
             headerShown: true,
             cardStyle: { backgroundColor: '#FFFFFF' },
-            tabBarIcon: ({ focused, color, size }) => {
-                let iconColor = 'gray';
-                if (focused) {
-                    iconColor = '#64CAF6';
-                }
-                
-                return <FontAwesome5 name="glass-martini-alt" size={26} color={iconColor} />;
-            },
-            tabBarOptions: {
-                activeTintColor: '#64CAF6',
-                inactiveTintColor: 'gray'
-            }
+            headerLeft:() => <Button title="Cancel" onPress={() => cancel(navigation)} />,
+            headerRight: () => <Button title="Done" onPress={() => submit(navigation)} />,
         }
     };
 
@@ -57,7 +46,7 @@ class CreateScreen extends React.Component {
     componentDidMount() {
         console.log('COMPONENTDIDMOUNT');
         const drink = this.props.navigation.getParam('drink');
-        if (drink) { // If it is an edit, update state to correct drink
+        if (drink) {
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
                 ingredients: drink.ingredients, img: drink.img, tags: drink.tags, 
                 favorited: drink.favorited, created: drink.created});
@@ -66,7 +55,11 @@ class CreateScreen extends React.Component {
 
     // Drink is a creation
     createDrinkState = () => {
-        console.log('CREATEDRINKSTATE');
+        console.log('ONDIDFOCUS');
+        // 1. Check if the user is in the middle of creating a drink (use current state)
+        // 2. Find the correct drink ID and reset the drink state
+        // 3. Check if there are no drinks at all ( newId = 0, reset the state )
+        
         let newId = 0;
         if (this.props.drinks.length > 0) {
             let drinks = this.props.drinks;
@@ -78,6 +71,28 @@ class CreateScreen extends React.Component {
         console.log(newId);
         this.setState({ id: newId });
     };
+
+    blurHandler = () => {
+        // if it is a cancel, reset drink state
+        console.log('ONDIDBLUR');
+        this.setState({
+            id: null,
+            title: '',
+            instructions: '',
+            ingredients: [{
+                id: '1',
+                unit: ' ',
+                amount: '0',
+                amount2: ' ',
+                ingredient: ''
+            }],
+            img: null,
+            tags: [{ id: '1', title: '' }],
+            favorited: false,
+            created: ''
+        });
+        
+    }
 
     // Update ingredient amount due to picker and text input
     updateIngredient = (newA, newA2, newU, type, index, newId) => {
@@ -122,11 +137,9 @@ class CreateScreen extends React.Component {
                 {/* Sets the state to be a new creation */}
                 { this.state.created == ''
                 ? <NavigationEvents onDidFocus={this.createDrinkState}
-                                    onDidBlur={() => console.log('ONDDIDBLUR')} />
+                                    onDidBlur={this.blurHandler} />
                 : null
                 }
-                
-                <CreateHeader navigation={this.props.navigation} mix={this.state} created={this.state.created} />
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20}} />
@@ -164,6 +177,28 @@ class CreateScreen extends React.Component {
         );
     };
 };
+
+const cancel = (navigation) => {
+    Alert.alert(
+        "Cancel",
+        "Changes to your Mix will not be saved. Do you want to proceed?",
+        [
+            {
+                text: "Discard changes",
+                onPress: () => navigation.navigate('List')
+            },
+            {
+                text: "Continue editing",
+                onPress: () => console.log("Cancel Pressed")
+            },
+        ]
+    );
+};
+
+const submit = (navigation) => {
+    console.log('SUBMIT');
+    navigation.navigate('List');
+}
 
 const styles = StyleSheet.create({
     container: {
