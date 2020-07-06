@@ -104,8 +104,7 @@ createFlow.navigationOptions = () => {
   tabBarOptions: {
       activeTintColor: '#64CAF6',
       inactiveTintColor: 'gray'
-  }
-  }
+  }}
 }
 
 const Navigator = createBottomTabNavigator({
@@ -135,9 +134,7 @@ export default function App() {
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // BUG The first ingredient text and tag text inputs are not rendered in Create Mix
 
-//    Create an OnDidBlur handler that passes in whether it is a submit or not.
-//    If submit, then reset the drink data
-//    If not, do nothing
+// Delete the state after Create Cancel is pressed
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.

@@ -17,8 +17,8 @@ class CreateScreen extends React.Component {
         return {
             headerShown: true,
             cardStyle: { backgroundColor: '#FFFFFF' },
-            headerLeft:() => <Button title="Cancel" onPress={() => cancel(navigation)} />,
-            headerRight: () => <Button title="Done" onPress={() => submit(navigation)} />,
+            headerLeft:() => <Button title="Cancel" onPress={navigation.getParam('cancel')} />,
+            headerRight: () => <Button title="Done" onPress={() => console.log(navigation.getParam('mix'))} />,
         }
     };
 
@@ -54,12 +54,12 @@ class CreateScreen extends React.Component {
     }
 
     // Drink is a creation
-    createDrinkState = () => {
+    focusHandler = () => {
         console.log('ONDIDFOCUS');
         // 1. Check if the user is in the middle of creating a drink (use current state)
         // 2. Find the correct drink ID and reset the drink state
         // 3. Check if there are no drinks at all ( newId = 0, reset the state )
-        
+        /*
         let newId = 0;
         if (this.props.drinks.length > 0) {
             let drinks = this.props.drinks;
@@ -69,12 +69,37 @@ class CreateScreen extends React.Component {
         }
         newId = '' + newId;
         console.log(newId);
-        this.setState({ id: newId });
+        this.setState({ id: newId }); */
+        this.props.navigation.setParams({ mix: this.state });
     };
 
-    blurHandler = () => {
-        // if it is a cancel, reset drink state
-        console.log('ONDIDBLUR');
+    cancel = () => {
+        Alert.alert(
+            "Cancel",
+            "Changes to your Mix will not be saved. Do you want to proceed?",
+            [
+                {
+                    text: "Discard changes",
+                    onPress: () => { this.cancelHandler(); }
+                },
+                {
+                    text: "Continue editing",
+                    onPress: () => console.log("Cancel Pressed")
+                },
+            ]
+        );
+    };
+
+    cancelHandler = () => {
+        if (this.state.created == '') {
+            this.props.navigation.navigate('List');
+        } else {
+            this.props.navigation.goBack();
+        }
+    }
+
+    resetDrinkState = () => {
+        console.log('DRINKS RESET')
         this.setState({
             id: null,
             title: '',
@@ -89,9 +114,8 @@ class CreateScreen extends React.Component {
             img: null,
             tags: [{ id: '1', title: '' }],
             favorited: false,
-            created: ''
+            created: '' 
         });
-        
     }
 
     // Update ingredient amount due to picker and text input
@@ -134,12 +158,9 @@ class CreateScreen extends React.Component {
             <KeyboardShift>
             {() => (
             <ScrollView>
-                {/* Sets the state to be a new creation */}
                 { this.state.created == ''
-                ? <NavigationEvents onDidFocus={this.createDrinkState}
-                                    onDidBlur={this.blurHandler} />
-                : null
-                }
+                ? <NavigationEvents onDidFocus={this.focusHandler} />
+                : null }
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20}} />
@@ -177,7 +198,7 @@ class CreateScreen extends React.Component {
         );
     };
 };
-
+/*
 const cancel = (navigation) => {
     Alert.alert(
         "Cancel",
@@ -194,7 +215,7 @@ const cancel = (navigation) => {
         ]
     );
 };
-
+*/
 const submit = (navigation) => {
     console.log('SUBMIT');
     navigation.navigate('List');
