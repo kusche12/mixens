@@ -44,7 +44,7 @@ const initialStateDEVBUILD = [
                 ingredient: 'White Rum'
             },
         ],
-        img: 'https://images.unsplash.com/photo-1468465236047-6aac20937e92?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60',
+        img: 'https://hips.hearstapps.com/del.h-cdn.co/assets/16/17/1461680168-shot-1-207.jpg',
         tags: [
             {
                 id: '1',
