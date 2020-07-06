@@ -32,15 +32,9 @@ class CreateScreen extends React.Component {
             id: null,
             title: '',
             instructions: '',
-            ingredients: [{
-                id: '1',
-                unit: ' ',
-                amount: '0',
-                amount2: ' ',
-                ingredient: ''
-            }],
+            ingredients: [],
             img: null,
-            tags: [{ id: '1', title: '' }],
+            tags: [],
             favorited: false,
             created: ''
         };
