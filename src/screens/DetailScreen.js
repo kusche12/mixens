@@ -9,12 +9,16 @@ const WIDTH = Dimensions.get('window').width;
 class DetailScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            title: 'My Mixes',
+            title: '',
             headerMode: 'screen',
             cardStyle: { backgroundColor: '#FFFFFF' },
+            headerStyle: {
+                backgroundColor: '#64CAF6'
+            },
+            headerTintColor: '#FCFEFF',
             headerRight: () => 
             <TouchableOpacity onPress={() => navigation.navigate('Create', { drink: navigation.getParam('drink') })}>
-                <FontAwesome5 name="edit" size={24} style={{ marginRight: 10 }}/>   
+                <FontAwesome5 name="edit" size={24} style={{ marginRight: 10 }} color="#FCFEFF" />   
             </TouchableOpacity>
         }
     }

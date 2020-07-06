@@ -5,11 +5,15 @@ import DrinkListView from '../components/DrinkListView';
 import AsyncStorage from '@react-native-community/async-storage'; // DEV ONLY
 
 class ListScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = () => {
         return {
             title: 'My Mixes',
             headerMode: 'screen',
             cardStyle: { backgroundColor: '#FFFFFF' },
+            headerStyle: {
+              backgroundColor: '#64CAF6'
+            },
+            headerTintColor: '#FCFEFF'
         }
     }
 

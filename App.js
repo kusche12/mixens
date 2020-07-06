@@ -128,7 +128,6 @@ export default function App() {
 };
 
 // TODO STYLE:
-// Style the navbar: !! https://reactnavigation.org/docs/headers/ !!
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
