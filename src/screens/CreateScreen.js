@@ -16,7 +16,7 @@ import KeyboardShift from '../components/KeyboardShift';
 class CreateScreen extends React.Component {
     static navigationOptions = () => {
         return {
-            headerShown: false,
+            headerShown: true,
             cardStyle: { backgroundColor: '#FFFFFF' },
             tabBarIcon: ({ focused, color, size }) => {
                 let iconColor = 'gray';
@@ -68,7 +68,6 @@ class CreateScreen extends React.Component {
     createDrinkState = () => {
         console.log('CREATEDRINKSTATE');
         let newId = 0;
-        console.log(this.props.drinks.length);
         if (this.props.drinks.length > 0) {
             let drinks = this.props.drinks;
             newId = parseInt(drinks[drinks.length - 1].id) + 1;
@@ -76,6 +75,7 @@ class CreateScreen extends React.Component {
             newId = 0;
         }
         newId = '' + newId;
+        console.log(newId);
         this.setState({ id: newId });
     };
 
