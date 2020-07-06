@@ -89,7 +89,7 @@ authFlow.navigationOptions = () => {
 }
 
 const createFlow = createStackNavigator({
-  Create: CreateScreen
+  Create: CreateScreen,
 });
 createFlow.navigationOptions = () => {
   return {
@@ -128,11 +128,13 @@ export default function App() {
 };
 
 // TODO STYLE:
-// Style the navbar: !! https://reactnavigation.org/docs/headers/ !!
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // BUG The first ingredient text and tag text inputs are not rendered in Create Mix
+
+// Why does pressing "Cancel" make the component blur, but pressing "Done" does not make it blur?
+
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
