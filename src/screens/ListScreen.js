@@ -5,14 +5,18 @@ import DrinkListView from '../components/DrinkListView';
 import AsyncStorage from '@react-native-community/async-storage'; // DEV ONLY
 
 class ListScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = () => {
         return {
             title: 'My Mixes',
             headerMode: 'screen',
             cardStyle: { backgroundColor: '#FFFFFF' },
+            headerStyle: {
+              backgroundColor: '#64CAF6'
+            },
+            headerTintColor: '#FCFEFF'
         }
     }
-
+    
     // DEVELOPMENT ONLY
     showStorage = () => {
         console.log('Current ASYNCSTORAGE: ');
@@ -33,9 +37,9 @@ class ListScreen extends React.Component {
         return (
             <ScrollView>
                 {/* DEVELOPMENT ONLY */}
-                
+                {/*}
                 <Button title="CURRENT ASYNCSTORAGE" onPress={this.showStorage} />
-                <Button title="CURRENT REDUX STATE" onPress={this.showState} />   
+                <Button title="CURRENT REDUX STATE" onPress={this.showState} />    */}
                 <FlatList
                     data={this.props.drinks}
                     keyExtractor={drink => drink.id}

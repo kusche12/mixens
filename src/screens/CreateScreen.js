@@ -16,10 +16,13 @@ import KeyboardShift from '../components/KeyboardShift';
 class CreateScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerShown: true,
             cardStyle: { backgroundColor: '#FFFFFF' },
-            headerLeft:() => <Button title="Cancel" onPress={navigation.getParam('cancel')} />,
-            headerRight: () => <Button title="Done" onPress={navigation.getParam('submit')} />,
+            headerStyle: {
+                backgroundColor: '#64CAF6'
+            },
+            headerTintColor: '#FCFEFF',
+            headerLeft:() => <Button title="Cancel" onPress={navigation.getParam('cancel')} color="#FCFEFF" />,
+            headerRight: () => <Button title="Done" onPress={navigation.getParam('submit')} color="#FCFEFF" />,
         }
     };
 
@@ -45,6 +48,7 @@ class CreateScreen extends React.Component {
 
     // Drink is an edit
     componentDidMount() {
+        console.log('MOUNTED');
         const drink = this.props.navigation.getParam('drink');
         if (drink) {
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
@@ -68,6 +72,9 @@ class CreateScreen extends React.Component {
         this.setState({ id: newId });
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
+    blurHandler = () => {
+        console.log('BLUR');
+    }
 
     cancel = () => {
         Alert.alert(
@@ -141,7 +148,7 @@ class CreateScreen extends React.Component {
             let now = new Date();
             let newDate = dateFormat(now, 'mmmm dS, yyyy');
             this.setState({ created: newDate });
-            this.props.createMix(this.state);
+            //this.props.createMix(this.state);
             this.setState({
                 id: null,
                 title: '',
@@ -205,7 +212,8 @@ class CreateScreen extends React.Component {
             <KeyboardShift>
             {() => (
             <ScrollView>
-                { this.state.created == '' ? <NavigationEvents onDidFocus={this.focusHandler} /> : null }
+                { this.state.created == '' 
+                ? <NavigationEvents onDidFocus={this.focusHandler} onDidBlur={this.blurHandler} /> : null }
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20}} />
