@@ -8,6 +8,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { YellowBox } from 'react-native'
 import { MaterialCommunityIcons, Ionicons, FontAwesome5 } from '@expo/vector-icons'; 
+import FirebaseSetup from './src/api/FirebaseSetup';
+import * as firebase from 'firebase';
 
 import ListScreen from './src/screens/ListScreen';
 import DetailScreen from './src/screens/DetailScreen';
@@ -20,6 +22,8 @@ import AuthScreen from './src/screens/AuthScreen';
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested'
 ])
+
+// <<< REACT NAVIGATION >>>
 
 // Move between list and singular drink
 const detailFlow = createStackNavigator({
@@ -119,9 +123,9 @@ const Navigator = createBottomTabNavigator({
 const Main = createAppContainer(Navigator);
 
 export default function App() {
+  if (!firebase.apps.length) { firebase.initializeApp(FirebaseSetup.firebaseConfig) };
   return (
     <Provider store={store}>
-      {/* TODO: Create a loading component to show during app start up */}
       <PersistGate loading={null} persistor={persistor}>
         <Main />
       </PersistGate>
@@ -129,11 +133,11 @@ export default function App() {
   );
 };
 
+// TODO STYLING:
+// Add in an image for the loading={} in the PersistGate of the main App function
+
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
-// BUG The first ingredient text and tag text inputs are not rendered in Create Mix
-
-// Why does pressing "Cancel" make the component blur, but pressing "Done" does not make it blur?
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.

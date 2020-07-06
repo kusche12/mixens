@@ -32,15 +32,9 @@ class CreateScreen extends React.Component {
             id: null,
             title: '',
             instructions: '',
-            ingredients: [{
-                id: '1',
-                unit: ' ',
-                amount: '0',
-                amount2: ' ',
-                ingredient: ''
-            }],
+            ingredients: [],
             img: null,
-            tags: [{ id: '1', title: '' }],
+            tags: [],
             favorited: false,
             created: ''
         };
@@ -56,7 +50,6 @@ class CreateScreen extends React.Component {
         }
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     }
-
     // Drink is a creation
     focusHandler = () => {
         if (!this.state.id) {
@@ -70,7 +63,6 @@ class CreateScreen extends React.Component {
         }
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
-
     cancel = () => {
         Alert.alert(
             "Cancel",
@@ -287,7 +279,5 @@ const mapStateToProps = (state) => {
       drinks: state.drinkReducer,
     };
 };
-
-
 
 export default connect(mapStateToProps, actions)(CreateScreen);
