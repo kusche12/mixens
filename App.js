@@ -134,6 +134,11 @@ export default function App() {
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // BUG The first ingredient text and tag text inputs are not rendered in Create Mix
 
+// Currently, the "Done" press resets the create screen state, but it does not allow for further creation,
+// it's essentially the same bug, but now you have it all under the same component so... Steps in the right 
+// direction?
+
+
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
 
