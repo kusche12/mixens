@@ -79,7 +79,7 @@ authFlow.navigationOptions = () => {
       if (focused) {
           iconColor = '#64CAF6';
       }
-      return <FontAwesome5 name="user-alt" size={30} color={iconColor} style={{ top: 1 }} />;
+      return <FontAwesome5 name="user-alt" size={28} color={iconColor} style={{ top: 1 }} />;
     },
     tabBarOptions: {
       activeTintColor: '#64CAF6',
@@ -88,9 +88,28 @@ authFlow.navigationOptions = () => {
   }
 }
 
+const createFlow = createStackNavigator({
+  Create: CreateScreen
+});
+createFlow.navigationOptions = () => {
+  return {
+    title: 'Create',
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <FontAwesome5 name="glass-martini-alt" size={26} color={iconColor} />;
+  },
+  tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+  }}
+}
+
 const Navigator = createBottomTabNavigator({
   detailFlow,
-  Create: CreateScreen,
+  createFlow,
   searchFlow,
   authFlow
 });
@@ -109,15 +128,11 @@ export default function App() {
 };
 
 // TODO STYLE:
-// Style the navbar: https://reactnavigation.org/docs/headers/
+// Style the navbar: !! https://reactnavigation.org/docs/headers/ !!
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
-
-//    Currently, when the user submits a new drink, the navigation does not recognize this as a 
-//    blur effect. This means that it will never understand onDidFocus again after 1 creation
-//    Register the "Submit" as a ondidblur or a componentwillunmount so that the user can make multiple drinks 
-//    at a time
+// BUG The first ingredient text and tag text inputs are not rendered in Create Mix
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.

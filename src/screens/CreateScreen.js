@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Button, Alert } from 'react-native';
 import { connect } from 'react-redux'
+import * as actions from '../actions';
 import {NavigationEvents} from 'react-navigation';
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import dateFormat from 'dateformat';
 
-import CreateHeader from '../components/CreateHeader';
 import EditImage from '../components/EditImage';
 import EditInstructions from '../components/EditInstructions';
 import EditList from '../components/EditList';
@@ -14,22 +14,12 @@ import DeleteMix from '../components/DeleteMix';
 import KeyboardShift from '../components/KeyboardShift';
 
 class CreateScreen extends React.Component {
-    static navigationOptions = () => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerShown: false,
+            headerShown: true,
             cardStyle: { backgroundColor: '#FFFFFF' },
-            tabBarIcon: ({ focused, color, size }) => {
-                let iconColor = 'gray';
-                if (focused) {
-                    iconColor = '#64CAF6';
-                }
-                
-                return <FontAwesome5 name="glass-martini-alt" size={26} color={iconColor} />;
-            },
-            tabBarOptions: {
-                activeTintColor: '#64CAF6',
-                inactiveTintColor: 'gray'
-            }
+            headerLeft:() => <Button title="Cancel" onPress={navigation.getParam('cancel')} />,
+            headerRight: () => <Button title="Done" onPress={navigation.getParam('submit')} />,
         }
     };
 
@@ -55,20 +45,19 @@ class CreateScreen extends React.Component {
 
     // Drink is an edit
     componentDidMount() {
-        console.log('COMPONENTDIDMOUNT');
         const drink = this.props.navigation.getParam('drink');
-        if (drink) { // If it is an edit, update state to correct drink
+        if (drink) {
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
-                ingredients: drink.ingredients, img: drink.img, tags: drink.tags, 
-                favorited: drink.favorited, created: drink.created});
+            ingredients: drink.ingredients, img: drink.img, tags: drink.tags, 
+            favorited: drink.favorited, created: drink.created});
         }
+        this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit, mix: this.state });
     }
 
     // Drink is a creation
-    createDrinkState = () => {
-        console.log('CREATEDRINKSTATE');
+    focusHandler = () => {
+        console.log('FOCUSED');
         let newId = 0;
-        console.log(this.props.drinks.length);
         if (this.props.drinks.length > 0) {
             let drinks = this.props.drinks;
             newId = parseInt(drinks[drinks.length - 1].id) + 1;
@@ -77,7 +66,104 @@ class CreateScreen extends React.Component {
         }
         newId = '' + newId;
         this.setState({ id: newId });
+        this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
+
+    cancel = () => {
+        Alert.alert(
+            "Cancel",
+            "Changes to your Mix will not be saved. Do you want to proceed?",
+            [
+                {
+                    text: "Discard changes",
+                    onPress: () => { this.cancelHandler() }
+                },
+                {
+                    text: "Continue editing",
+                    onPress: () => console.log("Cancel Pressed")
+                },
+            ]
+        );
+    };
+    cancelHandler = () => {
+        if (this.state.created == '') {
+            this.setState({
+                id: null,
+                title: '',
+                instructions: '',
+                ingredients: [{
+                    id: '1',
+                    unit: ' ',
+                    amount: '0',
+                    amount2: ' ',
+                    ingredient: ''
+                }],
+                img: null,
+                tags: [{ id: '1', title: '' }],
+                favorited: false,
+            });
+            this.props.navigation.navigate('List');
+        } else {
+            this.props.navigation.goBack();
+        }
+    }
+    submit = () => {
+        if (this.state.title == '') {
+            Alert.alert(
+                "Hang on!",
+                "You must name your Mix before submitting",
+                []
+            );
+        } else {
+            Alert.alert(
+                "Submit my Mix",
+                "Are you sure you are done making edits to your Mix?",
+                [
+                    {
+                        text: "Submit my Mix",
+                        onPress: () => { this.submitHandler() }
+                    },
+                    {
+                        text: "Continue editing",
+                        onPress: () => console.log("Cancel Pressed")
+                    },
+                ]
+            );
+        }
+    };
+    submitHandler = () => {
+        let newIngredients = deleteEmptyIngredients(this.state.ingredients);
+        this.setState({ ingredients: newIngredients });
+        let newTags = deleteEmptyTags(this.state.tags);
+        this.setState({ tags: newTags });
+
+        if (this.state.created == '') { // New drink.
+            let now = new Date();
+            let newDate = dateFormat(now, 'mmmm dS, yyyy');
+            this.setState({ created: newDate });
+            this.props.createMix(this.state);
+            this.setState({
+                id: null,
+                title: '',
+                instructions: '',
+                ingredients: [{
+                    id: '1',
+                    unit: ' ',
+                    amount: '0',
+                    amount2: ' ',
+                    ingredient: ''
+                }],
+                img: null,
+                tags: [{ id: '1', title: '' }],
+                favorited: false,
+            });
+            this.props.navigation.navigate('List');
+        } else {
+            this.props.updateMix(this.state);
+            this.props.navigation.goBack();
+        }
+    };
+
 
     // Update ingredient amount due to picker and text input
     updateIngredient = (newA, newA2, newU, type, index, newId) => {
@@ -119,14 +205,7 @@ class CreateScreen extends React.Component {
             <KeyboardShift>
             {() => (
             <ScrollView>
-                {/* Sets the state to be a new creation */}
-                { this.state.created == ''
-                ? <NavigationEvents onDidFocus={this.createDrinkState}
-                                    onDidBlur={() => console.log('ONDDIDBLUR')} />
-                : null
-                }
-                
-                <CreateHeader navigation={this.props.navigation} mix={this.state} created={this.state.created} />
+                { this.state.created == '' ? <NavigationEvents onDidFocus={this.focusHandler} /> : null }
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20}} />
@@ -175,11 +254,37 @@ const styles = StyleSheet.create({
     },  
 });
 
+const deleteEmptyIngredients = (ingredients) => {
+    let allIngredients = [...ingredients];
+    for (let i = 0; i < allIngredients.length; i++) {
+        let item = allIngredients[i];
+        if (item.unit == ' ' && item.amount == '0' && item.amount2 == ' ' && item.ingredient == '') {
+            allIngredients.splice(i, 1);
+            i--;
+        }
+    }
+    return allIngredients;
+}
+
+const deleteEmptyTags = (tags) => {
+    let allTags = [...tags];
+    for (let i = 0; i < allTags.length; i++) {
+        let item = allTags[i];
+        if (item.title == '') {
+            allTags.splice(i, 1);
+            i--;
+        }
+    }
+    return allTags
+}
+
 // Redux Store Passes State To Component
 const mapStateToProps = (state) => {
     return {
       drinks: state.drinkReducer,
     };
-  };
+};
 
-export default connect(mapStateToProps)(CreateScreen);
+
+
+export default connect(mapStateToProps, actions)(CreateScreen);
