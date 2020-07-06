@@ -112,6 +112,8 @@ const Navigator = createBottomTabNavigator({
   createFlow,
   searchFlow,
   authFlow
+}, {
+  lazy: false
 });
 
 const Main = createAppContainer(Navigator);
@@ -127,14 +129,11 @@ export default function App() {
   );
 };
 
-// TODO STYLE:
-
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // BUG The first ingredient text and tag text inputs are not rendered in Create Mix
 
 // Why does pressing "Cancel" make the component blur, but pressing "Done" does not make it blur?
-
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
