@@ -55,23 +55,26 @@ class CreateScreen extends React.Component {
             ingredients: drink.ingredients, img: drink.img, tags: drink.tags, 
             favorited: drink.favorited, created: drink.created});
         }
-        this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit, mix: this.state });
+        this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     }
 
     // Drink is a creation
     focusHandler = () => {
         console.log('FOCUSED');
-        let newId = 0;
-        if (this.props.drinks.length > 0) {
-            let drinks = this.props.drinks;
-            newId = parseInt(drinks[drinks.length - 1].id) + 1;
-        } else {
-            newId = 0;
+        if (!this.state.id) {
+            console.log('drink has no id');
+            let newId = 0;
+            if (this.props.drinks.length > 0) {
+                let drinks = this.props.drinks;
+                newId = parseInt(drinks[drinks.length - 1].id) + 1;
+            }
+            newId = '' + newId;
+            console.log(newId);
+            this.setState({ id: newId });
         }
-        newId = '' + newId;
-        this.setState({ id: newId });
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
+
     blurHandler = () => {
         console.log('BLUR');
     }
@@ -94,6 +97,7 @@ class CreateScreen extends React.Component {
     };
     cancelHandler = () => {
         if (this.state.created == '') {
+            console.log('cancel a drink creation')
             this.setState({
                 id: null,
                 title: '',
@@ -139,38 +143,23 @@ class CreateScreen extends React.Component {
         }
     };
     submitHandler = () => {
-        let newIngredients = deleteEmptyIngredients(this.state.ingredients);
-        this.setState({ ingredients: newIngredients });
-        let newTags = deleteEmptyTags(this.state.tags);
-        this.setState({ tags: newTags });
+        //let newIngredients = deleteEmptyIngredients(this.state.ingredients);
+        //this.setState({ ingredients: newIngredients });
+        //let newTags = deleteEmptyTags(this.state.tags);
+        //this.setState({ tags: newTags });
 
         if (this.state.created == '') { // New drink.
+            console.log('submit a new drink');
             let now = new Date();
             let newDate = dateFormat(now, 'mmmm dS, yyyy');
             this.setState({ created: newDate });
             //this.props.createMix(this.state);
-            this.setState({
-                id: null,
-                title: '',
-                instructions: '',
-                ingredients: [{
-                    id: '1',
-                    unit: ' ',
-                    amount: '0',
-                    amount2: ' ',
-                    ingredient: ''
-                }],
-                img: null,
-                tags: [{ id: '1', title: '' }],
-                favorited: false,
-            });
             this.props.navigation.navigate('List');
         } else {
             this.props.updateMix(this.state);
-            this.props.navigation.goBack();
+            this.props.navigation.navigate('List');
         }
     };
-
 
     // Update ingredient amount due to picker and text input
     updateIngredient = (newA, newA2, newU, type, index, newId) => {
