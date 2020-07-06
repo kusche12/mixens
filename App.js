@@ -134,8 +134,6 @@ export default function App() {
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // BUG The first ingredient text and tag text inputs are not rendered in Create Mix
 
-// Delete the state after Create Cancel is pressed
-
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
 
