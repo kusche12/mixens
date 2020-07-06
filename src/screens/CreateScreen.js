@@ -48,7 +48,6 @@ class CreateScreen extends React.Component {
 
     // Drink is an edit
     componentDidMount() {
-        console.log('MOUNTED');
         const drink = this.props.navigation.getParam('drink');
         if (drink) {
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
@@ -60,24 +59,17 @@ class CreateScreen extends React.Component {
 
     // Drink is a creation
     focusHandler = () => {
-        console.log('FOCUSED');
         if (!this.state.id) {
-            console.log('drink has no id');
             let newId = 0;
             if (this.props.drinks.length > 0) {
                 let drinks = this.props.drinks;
                 newId = parseInt(drinks[drinks.length - 1].id) + 1;
             }
             newId = '' + newId;
-            console.log(newId);
             this.setState({ id: newId });
         }
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
-
-    blurHandler = () => {
-        console.log('BLUR');
-    }
 
     cancel = () => {
         Alert.alert(
@@ -142,23 +134,37 @@ class CreateScreen extends React.Component {
             );
         }
     };
-    submitHandler = () => {
-        //let newIngredients = deleteEmptyIngredients(this.state.ingredients);
-        //this.setState({ ingredients: newIngredients });
-        //let newTags = deleteEmptyTags(this.state.tags);
-        //this.setState({ tags: newTags });
-
+    submitHandler = async () => {
+        let newIngredients = deleteEmptyIngredients(this.state.ingredients);
+        this.setState({ ingredients: newIngredients });
+        let newTags = deleteEmptyTags(this.state.tags);
+        this.setState({ tags: newTags });
+        
         if (this.state.created == '') { // New drink.
-            console.log('submit a new drink');
             let now = new Date();
             let newDate = dateFormat(now, 'mmmm dS, yyyy');
-            this.setState({ created: newDate });
-            //this.props.createMix(this.state);
-            this.props.navigation.navigate('List');
+            let stateWithDate = {...this.state};
+            stateWithDate.created = newDate
+            await this.props.createMix(stateWithDate);
+            await this.setState({
+                id: null,
+                title: '',
+                instructions: '',
+                ingredients: [{
+                    id: '1',
+                    unit: ' ',
+                    amount: '0',
+                    amount2: ' ',
+                    ingredient: ''
+                }],
+                img: null,
+                tags: [{ id: '1', title: '' }],
+                favorited: false,
+            });
         } else {
-            this.props.updateMix(this.state);
-            this.props.navigation.navigate('List');
+            await this.props.updateMix(this.state);
         }
+        this.props.navigation.navigate('List');
     };
 
     // Update ingredient amount due to picker and text input
@@ -202,7 +208,7 @@ class CreateScreen extends React.Component {
             {() => (
             <ScrollView>
                 { this.state.created == '' 
-                ? <NavigationEvents onDidFocus={this.focusHandler} onDidBlur={this.blurHandler} /> : null }
+                ? <NavigationEvents onDidFocus={this.focusHandler} /> : null }
                 <View style={styles.container}>
                     <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
                     <View style={{ marginBottom: 20}} />
