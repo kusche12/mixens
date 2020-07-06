@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Button, ScrollView } from 'react-native';
+import { FlatList, Button, ScrollView, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import DrinkListView from '../components/DrinkListView';
 import AsyncStorage from '@react-native-community/async-storage'; // DEV ONLY
@@ -36,10 +36,11 @@ class ListScreen extends React.Component {
     render() {
         return (
             <ScrollView>
+            <StatusBar barStyle="light-content" backgroundColor="WHITE" />
                 {/* DEVELOPMENT ONLY */}
-                {/*}
+                
                 <Button title="CURRENT ASYNCSTORAGE" onPress={this.showStorage} />
-                <Button title="CURRENT REDUX STATE" onPress={this.showState} />    */}
+                <Button title="CURRENT REDUX STATE" onPress={this.showState} /> 
                 <FlatList
                     data={this.props.drinks}
                     keyExtractor={drink => drink.id}
