@@ -148,7 +148,7 @@ class CreateScreen extends React.Component {
             let now = new Date();
             let newDate = dateFormat(now, 'mmmm dS, yyyy');
             this.setState({ created: newDate });
-            this.props.createMix(this.state);
+            //this.props.createMix(this.state);
             this.setState({
                 id: null,
                 title: '',

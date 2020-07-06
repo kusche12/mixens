@@ -89,7 +89,7 @@ authFlow.navigationOptions = () => {
 }
 
 const createFlow = createStackNavigator({
-  Create: CreateScreen
+  Create: CreateScreen,
 });
 createFlow.navigationOptions = () => {
   return {
@@ -133,9 +133,7 @@ export default function App() {
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // BUG The first ingredient text and tag text inputs are not rendered in Create Mix
 
-// Currently, the "Done" press resets the create screen state, but it does not allow for further creation,
-// it's essentially the same bug, but now you have it all under the same component so... Steps in the right 
-// direction?
+// Why does pressing "Cancel" make the component blur, but pressing "Done" does not make it blur?
 
 
 // CAUTION:
