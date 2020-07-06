@@ -56,7 +56,6 @@ class CreateScreen extends React.Component {
         }
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     }
-
     // Drink is a creation
     focusHandler = () => {
         if (!this.state.id) {
@@ -70,7 +69,6 @@ class CreateScreen extends React.Component {
         }
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
-
     cancel = () => {
         Alert.alert(
             "Cancel",
@@ -287,7 +285,5 @@ const mapStateToProps = (state) => {
       drinks: state.drinkReducer,
     };
 };
-
-
 
 export default connect(mapStateToProps, actions)(CreateScreen);
