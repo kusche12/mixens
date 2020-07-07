@@ -246,7 +246,6 @@ const initialStateDEVBUILD = [
         favorited: false   
     }
 ];
-
 const newDrink = {
     id: '1',
     title: 'Mojito',

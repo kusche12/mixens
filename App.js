@@ -124,6 +124,14 @@ const Main = createAppContainer(Navigator);
 
 export default function App() {
   if (!firebase.apps.length) { firebase.initializeApp(FirebaseSetup.firebaseConfig) };
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      store.dispatch({ type: 'LOGIN', payload: user })
+    } else {
+      store.dispatch({ type: 'LOGOUT' });
+    }
+  });
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -133,11 +141,15 @@ export default function App() {
   );
 };
 
+
 // TODO STYLING:
 // Add in an image for the loading={} in the PersistGate of the main App function
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
+
+// Allow for signout
+// Create user database to save all their AsyncStorage drinks
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.

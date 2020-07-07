@@ -1,5 +1,6 @@
 // Fill this with functions that have to do with authentication
-export const login = () => ({
+export const login = (user) => ({
     type: 'LOGIN',
-    payload: true,
+    payload: user,
 });
+export const logout = () => ({ type: 'LOGOUT' });
