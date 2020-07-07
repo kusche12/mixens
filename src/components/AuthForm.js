@@ -1,42 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-const AuthForm = ({ authType }) => {
-    const renderText = (main, link) => {
+const AuthForm = ({ signup, formHandler, handleSignup, handleSignin }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+
+    const renderText = (main, link, button) => {
         return (
-            <View style={styles.textContainer}>
-                <Text style={styles.text}>{main}</Text>
-                <TouchableOpacity onPress={() => console.log('callback to rerender the right signup page')}>
-                    <Text style={[styles.text, styles.link]}>{link}</Text>
+            <>
+                <TouchableOpacity onPress={() => 
+                { signup ? handleSignup(email, password, name) : handleSignin(email, password)} }>
+                    <View style={styles.button}>
+                        <Text style={styles.textButton}>{button}</Text>
+                    </View>
                 </TouchableOpacity>
-            </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>{main}</Text>
+                    <TouchableOpacity onPress={formHandler}>
+                        <Text style={[styles.text, styles.link]}>{link}</Text>
+                    </TouchableOpacity>
+                </View>
+            </>
         );
     };
 
+
     return (
         <SafeAreaView>
-            <Text style={styles.title}>{authType}</Text>
+            <Text style={styles.title}>Save your mixes to the cloud!</Text> 
             <View style={{ height: 20 }} />
             <TextInput 
                 style={styles.input}
                 placeholder="Email"
+                value={email}
+                onChangeText={text => setEmail(text)}
             />
+            {signup 
+            ? <TextInput 
+                style={styles.input}
+                placeholder="First & Last Name"
+                value={name}
+                onChangeText={text => setName(text)}
+                autoCapitalize="words"
+            />
+            : null
+            }
             <TextInput 
                 style={styles.input}
                 placeholder="Password"
                 secureTextEntry={true}
+                value={password}
+                onChangeText={text => setPassword(text)}
             />
-            <TouchableOpacity>
-                <View style={styles.button}>
-                    {authType === 'Sign Up'
-                    ? <Text style={styles.textButton}>Create Account</Text>
-                    : <Text style={styles.textButton}>Log In</Text>
-                    }
-                </View>
-            </TouchableOpacity>
-            {authType == 'Sign Up'
-            ? renderText('Already have an account?', 'Log in!')
-            : renderText('Don\'t have an account?', 'Sign up!')
+            {signup
+            ? renderText('Already have an account?', 'Log in!', 'Create an Account')
+            : renderText('Don\'t have an account?', 'Sign up!', 'Log in')
             }
         </SafeAreaView>
     );
@@ -44,7 +63,10 @@ const AuthForm = ({ authType }) => {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 24
+        fontSize: 20,
+        fontWeight: '500',
+        marginBottom: 20,
+        color: '#666666'
     },
     input: {
         color: '#C4C4C4',
@@ -71,7 +93,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        color: '#C4C4C4'
+        color: '#666666'
     },
     link: {
         color: '#64CAF6',
