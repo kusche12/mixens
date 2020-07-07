@@ -2,10 +2,15 @@ import React from 'react';
 import { Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { deleteMixFB } from '../api/FirebaseActions';
 
-const DeleteMix = ({ navigation, deleteMix, mix }) => {
+const DeleteMix = ({ navigation, deleteMix, mix, user }) => {
     const deleteDrink = () => {
         deleteMix(mix);
+        if (user.loggedIn) {
+            deleteMixFB(mix, user.user.uid);
+        }
+
         navigation.navigate('List');
     }
 
@@ -45,4 +50,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, actions)(DeleteMix);
+const mapStateToProps = (state) => { 
+    return {
+        user: state.authReducer,
+    }
+};
+
+export default connect(mapStateToProps, actions)(DeleteMix);
