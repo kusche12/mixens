@@ -1,8 +1,11 @@
 import React from 'react'
-import { SafeAreaView, Dimensions, StyleSheet } from 'react-native';
+import { SafeAreaView, Dimensions, StyleSheet, Text } from 'react-native';
 import AuthForm from '../components/AuthForm';
+import SignoutForm from '../components/SignoutForm';
+import { connect } from 'react-redux'
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class UserScreen extends React.Component {
@@ -17,11 +20,77 @@ class UserScreen extends React.Component {
             headerTintColor: '#FCFEFF'
         }
     }
+    constructor(props) {
+        super(props);
+        this.state = {
+            signup: true,
+            errorMessage: null,
+        };
+    };
 
+    handleSignup = (email, password, name) => {
+        this.setState({ errorMessage: null });
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((user) => {
+                firebase.database().ref('/users/' + user.user.uid + '/username').set({
+                    name: name,
+                    email: email
+                }); 
+            })
+            .catch((error) => {
+                let errorMessage = error.message;
+                this.setState({ errorMessage });
+        });
+    }
+
+    handleSignin = (email, password) => {
+		this.setState({ errorMessage: null });
+		firebase.auth().signInWithEmailAndPassword(email, password)
+			.catch((error) => {
+				this.setState({ errorMessage: error.message });
+        });
+    }
+    
+    handleSignout = () => {
+        this.setState({ errorMessage: null });
+        firebase.auth().signOut()
+        .catch(function(error) {
+            this.setState({ errorMessage: error.message });
+        });
+    }
+    
     render() {
+        let user = this.props.user;
+        let name = '';        
+        if (this.props.user.loggedIn) {
+            let rootRef = firebase.database().ref('/users/' + this.props.user.user.uid + '/username');
+            rootRef.on("value", (snapshot) => {
+                let data = snapshot.val();
+                if (data.name) {
+                    name = data.name;
+                } else {
+                    name = data.email
+                }
+            }, err => {
+                console.log("The read failed: " + err.code);
+            });
+        } 
+
         return (
             <SafeAreaView style={styles.container}>
-                <AuthForm authType="Sign Up" />
+                {user.loggedIn
+                ? <SignoutForm 
+                    user={name}
+                    email={user.user.email}
+                    handleSignout={this.handleSignout}
+                />
+                : <AuthForm 
+                    signup={this.state.signup} 
+                    formHandler={() => this.setState({ signup: !this.state.signup })} 
+                    handleSignup={this.handleSignup} handleSignin={this.handleSignin}
+                /> 
+                }
+                <Text style={styles.error}>{this.state.errorMessage}</Text>
             </SafeAreaView>
         );
     }
@@ -31,7 +100,13 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 1/5 * HEIGHT,
         paddingHorizontal: 50
+    },
+    error: {
+        color: '#e34d4d',
+        marginTop: 16
     }
 });
 
-export default UserScreen;
+const mapStateToProps = (state) => { return { user: state.authReducer }};
+
+export default connect(mapStateToProps)(UserScreen);
