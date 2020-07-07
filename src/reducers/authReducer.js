@@ -7,10 +7,8 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
       case 'LOGIN':
-        console.log('USER AUTHENTICARTED IN REDUX')
         return {...state, loggedIn: true, user: action.payload };
       case 'LOGOUT': 
-        console.log('USER LOGOUT FROM REDUX');
         return {...state, loggedIn: false, user: null }
       default:
         return state;

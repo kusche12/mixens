@@ -16,7 +16,6 @@ import DetailScreen from './src/screens/DetailScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import UserScreen from './src/screens/UserScreen';
-import AuthScreen from './src/screens/AuthScreen';
 
 // TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
 YellowBox.ignoreWarnings([
@@ -73,7 +72,6 @@ searchFlow.navigationOptions = () => {
 // Move between user settings and authentication
 const authFlow = createStackNavigator({
   User: UserScreen,
-  Auth: AuthScreen
 });
 authFlow.navigationOptions = () => {
   return {
@@ -126,7 +124,7 @@ export default function App() {
   if (!firebase.apps.length) { firebase.initializeApp(FirebaseSetup.firebaseConfig) };
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      store.dispatch({ type: 'LOGIN', payload: user })
+      store.dispatch({ type: 'LOGIN', payload: user });
     } else {
       store.dispatch({ type: 'LOGOUT' });
     }
@@ -147,9 +145,16 @@ export default function App() {
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
+// BUG CREATESCREEN. When in the middle of typing input, and then pressing cancel, the app crashes
 
-// Allow for signout
-// Create user database to save all their AsyncStorage drinks
+// Fix some of the navigation flows. For example, take out the authScreen from the authFlow. This will fix
+// the glitch where the top navbar jumps between tab navigation
+
+// Reconstruct the Create, X-Delete, and Update
+// drinkActions to update the firebase if the Redux Store states that loggedIn === true
+// Find out why the index sometimes does not work. Possibly due to async/await
+// Also, make sure that when the user Signs in that the Firebase DB is replaced with the asyncstorage
+// test this by signing out, creating a drink, logging in, and checking firebase
 
 // CAUTION:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.

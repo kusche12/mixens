@@ -1,4 +1,5 @@
 import _ from 'lodash';
+
 const initialState = [];
 const initialStateDEVBUILD = [
     {
@@ -246,67 +247,6 @@ const initialStateDEVBUILD = [
         favorited: false   
     }
 ];
-const newDrink = {
-    id: '1',
-    title: 'Mojito',
-    instructions: 'Place mint leaves and 1 lime wedge into a sturdy glass. Use a muddler to crush the mint and lime to release the mint oils and lime juice. Add 2 more lime wedges and the sugar, and muddle again to release the lime juice. Do not strain the mixture. Fill the glass almost to the top with ice. Pour the rum over the ice, and fill the glass with carbonated water. Stir, taste, and add more sugar if desired. Garnish with the remaining lime wedge.',
-    ingredients: [
-        {
-            id: '1',
-            unit: 'PIECES',
-            amount: '10',
-            amount2: ' ',
-            ingredient: 'Fresh Mint Leaves'
-        }, {
-            id: '2',
-            unit: 'WEDGES',
-            amount: '4',
-            amount2: ' ',
-            ingredient: 'Limes'
-        }, {
-            id: '3',
-            unit: 'TBSP',
-            amount: '2',
-            amount2: ' ',
-            ingredient: 'White Sugar'
-        }, {
-            id: '4',
-            unit: 'CUP',
-            amount: '1',
-            amount2: ' ',
-            ingredient: 'Ice Cubes'
-        }, {
-            id: '5',
-            unit: 'OZ',
-            amount: '1',
-            amount2: '1/2',
-            ingredient: 'White Rum'
-        }, {
-            id: '6',
-            unit: 'CUP',
-            amount: '0',
-            amount2: '1/2',
-            ingredient: 'Club Soda'
-        },
-    ],
-    img: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F1133511.jpg&w=596&h=399&c=sc&poi=face&q=85',
-    tags: [
-        {
-            id: '1',
-            title: 'Summer',
-        }, 
-        {
-            id: '2',
-            title: 'Mint'
-        }, 
-        { 
-            id: '3',
-            title: 'Fresh'
-        }
-    ],
-    created: 'May 30th, 2020',   
-    favorited: false   
-}
 
 const drinkReducer = (state = initialStateDEVBUILD, action) => {
     switch (action.type) {
