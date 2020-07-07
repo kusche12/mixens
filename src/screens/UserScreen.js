@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, Dimensions, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, Dimensions, StyleSheet, Text, Button } from 'react-native';
 import AuthForm from '../components/AuthForm';
 import SignoutForm from '../components/SignoutForm';
 import { connect } from 'react-redux'
@@ -30,11 +30,17 @@ class UserScreen extends React.Component {
 
     handleSignup = (email, password, name) => {
         this.setState({ errorMessage: null });
+        // Create user
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((user) => {
+                // Save user's name and email
                 firebase.database().ref('/users/' + user.user.uid + '/username').set({
                     name: name,
                     email: email
+                }); 
+                // Save user's drinks
+                firebase.database().ref('/users/' + user.user.uid + '/mixes').set({
+                    mixes: this.props.mixes
                 }); 
             })
             .catch((error) => {
@@ -45,7 +51,12 @@ class UserScreen extends React.Component {
 
     handleSignin = (email, password) => {
 		this.setState({ errorMessage: null });
-		firebase.auth().signInWithEmailAndPassword(email, password)
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((user) => {
+                firebase.database().ref('/users/' + user.user.uid + '/mixes').set({
+                    mixes: this.props.mixes
+                }); 
+            })
 			.catch((error) => {
 				this.setState({ errorMessage: error.message });
         });
@@ -61,7 +72,7 @@ class UserScreen extends React.Component {
     
     render() {
         let user = this.props.user;
-        let name = '';        
+        let name = '';     
         if (this.props.user.loggedIn) {
             let rootRef = firebase.database().ref('/users/' + this.props.user.user.uid + '/username');
             rootRef.on("value", (snapshot) => {
@@ -91,6 +102,7 @@ class UserScreen extends React.Component {
                 /> 
                 }
                 <Text style={styles.error}>{this.state.errorMessage}</Text>
+                <Button title="DEV TEST" onPress={() => console.log(this.props.mixes)} />
             </SafeAreaView>
         );
     }
@@ -107,6 +119,11 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (state) => { return { user: state.authReducer }};
+const mapStateToProps = (state) => { 
+    return {
+        user: state.authReducer,
+        mixes: state.drinkReducer
+    }
+};
 
 export default connect(mapStateToProps)(UserScreen);
