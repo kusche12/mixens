@@ -2,6 +2,7 @@ import React from 'react'
 import { View, StyleSheet, ScrollView, Button, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import * as actions from '../actions';
+import { updateMixFB, createMixFB } from '../api/FirebaseActions';
 import {NavigationEvents} from 'react-navigation';
 import dateFormat from 'dateformat';
 
@@ -155,6 +156,9 @@ class CreateScreen extends React.Component {
             });
         } else {
             await this.props.updateMix(this.state);
+            if (this.props.user.loggedIn) {
+                await updateMixFB(this.state, this.props.user.user.uid);
+            }
         }
         this.props.navigation.navigate('List');
     };
@@ -277,6 +281,7 @@ const deleteEmptyTags = (tags) => {
 const mapStateToProps = (state) => {
     return {
       drinks: state.drinkReducer,
+      user: state.authReducer
     };
 };
 

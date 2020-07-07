@@ -15,7 +15,7 @@ const SignoutForm = ({ user, email, handleSignout }) => {
                     <Text style={styles.textButton}>Sign out</Text>
                     </View>
                 </TouchableOpacity>
-                <Text style={styles.text}>You are currently sign in as: {email}</Text>
+                <Text style={styles.text}>You are currently signed in using {email}</Text>
             </View>
         </SafeAreaView>
     );
@@ -24,13 +24,13 @@ const SignoutForm = ({ user, email, handleSignout }) => {
 const styles = StyleSheet.create({
     title: {
         marginTop: 50,
-        fontSize: 40,
+        fontSize: 32,
         fontWeight: '500',
-        color: '#666666'
+        color: '#333333'
     }, 
     name: {
-        fontSize: 34,
-        fontWeight: '500',
+        fontSize: 36,
+        fontWeight: '400',
         color: '#666666'
     },
     text: {
