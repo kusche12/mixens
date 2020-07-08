@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
 const SignoutForm = ({ user, email, handleSignout }) => {
     return (
@@ -43,13 +43,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         alignItems: 'center',
-        marginTop: 200
     },
     textButton: {
         color: 'white',
         fontSize: 18,
         fontWeight: '500'
     },
+    textContainer: {
+        position: 'absolute',
+        left: (Dimensions.get('window').width / 2) - 170,
+        top: Dimensions.get('window').height / 2
+    }
 });
 
 export default SignoutForm;

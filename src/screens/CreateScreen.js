@@ -2,9 +2,10 @@ import React from 'react'
 import { View, StyleSheet, ScrollView, Button, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import * as actions from '../actions';
-import { updateMixFB, createMixFB } from '../api/FirebaseActions';
+import { updateMixFB } from '../api/FirebaseActions';
 import {NavigationEvents} from 'react-navigation';
 import dateFormat from 'dateformat';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import EditImage from '../components/EditImage';
 import EditInstructions from '../components/EditInstructions';
@@ -12,7 +13,6 @@ import EditList from '../components/EditList';
 import EditFavorite from '../components/EditFavorite'
 import EditDrinkName from '../components/EditDrinkName';
 import DeleteMix from '../components/DeleteMix';
-import KeyboardShift from '../components/KeyboardShift';
 
 class CreateScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -87,15 +87,9 @@ class CreateScreen extends React.Component {
                 id: null,
                 title: '',
                 instructions: '',
-                ingredients: [{
-                    id: '1',
-                    unit: ' ',
-                    amount: '0',
-                    amount2: ' ',
-                    ingredient: ''
-                }],
+                ingredients: [],
                 img: null,
-                tags: [{ id: '1', title: '' }],
+                tags: [],
                 favorited: false,
             });
             this.props.navigation.navigate('List');
@@ -146,15 +140,9 @@ class CreateScreen extends React.Component {
                 id: null,
                 title: '',
                 instructions: '',
-                ingredients: [{
-                    id: '1',
-                    unit: ' ',
-                    amount: '0',
-                    amount2: ' ',
-                    ingredient: ''
-                }],
+                ingredients: [],
                 img: null,
-                tags: [{ id: '1', title: '' }],
+                tags: [],
                 favorited: false,
             });
         } else {
@@ -204,9 +192,7 @@ class CreateScreen extends React.Component {
 
     render() {
         return (
-            <KeyboardShift>
-            {() => (
-            <ScrollView>
+            <KeyboardAwareScrollView style={{ flex: 1 }}>
                 { this.state.created == '' 
                 ? <NavigationEvents onDidFocus={this.focusHandler} /> : null }
                 <View style={styles.container}>
@@ -240,9 +226,7 @@ class CreateScreen extends React.Component {
                     : null
                     }
                 </View>
-            </ScrollView>
-            )}
-            </KeyboardShift>
+            </KeyboardAwareScrollView>
         );
     };
 };
