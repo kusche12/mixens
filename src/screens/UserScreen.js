@@ -39,9 +39,9 @@ class UserScreen extends React.Component {
                     email: email
                 }); 
                 // Save user's drinks
-                firebase.database().ref('/users/' + user.user.uid + '/mixes').set({
-                    mixes: this.props.mixes
-                }); 
+                let mixes = this.props.mixes
+                console.log(mixes.mixes);
+                firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes); 
             })
             .catch((error) => {
                 let errorMessage = error.message;
@@ -53,9 +53,8 @@ class UserScreen extends React.Component {
 		this.setState({ errorMessage: null });
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((user) => {
-                firebase.database().ref('/users/' + user.user.uid + '/mixes').set({
-                    mixes: this.props.mixes
-                }); 
+                let mixes = this.props.mixes
+                firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes); 
             })
 			.catch((error) => {
 				this.setState({ errorMessage: error.message });
