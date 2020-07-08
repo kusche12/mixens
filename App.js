@@ -16,6 +16,7 @@ import DetailScreen from './src/screens/DetailScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import UserScreen from './src/screens/UserScreen';
+import ForgotScreen from './src/screens/ForgotScreen';
 import Loading from './src/components/Loading';
 
 // TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
@@ -87,7 +88,11 @@ createFlow.navigationOptions = () => {
   }}
 }
 
-UserScreen.navigationOptions = () => {
+const userFlow = createStackNavigator({
+  User: UserScreen,
+  Forgot: ForgotScreen
+});
+userFlow.navigationOptions = () => {
   return {
     tabBarIcon: ({ focused }) => {
       let iconColor = 'gray';
@@ -107,7 +112,7 @@ const Navigator = createBottomTabNavigator({
   detailFlow,
   createFlow,
   searchFlow,
-  User: UserScreen,
+  userFlow,
 }, {
   lazy: false
 });
@@ -142,7 +147,7 @@ export default function App() {
 // Allow user to retrieve password (if they forgot it)
 
 // BUGS:
-// Name does not load in on sign in page
+// Name does not load in after user log in
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
