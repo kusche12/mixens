@@ -142,6 +142,7 @@ export default function App() {
 // Allow user to retrieve password (if they forgot it)
 
 // BUGS:
+// Name does not load in on sign in page
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
