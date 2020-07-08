@@ -17,6 +17,7 @@ import CreateScreen from './src/screens/CreateScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import UserScreen from './src/screens/UserScreen';
 import ForgotScreen from './src/screens/ForgotScreen';
+import DeleteAccountScreen from './src/screens/DeleteAccountScreen';
 import Loading from './src/components/Loading';
 
 // TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
@@ -90,10 +91,12 @@ createFlow.navigationOptions = () => {
 
 const userFlow = createStackNavigator({
   User: UserScreen,
-  Forgot: ForgotScreen
+  Forgot: ForgotScreen,
+  DeleteAccount: DeleteAccountScreen
 });
 userFlow.navigationOptions = () => {
   return {
+    title: 'Profile',
     tabBarIcon: ({ focused }) => {
       let iconColor = 'gray';
       if (focused) {
@@ -143,9 +146,14 @@ export default function App() {
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
-// Allow user to delete account
+// Finish the delete account flow: https://stackoverflow.com/questions/37811684/how-to-create-credential-object-needed-by-firebase-web-user-reauthenticatewith
+// 1. MAKE THE UX DESIGN BETTER, MAYBE REDIRECTING TO AN ACTUAL DELETE ACCOUNT SCREEN
+// 2. DELETE USER DATA ALONG WITH THE DELETION OF THEIR ACCOUNT
+
+// Add a Plus icon to the ListScreen that leads directly to CreateScreen
 
 // BUGS:
+// NAME DOES NOT LOAD IN ON SIGN IN FIX THIS SHITTTT. PROBABLY AN ASYNC/AWAIT WILL DO
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
