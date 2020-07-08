@@ -16,13 +16,12 @@ import DetailScreen from './src/screens/DetailScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import UserScreen from './src/screens/UserScreen';
+import Loading from './src/components/Loading';
 
 // TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested'
 ])
-
-// <<< REACT NAVIGATION >>>
 
 // Move between list and singular drink
 const detailFlow = createStackNavigator({
@@ -108,7 +107,7 @@ const Navigator = createBottomTabNavigator({
   detailFlow,
   createFlow,
   searchFlow,
-  User: UserScreen
+  User: UserScreen,
 }, {
   lazy: false
 });
@@ -127,7 +126,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Loading />} persistor={persistor}>
         <Main />
       </PersistGate>
     </Provider>
@@ -136,16 +135,13 @@ export default function App() {
 
 
 // TODO STYLING:
-// Add in an image for the loading={} in the PersistGate of the main App function
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
+// Allow user to delete account
+// Allow user to retrieve password (if they forgot it)
 
 // BUGS:
-// Picker default options has an occasional glitch where it does not work. Keep a watch on this.
-// Sometimes, the AuthScreen does not show user name after login: 'Hello, !'
-// CREATESCREEN. When in the middle of typing input, and then pressing cancel/submit, the app crashes
-
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress

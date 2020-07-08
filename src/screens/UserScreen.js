@@ -74,7 +74,7 @@ class UserScreen extends React.Component {
         let name = '';     
         if (this.props.user.loggedIn) {
             let rootRef = firebase.database().ref('/users/' + this.props.user.user.uid + '/username');
-            rootRef.on("value", (snapshot) => {
+            rootRef.once("value", (snapshot) => {
                 let data = snapshot.val();
                 if (data.name) {
                     name = data.name;
