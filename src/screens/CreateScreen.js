@@ -139,6 +139,9 @@ class CreateScreen extends React.Component {
             let stateWithDate = {...this.state};
             stateWithDate.created = newDate
             await this.props.createMix(stateWithDate);
+            if (this.props.user.loggedIn) {
+                await updateMixFB(this.state, this.props.user.user.uid);
+            }
             await this.setState({
                 id: null,
                 title: '',
@@ -156,6 +159,7 @@ class CreateScreen extends React.Component {
             });
         } else {
             await this.props.updateMix(this.state);
+
             if (this.props.user.loggedIn) {
                 await updateMixFB(this.state, this.props.user.user.uid);
             }
