@@ -16,13 +16,12 @@ import DetailScreen from './src/screens/DetailScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import UserScreen from './src/screens/UserScreen';
+import Loading from './src/components/Loading';
 
 // TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested'
 ])
-
-// <<< REACT NAVIGATION >>>
 
 // Move between list and singular drink
 const detailFlow = createStackNavigator({
@@ -69,27 +68,6 @@ searchFlow.navigationOptions = () => {
   }
 }
 
-// Move between user settings and authentication
-const authFlow = createStackNavigator({
-  User: UserScreen,
-});
-authFlow.navigationOptions = () => {
-  return {
-    title: 'Profile',
-    tabBarIcon: ({ focused }) => {
-      let iconColor = 'gray';
-      if (focused) {
-          iconColor = '#64CAF6';
-      }
-      return <FontAwesome5 name="user-alt" size={28} color={iconColor} style={{ top: 1 }} />;
-    },
-    tabBarOptions: {
-      activeTintColor: '#64CAF6',
-      inactiveTintColor: 'gray'
-    }
-  }
-}
-
 const createFlow = createStackNavigator({
   Create: CreateScreen,
 });
@@ -109,11 +87,27 @@ createFlow.navigationOptions = () => {
   }}
 }
 
+UserScreen.navigationOptions = () => {
+  return {
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <FontAwesome5 name="user-alt" size={28} color={iconColor} style={{ top: 1 }} />;
+    },
+    tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+    }
+  }
+}
+
 const Navigator = createBottomTabNavigator({
   detailFlow,
   createFlow,
   searchFlow,
-  authFlow
+  User: UserScreen,
 }, {
   lazy: false
 });
@@ -132,7 +126,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Loading />} persistor={persistor}>
         <Main />
       </PersistGate>
     </Provider>
@@ -141,22 +135,13 @@ export default function App() {
 
 
 // TODO STYLING:
-// Add in an image for the loading={} in the PersistGate of the main App function
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
-
-// Fix some of the navigation flows. For example, take out the authScreen from the authFlow. This will fix
-// the glitch where the top navbar jumps between tab navigation
-
-// Make sure that when the user Signs in that the Firebase DB is replaced with the asyncstorage
-// test this by signing out, creating a drink, logging in, and checking firebase
+// Allow user to delete account
+// Allow user to retrieve password (if they forgot it)
 
 // BUGS:
-// Picker default options has an occasional glitch where it does not work. Keep a watch on this.
-// Sometimes, the AuthScreen does not show user name after login: 'Hello, !'
-//CREATESCREEN. When in the middle of typing input, and then pressing cancel, the app crashes
-
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress

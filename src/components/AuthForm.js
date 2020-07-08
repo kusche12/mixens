@@ -29,7 +29,7 @@ const AuthForm = ({ signup, formHandler, handleSignup, handleSignin }) => {
     return (
         <SafeAreaView>
             <Text style={styles.title}>Save your mixes to the cloud!</Text> 
-            <View style={{ height: 20 }} />
+            <View style={{ height: 50 }} />
             <TextInput 
                 style={styles.input}
                 placeholder="Email"
