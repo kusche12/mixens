@@ -145,19 +145,18 @@ export default function App() {
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
-// BUG CREATESCREEN. When in the middle of typing input, and then pressing cancel, the app crashes
 
 // Fix some of the navigation flows. For example, take out the authScreen from the authFlow. This will fix
 // the glitch where the top navbar jumps between tab navigation
 
-// Reconstruct the Create, X-Delete, and Update
-// drinkActions to update the firebase if the Redux Store states that loggedIn === true
-// Find out why the index sometimes does not work. Possibly due to async/await
-// Also, make sure that when the user Signs in that the Firebase DB is replaced with the asyncstorage
+// Make sure that when the user Signs in that the Firebase DB is replaced with the asyncstorage
 // test this by signing out, creating a drink, logging in, and checking firebase
 
-// CAUTION:
+// BUGS:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
+// Sometimes, the AuthScreen does not show user name after login: 'Hello, !'
+//CREATESCREEN. When in the middle of typing input, and then pressing cancel, the app crashes
+
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
