@@ -40,7 +40,6 @@ class UserScreen extends React.Component {
                 }); 
                 // Save user's drinks
                 let mixes = this.props.mixes
-                console.log(mixes.mixes);
                 firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes); 
             })
             .catch((error) => {
@@ -72,9 +71,10 @@ class UserScreen extends React.Component {
     render() {
         let user = this.props.user;
         let name = '';     
+        console.log(this.props.user.loggedIn);
         if (this.props.user.loggedIn) {
             let rootRef = firebase.database().ref('/users/' + this.props.user.user.uid + '/username');
-            rootRef.once("value", (snapshot) => {
+            rootRef.on("value", (snapshot) => {
                 let data = snapshot.val();
                 if (data.name) {
                     name = data.name;

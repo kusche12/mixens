@@ -144,10 +144,8 @@ export default function App() {
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // Allow user to delete account
-// Allow user to retrieve password (if they forgot it)
 
 // BUGS:
-// Name does not load in after user log in
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
