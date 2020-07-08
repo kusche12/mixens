@@ -40,7 +40,6 @@ class UserScreen extends React.Component {
                 }); 
                 // Save user's drinks
                 let mixes = this.props.mixes
-                console.log(mixes.mixes);
                 firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes); 
             })
             .catch((error) => {
@@ -61,20 +60,13 @@ class UserScreen extends React.Component {
         });
     }
     
-    handleSignout = () => {
-        this.setState({ errorMessage: null });
-        firebase.auth().signOut()
-        .catch(function(error) {
-            this.setState({ errorMessage: error.message });
-        });
-    }
-    
     render() {
         let user = this.props.user;
         let name = '';     
+        console.log(this.props.user.loggedIn);
         if (this.props.user.loggedIn) {
             let rootRef = firebase.database().ref('/users/' + this.props.user.user.uid + '/username');
-            rootRef.once("value", (snapshot) => {
+            rootRef.on("value", (snapshot) => {
                 let data = snapshot.val();
                 if (data.name) {
                     name = data.name;
@@ -85,7 +77,6 @@ class UserScreen extends React.Component {
                 console.log("The read failed: " + err.code);
             });
         } 
-
         return (
             <SafeAreaView>
             <View style={styles.container}>
@@ -93,12 +84,13 @@ class UserScreen extends React.Component {
                 ? <SignoutForm 
                     user={name}
                     email={user.user.email}
-                    handleSignout={this.handleSignout}
+                    navigation={this.props.navigation}
                 />
                 : <AuthForm 
                     signup={this.state.signup} 
                     formHandler={() => this.setState({ signup: !this.state.signup })} 
                     handleSignup={this.handleSignup} handleSignin={this.handleSignin}
+                    navigation={this.props.navigation}
                 /> 
                 }
                 <Text style={styles.error}>{this.state.errorMessage}</Text>
@@ -110,7 +102,7 @@ class UserScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: HEIGHT / 5,
+        marginTop: HEIGHT /6,
         paddingHorizontal: 50
     },
     error: {

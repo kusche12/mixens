@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-const AuthForm = ({ signup, formHandler, handleSignup, handleSignin }) => {
+const AuthForm = ({ signup, formHandler, handleSignup, handleSignin, navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
@@ -21,6 +21,13 @@ const AuthForm = ({ signup, formHandler, handleSignup, handleSignin }) => {
                         <Text style={[styles.text, styles.link]}>{link}</Text>
                     </TouchableOpacity>
                 </View>
+                { !signup 
+                ? <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
+                    <Text style={[styles.text, styles.forgot]}>Forgot password?</Text>
+                </TouchableOpacity>
+                : null
+                }
+                
             </>
         );
     };
@@ -98,6 +105,11 @@ const styles = StyleSheet.create({
     link: {
         color: '#64CAF6',
         marginLeft: 10
+    },
+    forgot: {
+        color: '#64CAF6',
+        textAlign: 'center',
+        marginTop: 10
     }
 });
 
