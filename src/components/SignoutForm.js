@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
-const SignoutForm = ({ user, email, handleSignout }) => {
+const SignoutForm = ({ user, email, navigation }) => {
     return (
         <SafeAreaView>
             <View>
@@ -10,12 +10,10 @@ const SignoutForm = ({ user, email, handleSignout }) => {
             </View>
 
             <View style={styles.textContainer}>
-                <TouchableOpacity onPress={handleSignout}>
-                    <View style={styles.button}>
-                    <Text style={styles.textButton}>Sign out</Text>
-                    </View>
+                <Text style={styles.text}>{email}</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('DeleteAccount')}>
+                <Text style={[styles.text, {color: '#64CAF6'}]}>Account Settings</Text>
                 </TouchableOpacity>
-                <Text style={styles.text}>You are currently signed in using {email}</Text>
             </View>
         </SafeAreaView>
     );
@@ -23,7 +21,7 @@ const SignoutForm = ({ user, email, handleSignout }) => {
 
 const styles = StyleSheet.create({
     title: {
-        marginTop: 50,
+        marginTop: Dimensions.get('window').height / 8,
         fontSize: 32,
         fontWeight: '500',
         color: '#333333'
@@ -38,21 +36,10 @@ const styles = StyleSheet.create({
         color: '#666666',
         textAlign: 'center'
     },
-    button: {
-        backgroundColor: '#64CAF6',
-        borderRadius: 5,
-        padding: 10,
-        alignItems: 'center',
-    },
-    textButton: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: '500'
-    },
     textContainer: {
         position: 'absolute',
-        left: (Dimensions.get('window').width / 2) - 170,
-        top: Dimensions.get('window').height / 2
+        left: (Dimensions.get('window').width / 8),
+        top: Dimensions.get('window').height / 1.9
     }
 });
 

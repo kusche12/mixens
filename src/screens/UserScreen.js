@@ -60,14 +60,6 @@ class UserScreen extends React.Component {
         });
     }
     
-    handleSignout = () => {
-        this.setState({ errorMessage: null });
-        firebase.auth().signOut()
-        .catch(function(error) {
-            this.setState({ errorMessage: error.message });
-        });
-    }
-    
     render() {
         let user = this.props.user;
         let name = '';     
@@ -92,7 +84,7 @@ class UserScreen extends React.Component {
                 ? <SignoutForm 
                     user={name}
                     email={user.user.email}
-                    handleSignout={this.handleSignout}
+                    navigation={this.props.navigation}
                 />
                 : <AuthForm 
                     signup={this.state.signup} 
