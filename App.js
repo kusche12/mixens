@@ -69,27 +69,6 @@ searchFlow.navigationOptions = () => {
   }
 }
 
-// Move between user settings and authentication
-const authFlow = createStackNavigator({
-  User: UserScreen,
-});
-authFlow.navigationOptions = () => {
-  return {
-    title: 'Profile',
-    tabBarIcon: ({ focused }) => {
-      let iconColor = 'gray';
-      if (focused) {
-          iconColor = '#64CAF6';
-      }
-      return <FontAwesome5 name="user-alt" size={28} color={iconColor} style={{ top: 1 }} />;
-    },
-    tabBarOptions: {
-      activeTintColor: '#64CAF6',
-      inactiveTintColor: 'gray'
-    }
-  }
-}
-
 const createFlow = createStackNavigator({
   Create: CreateScreen,
 });
@@ -109,11 +88,27 @@ createFlow.navigationOptions = () => {
   }}
 }
 
+UserScreen.navigationOptions = () => {
+  return {
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <FontAwesome5 name="user-alt" size={28} color={iconColor} style={{ top: 1 }} />;
+    },
+    tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+    }
+  }
+}
+
 const Navigator = createBottomTabNavigator({
   detailFlow,
   createFlow,
   searchFlow,
-  authFlow
+  User: UserScreen
 }, {
   lazy: false
 });
@@ -146,16 +141,10 @@ export default function App() {
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 
-// Fix some of the navigation flows. For example, take out the authScreen from the authFlow. This will fix
-// the glitch where the top navbar jumps between tab navigation
-
-// Make sure that when the user Signs in that the Firebase DB is replaced with the asyncstorage
-// test this by signing out, creating a drink, logging in, and checking firebase
-
 // BUGS:
 // Picker default options has an occasional glitch where it does not work. Keep a watch on this.
 // Sometimes, the AuthScreen does not show user name after login: 'Hello, !'
-//CREATESCREEN. When in the middle of typing input, and then pressing cancel, the app crashes
+// CREATESCREEN. When in the middle of typing input, and then pressing cancel/submit, the app crashes
 
 
 // STRETCH:

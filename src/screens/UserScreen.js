@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, Dimensions, StyleSheet, Text, Button } from 'react-native';
+import { SafeAreaView, Dimensions, StyleSheet, Text, View } from 'react-native';
 import AuthForm from '../components/AuthForm';
 import SignoutForm from '../components/SignoutForm';
 import { connect } from 'react-redux'
@@ -17,7 +17,7 @@ class UserScreen extends React.Component {
             headerStyle: {
               backgroundColor: '#64CAF6'
             },
-            headerTintColor: '#FCFEFF'
+            headerTintColor: '#FCFEFF',
         }
     }
     constructor(props) {
@@ -87,7 +87,8 @@ class UserScreen extends React.Component {
         } 
 
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView>
+            <View style={styles.container}>
                 {user.loggedIn
                 ? <SignoutForm 
                     user={name}
@@ -101,7 +102,7 @@ class UserScreen extends React.Component {
                 /> 
                 }
                 <Text style={styles.error}>{this.state.errorMessage}</Text>
-                <Button title="DEV TEST" onPress={() => console.log(this.props.mixes)} />
+            </View>
             </SafeAreaView>
         );
     }
@@ -109,7 +110,7 @@ class UserScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 1/5 * HEIGHT,
+        marginTop: HEIGHT / 5,
         paddingHorizontal: 50
     },
     error: {
