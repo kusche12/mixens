@@ -85,7 +85,6 @@ class UserScreen extends React.Component {
                 console.log("The read failed: " + err.code);
             });
         } 
-
         return (
             <SafeAreaView>
             <View style={styles.container}>
@@ -99,6 +98,7 @@ class UserScreen extends React.Component {
                     signup={this.state.signup} 
                     formHandler={() => this.setState({ signup: !this.state.signup })} 
                     handleSignup={this.handleSignup} handleSignin={this.handleSignin}
+                    navigation={this.props.navigation}
                 /> 
                 }
                 <Text style={styles.error}>{this.state.errorMessage}</Text>
@@ -110,7 +110,7 @@ class UserScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: HEIGHT / 5,
+        marginTop: HEIGHT /6,
         paddingHorizontal: 50
     },
     error: {

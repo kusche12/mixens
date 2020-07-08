@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, Button, ScrollView, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import DrinkListView from '../components/DrinkListView';
-import AsyncStorage from '@react-native-community/async-storage'; // DEV ONLY
+//import AsyncStorage from '@react-native-community/async-storage'; // DEV ONLY
 
 class ListScreen extends React.Component {
     static navigationOptions = () => {
@@ -16,7 +16,7 @@ class ListScreen extends React.Component {
             headerTintColor: '#FCFEFF'
         }
     }
-    
+    /*
     // DEVELOPMENT ONLY
     showStorage = () => {
         console.log('Current ASYNCSTORAGE: ');
@@ -32,7 +32,7 @@ class ListScreen extends React.Component {
     // DEVELOPMENT ONLY
     showState = () => {
         console.log(this.props.drinks)
-    }
+    }*/
     render() {
         return (
             <ScrollView>
