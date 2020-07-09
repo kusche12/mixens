@@ -43,6 +43,7 @@ class CreateScreen extends React.Component {
 
     // Drink is an edit
     componentDidMount() {
+        console.log('MOUNTED')
         const drink = this.props.navigation.getParam('drink');
         if (drink) {
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
@@ -53,6 +54,7 @@ class CreateScreen extends React.Component {
     }
     // Drink is a creation
     focusHandler = () => {
+        console.log('FOCUSED')
         if (!this.state.id) {
             let newId = 0;
             if (this.props.drinks.length > 0) {
@@ -189,13 +191,17 @@ class CreateScreen extends React.Component {
         }
     };
 
+    updateImage = (image) => {
+        this.setState({ img: image });
+    }
+
     render() {
         return (
             <KeyboardAwareScrollView style={{ flex: 1 }}>
                 { this.state.created == '' 
                 ? <NavigationEvents onDidFocus={this.focusHandler} /> : null }
                 <View style={styles.container}>
-                    <EditImage img={this.state.img} updateImage={image => this.setState({ img: image })} />
+                    <EditImage img={this.state.img} updateImage={this.updateImage} navigation={this.props.navigation}/>
                     <View style={{ marginBottom: 20}} />
                     <EditDrinkName title={this.state.title} handleTextInput={this.handleTextInput} />
                     <View style={{ marginBottom: 40}} />
