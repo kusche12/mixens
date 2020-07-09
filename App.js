@@ -132,6 +132,7 @@ export default function App() {
     }
   });
 
+
   return (
     <Provider store={store}>
       <PersistGate loading={<Loading />} persistor={persistor}>
@@ -146,9 +147,12 @@ export default function App() {
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
+// Change database rules
 
 // BUGS:
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
-// Add a handful of pictures within assets that the user can use to choose a fill-in for one of their pictures
+
+// Format the Image Browser to your specifications
+// https://github.com/halilb/react-native-photo-browser
