@@ -9,12 +9,14 @@ const AuthForm = ({ signup, formHandler, handleSignup, handleSignin, navigation 
     const renderText = (main, link, button) => {
         return (
             <>
+                {/* Either the Sign up or sign in buttons */}
                 <TouchableOpacity onPress={() => 
                 { signup ? handleSignup(email, password, name) : handleSignin(email, password)} }>
                     <View style={styles.button}>
                         <Text style={styles.textButton}>{button}</Text>
                     </View>
                 </TouchableOpacity>
+                {/* Switch between sign up and log in */}
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>{main}</Text>
                     <TouchableOpacity onPress={formHandler}>

@@ -1,11 +1,11 @@
 import React from 'react'
-import { FlatList, Button, ScrollView, StatusBar } from 'react-native';
+import { FlatList, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import DrinkListView from '../components/DrinkListView';
-//import AsyncStorage from '@react-native-community/async-storage'; // DEV ONLY
+import { Feather } from '@expo/vector-icons'; 
 
 class ListScreen extends React.Component {
-    static navigationOptions = () => {
+    static navigationOptions = ({ navigation }) => {
         return {
             title: 'My Mixes',
             headerMode: 'screen',
@@ -13,34 +13,17 @@ class ListScreen extends React.Component {
             headerStyle: {
               backgroundColor: '#64CAF6'
             },
-            headerTintColor: '#FCFEFF'
+            headerTintColor: '#FCFEFF',
+            headerRight: () => <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+            <Feather name="plus" size={28} color="#FCFEFF" style={{ marginRight: 10 }} />
+            </TouchableOpacity>,
         }
     }
-    /*
-    // DEVELOPMENT ONLY
-    showStorage = () => {
-        console.log('Current ASYNCSTORAGE: ');
-        AsyncStorage.getAllKeys((err, keys) => {
-            AsyncStorage.multiGet(keys, (error, stores) => {
-              stores.map((result, i, store) => {
-                console.log({ [store[i][0]]: store[i][1] });
-                return true;
-              });
-            });
-          });
-    }
-    // DEVELOPMENT ONLY
-    showState = () => {
-        console.log(this.props.drinks)
-    }*/
+
     render() {
         return (
             <ScrollView>
             <StatusBar barStyle="light-content" backgroundColor="WHITE" />
-                {/* DEVELOPMENT ONLY 
-                
-                <Button title="CURRENT ASYNCSTORAGE" onPress={this.showStorage} />
-                <Button title="CURRENT REDUX STATE" onPress={this.showState} />  */}
                 <FlatList
                     data={this.props.drinks}
                     keyExtractor={drink => drink.id}

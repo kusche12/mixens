@@ -1,6 +1,7 @@
 const initialState = {
     loggedIn: false,
-    user: null
+    user: null,
+    name: null
 };
   
 // Reducers (Modifies The State And Returns A New State)
@@ -9,7 +10,10 @@ const authReducer = (state = initialState, action) => {
       case 'LOGIN':
         return {...state, loggedIn: true, user: action.payload };
       case 'LOGOUT': 
-        return {...state, loggedIn: false, user: null }
+        return {...state, loggedIn: false, user: null };
+      case 'SAVENAME':
+        console.log('save name reducer')
+        return {...state, name: action.payload};
       default:
         return state;
     }
