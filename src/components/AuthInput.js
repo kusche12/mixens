@@ -16,6 +16,7 @@ const AuthInput = ({ email, password, handleText}) => {
                 value={password}
                 onChangeText={text => handleText('password', text)}
                 style={styles.input}
+                secureTextEntry={true}
             />
         </View>
     );
@@ -24,7 +25,8 @@ const AuthInput = ({ email, password, handleText}) => {
 const styles = StyleSheet.create({
     text: {
         color: '#666666',
-        fontSize: 16
+        fontSize: 16,
+        marginTop: 40
     },  
     input: {
         color: '#C4C4C4',
