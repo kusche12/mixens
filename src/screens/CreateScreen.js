@@ -82,7 +82,6 @@ class CreateScreen extends React.Component {
     };
     cancelHandler = () => {
         if (this.state.created == '') {
-            console.log('cancel a drink creation')
             this.setState({
                 id: null,
                 title: '',
@@ -134,7 +133,7 @@ class CreateScreen extends React.Component {
             stateWithDate.created = newDate
             await this.props.createMix(stateWithDate);
             if (this.props.user.loggedIn) {
-                await updateMixFB(this.state, this.props.user.user.uid);
+                await updateMixFB(stateWithDate, this.props.user.user.uid);
             }
             await this.setState({
                 id: null,

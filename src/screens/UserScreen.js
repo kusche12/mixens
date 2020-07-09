@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { SafeAreaView, Dimensions, StyleSheet, Text, View } from 'react-native';
 import AuthForm from '../components/AuthForm';
 import SignoutForm from '../components/SignoutForm';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -30,14 +31,17 @@ class UserScreen extends React.Component {
 
     handleSignup = (email, password, name) => {
         this.setState({ errorMessage: null });
-        // Create user
+        if (name === '') {
+            this.setState({ errorMessage: 'You must include a name for your account' });
+        } else {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((user) => {
                 // Save user's name and email
                 firebase.database().ref('/users/' + user.user.uid + '/username').set({
                     name: name,
                     email: email
-                }); 
+                });
+                this.props.saveName(name);
                 // Save user's drinks
                 let mixes = this.props.mixes
                 firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes); 
@@ -46,6 +50,7 @@ class UserScreen extends React.Component {
                 let errorMessage = error.message;
                 this.setState({ errorMessage });
         });
+        }
     }
 
     handleSignin = (email, password) => {
@@ -62,20 +67,9 @@ class UserScreen extends React.Component {
     
     render() {
         let user = this.props.user;
-        let name = '';     
-        console.log(this.props.user.loggedIn);
-        if (this.props.user.loggedIn) {
-            let rootRef = firebase.database().ref('/users/' + this.props.user.user.uid + '/username');
-            rootRef.on("value", (snapshot) => {
-                let data = snapshot.val();
-                if (data.name) {
-                    name = data.name;
-                } else {
-                    name = data.email
-                }
-            }, err => {
-                console.log("The read failed: " + err.code);
-            });
+        let name = '';
+        if (user.loggedIn) {
+            name = user.name;
         } 
         return (
             <SafeAreaView>
@@ -118,4 +112,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(UserScreen);
+export default connect(mapStateToProps, actions)(UserScreen);
