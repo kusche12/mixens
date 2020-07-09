@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
-import DefaultPhotoBrowser from './DefaultPhotoBrowser';
 
-const EditImage = ({ img, updateImage }) => {
-    const [renderPhotos, setRenderPhotos] = useState(false);
+const EditImage = ({ img, updateImage, navigation }) => {
     const takeImage = async () => {
         if (Constants.platform.ios) {
             const rollPermission = await ImagePicker.requestCameraPermissionsAsync();
@@ -42,11 +40,6 @@ const EditImage = ({ img, updateImage }) => {
         }
     };
 
-    const chooseDefault = async (image) => {
-
-        updateImage(image);
-    };
-    
     const sendAlert = () => {
         Alert.alert(
             "Upload Image",
@@ -61,8 +54,8 @@ const EditImage = ({ img, updateImage }) => {
                     onPress: () => chooseImage()
                 },
                 {
-                    text: "Choose from our Library",
-                    onPress: () => setRenderPhotos(true)
+                    text: "Choose from our Gallery",
+                    onPress: () => navigation.navigate('Image', { updateImage })
                 },
                 {
                     text: "Cancel",
@@ -79,7 +72,6 @@ const EditImage = ({ img, updateImage }) => {
             : <Image source={require('./cocktail.png')} style={styles.image} />
             }
             <TouchableOpacity onPress={sendAlert}><Text style={styles.text}>Change Image</Text></TouchableOpacity>
-            { renderPhotos ? <DefaultPhotoBrowser /> : null }
         </View>
     );
 };
@@ -94,7 +86,7 @@ const styles = StyleSheet.create({
         color: '#666666',
         fontWeight: '600',
         fontSize: 14
-    }
+    },
 });
 
 export default EditImage;

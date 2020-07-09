@@ -18,6 +18,7 @@ import SearchScreen from './src/screens/SearchScreen';
 import UserScreen from './src/screens/UserScreen';
 import ForgotScreen from './src/screens/ForgotScreen';
 import DeleteAccountScreen from './src/screens/DeleteAccountScreen';
+import ImageScreen from './src/screens/ImageScreen';
 import Loading from './src/components/Loading';
 
 // TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
@@ -29,7 +30,8 @@ YellowBox.ignoreWarnings([
 const detailFlow = createStackNavigator({
   List: ListScreen,
   Detail: DetailScreen,
-  Create: CreateScreen
+  Create: CreateScreen,
+  Image: ImageScreen
 });
 detailFlow.navigationOptions = () => {
   return {
@@ -46,7 +48,7 @@ detailFlow.navigationOptions = () => {
       inactiveTintColor: 'gray'
     },
   }
-}
+};
 
 // Move between search and singular drink
 const searchFlow = createStackNavigator({
@@ -68,10 +70,11 @@ searchFlow.navigationOptions = () => {
       inactiveTintColor: 'gray'
     }
   }
-}
+};
 
 const createFlow = createStackNavigator({
   Create: CreateScreen,
+  Image: ImageScreen
 });
 createFlow.navigationOptions = () => {
   return {
@@ -87,7 +90,7 @@ createFlow.navigationOptions = () => {
       activeTintColor: '#64CAF6',
       inactiveTintColor: 'gray'
   }}
-}
+};
 
 const userFlow = createStackNavigator({
   User: UserScreen,
@@ -109,7 +112,7 @@ userFlow.navigationOptions = () => {
       inactiveTintColor: 'gray'
     }
   }
-}
+};
 
 const Navigator = createBottomTabNavigator({
   detailFlow,
@@ -147,12 +150,9 @@ export default function App() {
 
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
-// Change database rules
+// Change database rules for reading/writing drinks. Maximum sexurity.
 
 // BUGS:
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
-
-// Format the Image Browser to your specifications
-// https://github.com/halilb/react-native-photo-browser
