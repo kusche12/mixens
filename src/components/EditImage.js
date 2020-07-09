@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, Alert } from 'react-na
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 
-const EditImage = ({ img, updateImage }) => {
+const EditImage = ({ img, updateImage, navigation }) => {
     const takeImage = async () => {
         if (Constants.platform.ios) {
             const rollPermission = await ImagePicker.requestCameraPermissionsAsync();
@@ -39,7 +39,7 @@ const EditImage = ({ img, updateImage }) => {
             }
         }
     };
-    
+
     const sendAlert = () => {
         Alert.alert(
             "Upload Image",
@@ -54,6 +54,10 @@ const EditImage = ({ img, updateImage }) => {
                     onPress: () => chooseImage()
                 },
                 {
+                    text: "Choose from our Gallery",
+                    onPress: () => navigation.navigate('Image', { updateImage })
+                },
+                {
                     text: "Cancel",
                     onPress: () => console.log("Cancel Pressed"),
                 },
@@ -63,7 +67,6 @@ const EditImage = ({ img, updateImage }) => {
 
     return (
         <View style={{ alignItems: 'center' }}>
-
             { img 
             ? <Image source={{ uri: img }} style={styles.image} />
             : <Image source={require('./cocktail.png')} style={styles.image} />
@@ -78,13 +81,12 @@ const styles = StyleSheet.create({
         height: 125,
         width: 125,
         borderRadius: 10,
-
     },
     text: {
         color: '#666666',
         fontWeight: '600',
         fontSize: 14
-    }
+    },
 });
 
 export default EditImage;
