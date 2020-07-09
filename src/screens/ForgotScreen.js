@@ -65,13 +65,13 @@ class ForgotScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: HEIGHT / 6,
+        marginTop: HEIGHT / 4,
         paddingHorizontal: 50
     },
     title: {
         fontSize: 20,
         fontWeight: '500',
-        marginBottom: 20,
+        marginBottom: 10,
         color: '#666666'
     },
     input: {
