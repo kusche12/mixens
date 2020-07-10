@@ -5,7 +5,6 @@ const getOrderedTags = () => {
     let data = new Map();
 
     allDrinks.forEach(drink => {
-        console.log(drink.title);
         if (drink.favorited) {
             if (data.has('Favorites')) {
                 data.set('Favorites', data.get('Favorites') + 1);

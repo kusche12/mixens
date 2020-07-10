@@ -152,12 +152,8 @@ export default function App() {
 // Install the Expo Simulator to test the app out in all displays of iPhone. Style until pixel perfect.
 
 // TODO DEV:
-// Navigate from Tag in DetailScreen to specific query of all drinks with that tag (ListScreen with Tag passed as param)
 // Change database rules for reading/writing drinks. Maximum sexurity.
 
-// SEARCH UX
-// Current Bugs: 
-//    1. Navigation is confusing. Choose what is better CreateScreen or createFlow
 
 // -> https://www.npmjs.com/package/react-native-search-filter
 // 2. User can use the search bar to find the name of a drink

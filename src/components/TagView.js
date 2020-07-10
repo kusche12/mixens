@@ -2,10 +2,10 @@ import React from 'react';
 import { TouchableOpacity, Text, View, FlatList, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const TagView = ({ tags, favorited }) => {
+const TagView = ({ tags, favorited, navigation }) => {
     const renderStar = () => {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Search', { tag: ['Favorites'] })}>
                 <View style={styles.tag}>
                 <FontAwesome name="star" size={16} color="#FFFFFF" style={styles.star} />
                 </View>
@@ -15,7 +15,7 @@ const TagView = ({ tags, favorited }) => {
 
     const renderTag = ({ item }) => {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Search', { tag: [item.title] })}>
                 <View style={styles.tag}>
                     <Text style={{ color: 'white' }}>{item.title}</Text>
                 </View>
