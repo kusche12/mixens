@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { ScrollView, Text, StyleSheet } from 'react-native';
 import EditAddItem from './EditAddItem';
 import EditSingleIngredient from './EditSingleIngredient';
 import EditSingleTag from './EditSingleTag';
@@ -7,29 +7,28 @@ import EditSingleTag from './EditSingleTag';
 const EditList = ({ type, list, updateList, addItem }) => {
     const renderItem = (item, index) => {
         if (type === 'INGREDIENT') {
-            return <EditSingleIngredient item={item} index={index} updateIngredient={updateList} />
+            return <EditSingleIngredient item={item} index={index} key={index} updateIngredient={updateList} />
         } else {
-            return <EditSingleTag item={item} index={index} updateTag={updateList} />
+            return <EditSingleTag item={item} index={index} key={index} updateTag={updateList} />
         }
     }
     return (   
-        <View>
+        <>
             <Text style={styles.title}>{type}S</Text>
-            <FlatList
-                style={{ flexGrow: 0 }}
-                data={list}
-                keyExtractor={ item => item.id}
-                renderItem={({item, index}) => renderItem(item, index)}
-                scrollEnabled={false}
-            />
+            <ScrollView>
+                {list.map((item, index) => { 
+                    return renderItem(item, index);
+                })}
+            </ScrollView>
             <EditAddItem item={type} addItem={addItem} />
-        </View>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
     title: {
-        paddingLeft: 20,
+        alignSelf: 'flex-start',
+        marginLeft: 38,
         fontSize: 14,
         color: '#666666',
         fontWeight: "600"

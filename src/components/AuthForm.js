@@ -63,8 +63,8 @@ const AuthForm = ({ signup, formHandler, handleSignup, handleSignin, navigation 
                 onChangeText={text => setPassword(text)}
             />
             {signup
-            ? renderText('Already have an account?', 'Log in!', 'Create an Account')
-            : renderText('Don\'t have an account?', 'Sign up!', 'Log in')
+            ? renderText('Already have an account?', 'Log in', 'Create an Account')
+            : renderText('Don\'t have an account?', 'Sign up', 'Log in')
             }
         </SafeAreaView>
     );

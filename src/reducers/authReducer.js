@@ -12,7 +12,6 @@ const authReducer = (state = initialState, action) => {
       case 'LOGOUT': 
         return {...state, loggedIn: false, user: null };
       case 'SAVENAME':
-        console.log('save name reducer')
         return {...state, name: action.payload};
       default:
         return state;
