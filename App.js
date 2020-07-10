@@ -21,11 +21,6 @@ import DeleteAccountScreen from './src/screens/DeleteAccountScreen';
 import ImageScreen from './src/screens/ImageScreen';
 import Loading from './src/components/Loading';
 
-// TODO: Find the appropriate fix for displaying the Ingredients list component in CreateScreen
-YellowBox.ignoreWarnings([
-  'VirtualizedLists should never be nested'
-])
-
 // Move between list and singular drink
 const detailFlow = createStackNavigator({
   List: ListScreen,
@@ -154,10 +149,9 @@ export default function App() {
 // TODO DEV:
 // Change database rules for reading/writing drinks. Maximum sexurity.
 
+// Change all of the FlatList components to make them similar to my ScrollView component in SearchScreen, 
+// I think this might fix the 'VirtualizedLists should never be nested...' error
 
-// -> https://www.npmjs.com/package/react-native-search-filter
-// 2. User can use the search bar to find the name of a drink
-// 2.2 This will remove all tag options and replace them with drink names
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
