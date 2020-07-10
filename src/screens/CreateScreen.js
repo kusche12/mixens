@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView, Button, Alert } from 'react-native';
+import { View, StyleSheet, Button, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import * as actions from '../actions';
 import { updateMixFB } from '../api/FirebaseActions';
-import {NavigationEvents} from 'react-navigation';
+import { NavigationEvents } from 'react-navigation';
 import dateFormat from 'dateformat';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
