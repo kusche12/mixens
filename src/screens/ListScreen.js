@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
+import { ScrollView, StatusBar, TouchableOpacity, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import DrinkListView from '../components/DrinkListView';
 import { Feather } from '@expo/vector-icons'; 
@@ -28,15 +28,16 @@ class ListScreen extends React.Component {
             data = getTaggedMixes(tag[0]);
         }
         return (
-            <ScrollView>
+            <>
             <StatusBar barStyle="light-content" backgroundColor="WHITE" />
-                <FlatList
-                    data={data}
-                    keyExtractor={drink => drink.id}
-                    renderItem={drink => <DrinkListView drink={drink} navigation={this.props.navigation}/>}
-                    scrollEnabled={false}
-                />
+            <ScrollView style={{ height: Dimensions.get('window').height }}>
+                {data.map(mix => {
+                    return (
+                        <DrinkListView drink={mix} navigation={this.props.navigation} key={mix.id} />
+                    );
+                })}
             </ScrollView>
+            </>
         );
     }
 }

@@ -3,28 +3,29 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 const DrinkListView = ({ drink, navigation }) => {
-    drink = drink.item;
 
     // Format tags
     let tags = "";
     let index = 0;
-    if (drink.tags.length == 1) {
-        tags += drink.tags[index].title;
-    } else if (drink.tags.length > 1) {
-        while (index < drink.tags.length - 1) {
-            tags += drink.tags[index].title + ", ";
-            index++;
+    if (drink.tags) {
+        if (drink.tags.length == 1) {
+            tags += drink.tags[index].title;
+        } else if (drink.tags.length > 1) {
+            while (index < drink.tags.length - 1) {
+                tags += drink.tags[index].title + ", ";
+                index++;
+            }
+            tags += drink.tags[index].title;
         }
-        tags += drink.tags[index].title;
-    }
+    }      
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate('Detail', { drink })}>
             <View style={styles.container}>
-            { drink.img 
-            ? <Image source={{ uri: drink.img }} style={styles.image} />
-            : <Image source={require('./cocktail.png')} style={styles.image} />
-            }
+                { drink.img 
+                ? <Image source={{ uri: drink.img }} style={styles.image} />
+                : <Image source={require('./cocktail.png')} style={styles.image} />
+                }
                 <View style={styles.text_container}>
                     <Text style={styles.title}>{drink.title}</Text>
                     <Text style={styles.desc}>{tags}</Text>
