@@ -248,7 +248,7 @@ const initialStateDEVBUILD = [
     }
 ];
 
-const drinkReducer = (state = initialStateDEVBUILD, action) => {
+const drinkReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'UPDATE_MIX':
             let updateState = [...state];
