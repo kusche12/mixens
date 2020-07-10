@@ -52,8 +52,7 @@ detailFlow.navigationOptions = () => {
 
 // Move between search and singular drink
 const searchFlow = createStackNavigator({
-  Search: SearchScreen,
-  Detail: DetailScreen
+  Search: SearchScreen
 });
 searchFlow.navigationOptions = () => {
   return {
@@ -151,6 +150,18 @@ export default function App() {
 // TODO DEV:
 // Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // Change database rules for reading/writing drinks. Maximum sexurity.
+
+// SEARCH UX
+// 1. User can see a flatlist of each tag option and it's current amount of drinks
+// 1.2 User can click a tag option and be sent to a flastlist screen of all the drinks with that given tag
+//     Reuse the ListScreen here! Instead of rendering this.props.drinks, render the drinks with the given tag
+// 1.3 User can click on a drink and be sent to detailFlow -> DetailScreen of that drink
+
+// -> https://www.npmjs.com/package/react-native-search-filter
+// 2. User can use the search bar to find the name of a drink
+// 2.2 This will remove all tag options and replace them with drink names
+
+// THINGS TO MAKE: SearchScreen, SearchListView, TextInput (Search bar)
 
 // BUGS:
 

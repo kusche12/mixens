@@ -1,5 +1,8 @@
 import React from 'react'
-import { View, Text } from 'react-native';
+import { FlatList, SafeAreaView, Text, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import orderedTags from '../api/orderedTags';
+import TagListView from '../components/TagListView';
 
 class SearchScreen extends React.Component {
     static navigationOptions = () => {
@@ -16,14 +19,24 @@ class SearchScreen extends React.Component {
 
     render() {
         return (
-            <View>
-                <Text>SearchScreen</Text>
-                <Text>SearchScreen</Text>
-                <Text>SearchScreen</Text>
-                <Text>SearchScreen</Text>
-            </View>
+            <SafeAreaView>
+                <ScrollView>
+                    <FlatList 
+                        data={orderedTags}
+                        keyExtractor={(tag, index) => index}
+                        renderItem={({item}) => <TagListView tag={item} />}
+                        scrollEnabled={false}
+                    />
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
 
-export default SearchScreen;
+const mapStateToProps = (state) => {
+    return {
+      drinks: state.drinkReducer,
+    };
+};
+
+export default connect(mapStateToProps)(SearchScreen);
