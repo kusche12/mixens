@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, FlatList, StyleSheet, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { SafeAreaView, FlatList, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import firebase from 'firebase';
 
 const WIDTH = Dimensions.get('window').width;
@@ -24,7 +24,6 @@ class ImageScreen extends React.Component {
     };
 
     async componentDidMount() {
-        // Map over the images in firebase storage
         const images = firebase.storage().ref().child('default');
         let mediaList = [];
         await images.listAll()
@@ -56,16 +55,13 @@ class ImageScreen extends React.Component {
     render() {
         return (
             <SafeAreaView>
-            <ScrollView>
                 <FlatList 
                     data={this.state.images}
                     keyExtractor={item => item.id }
                     renderItem={({item}) => this.renderImage(item)}
-                    scrollEnabled={false}
                     numColumns={3}
                     style={styles.list}
                 /> 
-            </ScrollView>
             </SafeAreaView>
         );
     };
