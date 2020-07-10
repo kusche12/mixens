@@ -6,7 +6,6 @@ import { store, persistor } from './src/store/store';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { YellowBox } from 'react-native'
 import { MaterialCommunityIcons, Ionicons, FontAwesome5 } from '@expo/vector-icons'; 
 import FirebaseSetup from './src/api/FirebaseSetup';
 import * as firebase from 'firebase';
@@ -148,10 +147,6 @@ export default function App() {
 
 // TODO DEV:
 // Change database rules for reading/writing drinks. Maximum sexurity.
-
-// Change all of the FlatList components to make them similar to my ScrollView component in SearchScreen, 
-// I think this might fix the 'VirtualizedLists should never be nested...' error
-
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress
