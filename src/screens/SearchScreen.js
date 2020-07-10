@@ -18,6 +18,11 @@ class SearchScreen extends React.Component {
     }
 
     render() {
+        // If arrived from a "tag," automatically render that specific list
+        if (this.props.navigation.getParam('tag')) {
+            let tag = this.props.navigation.getParam('tag');
+            this.props.navigation.navigate('List', { tag });
+        }
         let data = getOrderedTags();
         return (
             <ScrollView>
