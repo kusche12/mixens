@@ -50,27 +50,6 @@ detailFlow.navigationOptions = () => {
   }
 };
 
-// Move between search and singular drink
-const searchFlow = createStackNavigator({
-  Search: SearchScreen
-});
-searchFlow.navigationOptions = () => {
-  return {
-    title: 'Search',
-    tabBarIcon: ({ focused }) => {
-      let iconColor = 'gray';
-      if (focused) {
-          iconColor = '#64CAF6';
-      }
-      return <Ionicons name="md-search" size={40} color={iconColor} style={{ bottom: 2 }}/>;
-    },
-    tabBarOptions: {
-      activeTintColor: '#64CAF6',
-      inactiveTintColor: 'gray'
-    }
-  }
-};
-
 const createFlow = createStackNavigator({
   Create: CreateScreen,
   Image: ImageScreen
@@ -89,6 +68,30 @@ createFlow.navigationOptions = () => {
       activeTintColor: '#64CAF6',
       inactiveTintColor: 'gray'
   }}
+};
+
+// Move between search and singular drink
+const searchFlow = createStackNavigator({
+  Search: SearchScreen,
+  List: ListScreen,
+  Detail: DetailScreen,
+  Create: CreateScreen
+});
+searchFlow.navigationOptions = () => {
+  return {
+    title: 'Search',
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <Ionicons name="md-search" size={40} color={iconColor} style={{ bottom: 2 }}/>;
+    },
+    tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+    }
+  }
 };
 
 const userFlow = createStackNavigator({
@@ -146,24 +149,19 @@ export default function App() {
 
 
 // TODO STYLING:
+// Install the Expo Simulator to test the app out in all displays of iPhone. Style until pixel perfect.
 
 // TODO DEV:
-// Navigate from Tag in DetailScreen to specific query of all drinks with that tag
+// Navigate from Tag in DetailScreen to specific query of all drinks with that tag (ListScreen with Tag passed as param)
 // Change database rules for reading/writing drinks. Maximum sexurity.
 
 // SEARCH UX
-// 1. User can see a flatlist of each tag option and it's current amount of drinks
-// 1.2 User can click a tag option and be sent to a flastlist screen of all the drinks with that given tag
-//     Reuse the ListScreen here! Instead of rendering this.props.drinks, render the drinks with the given tag
-// 1.3 User can click on a drink and be sent to detailFlow -> DetailScreen of that drink
+// Current Bugs: 
+//    1. Navigation is confusing. Choose what is better CreateScreen or createFlow
 
 // -> https://www.npmjs.com/package/react-native-search-filter
 // 2. User can use the search bar to find the name of a drink
 // 2.2 This will remove all tag options and replace them with drink names
-
-// THINGS TO MAKE: SearchScreen, SearchListView, TextInput (Search bar)
-
-// BUGS:
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress

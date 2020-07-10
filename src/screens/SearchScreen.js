@@ -1,8 +1,8 @@
 import React from 'react'
-import { FlatList, SafeAreaView, Text, ScrollView } from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import orderedTags from '../api/orderedTags';
 import TagListView from '../components/TagListView';
+import getOrderedTags from '../api/orderedTags';
 
 class SearchScreen extends React.Component {
     static navigationOptions = () => {
@@ -18,17 +18,16 @@ class SearchScreen extends React.Component {
     }
 
     render() {
+        let data = getOrderedTags();
         return (
-            <SafeAreaView>
-                <ScrollView>
-                    <FlatList 
-                        data={orderedTags}
-                        keyExtractor={(tag, index) => index}
-                        renderItem={({item}) => <TagListView tag={item} />}
-                        scrollEnabled={false}
-                    />
-                </ScrollView>
-            </SafeAreaView>
+            <ScrollView>
+                <FlatList 
+                    data={data}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({item, index}) => <TagListView tag={item} index={index} navigation={this.props.navigation} />}
+                    scrollEnabled={false}
+                />
+            </ScrollView>
         );
     }
 }
