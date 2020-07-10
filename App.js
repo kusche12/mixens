@@ -31,7 +31,6 @@ export default function App() {
 
 // TODO DEV:
 // Change database rules for reading/writing drinks. Maximum sexurity.
-
 // Fix the glitchy transitions between stack screens
-
+// Write a detailed Readme.MD
 // Make the UX of drink creation a bit more smooth. Make it something you enjoy doing, not a chore. Be proud of it.
