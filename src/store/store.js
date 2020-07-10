@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
+import { createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 
 import rootReducer from '../reducers/index';
@@ -18,12 +17,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 // Redux: Store
-const store = createStore(
-  persistedReducer/*,
-  applyMiddleware(
-    createLogger(),
-  ),*/
-);
+const store = createStore(persistedReducer);
 
 // Middleware: Redux Persist Persister
 let persistor = persistStore(store); // IMPORTANT: .purge() is temporary. It dumps local storage every refresh, used for development only
