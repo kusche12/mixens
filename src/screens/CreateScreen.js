@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView, Button, Alert } from 'react-native';
+import { View, StyleSheet, Button, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import * as actions from '../actions';
 import { updateMixFB } from '../api/FirebaseActions';
-import {NavigationEvents} from 'react-navigation';
+import { NavigationEvents } from 'react-navigation';
 import dateFormat from 'dateformat';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -43,7 +43,6 @@ class CreateScreen extends React.Component {
 
     // Drink is an edit
     componentDidMount() {
-        console.log('MOUNTED')
         const drink = this.props.navigation.getParam('drink');
         if (drink) {
             this.setState({ id: drink.id, title: drink.title, instructions: drink.instructions, 
@@ -54,7 +53,6 @@ class CreateScreen extends React.Component {
     }
     // Drink is a creation
     focusHandler = () => {
-        console.log('FOCUSED')
         if (!this.state.id) {
             let newId = 0;
             if (this.props.drinks.length > 0) {

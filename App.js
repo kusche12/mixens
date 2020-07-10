@@ -50,28 +50,6 @@ detailFlow.navigationOptions = () => {
   }
 };
 
-// Move between search and singular drink
-const searchFlow = createStackNavigator({
-  Search: SearchScreen,
-  Detail: DetailScreen
-});
-searchFlow.navigationOptions = () => {
-  return {
-    title: 'Search',
-    tabBarIcon: ({ focused }) => {
-      let iconColor = 'gray';
-      if (focused) {
-          iconColor = '#64CAF6';
-      }
-      return <Ionicons name="md-search" size={40} color={iconColor} style={{ bottom: 2 }}/>;
-    },
-    tabBarOptions: {
-      activeTintColor: '#64CAF6',
-      inactiveTintColor: 'gray'
-    }
-  }
-};
-
 const createFlow = createStackNavigator({
   Create: CreateScreen,
   Image: ImageScreen
@@ -90,6 +68,30 @@ createFlow.navigationOptions = () => {
       activeTintColor: '#64CAF6',
       inactiveTintColor: 'gray'
   }}
+};
+
+// Move between search and singular drink
+const searchFlow = createStackNavigator({
+  Search: SearchScreen,
+  List: ListScreen,
+  Detail: DetailScreen,
+  Create: CreateScreen
+});
+searchFlow.navigationOptions = () => {
+  return {
+    title: 'Search',
+    tabBarIcon: ({ focused }) => {
+      let iconColor = 'gray';
+      if (focused) {
+          iconColor = '#64CAF6';
+      }
+      return <Ionicons name="md-search" size={40} color={iconColor} style={{ bottom: 2 }}/>;
+    },
+    tabBarOptions: {
+      activeTintColor: '#64CAF6',
+      inactiveTintColor: 'gray'
+    }
+  }
 };
 
 const userFlow = createStackNavigator({
@@ -147,12 +149,15 @@ export default function App() {
 
 
 // TODO STYLING:
+// Install the Expo Simulator to test the app out in all displays of iPhone. Style until pixel perfect.
 
 // TODO DEV:
-// Navigate from Tag in DetailScreen to specific query of all drinks with that tag
 // Change database rules for reading/writing drinks. Maximum sexurity.
 
-// BUGS:
+
+// -> https://www.npmjs.com/package/react-native-search-filter
+// 2. User can use the search bar to find the name of a drink
+// 2.2 This will remove all tag options and replace them with drink names
 
 // STRETCH:
 // Animate the Down Arrow in EditSingleIngredient to rotate to an up arrow onpress

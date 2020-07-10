@@ -44,7 +44,7 @@ class DetailScreen extends React.Component {
                 }
 
                 { drink.tags.length > 1 || drink.favorited
-                ? <TagView tags={drink.tags} favorited={drink.favorited} /> 
+                ? <TagView tags={drink.tags} favorited={drink.favorited} navigation={this.props.navigation} /> 
                 : null
                 }
 
