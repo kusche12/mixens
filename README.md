@@ -1,5 +1,3 @@
-<a href="http://kylekusche.com"><img src="gs://mixens-5028a.appspot.com/LOGO.png" title="Mixens" alt="Mixens"></a>
-
 # Mixens
 
 > A React Native mobile application to create, save, and share your own personal cocktail recipes
