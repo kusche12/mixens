@@ -17,7 +17,7 @@ const EditFavorite = ({ favorited, handleFavorited }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: WIDTH * .9,
+        width: WIDTH,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
