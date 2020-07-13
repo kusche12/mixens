@@ -53,6 +53,7 @@ class CreateScreen extends React.Component {
     }
     // Drink is a creation
     focusHandler = () => {
+        console.log('focus');
         if (!this.state.id) {
             let newId = 0;
             if (this.props.drinks.length > 0) {
@@ -62,6 +63,8 @@ class CreateScreen extends React.Component {
             newId = '' + newId;
             this.setState({ id: newId });
         }
+        console.log(this.state.id);
+
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
     cancel = () => {
@@ -170,11 +173,11 @@ class CreateScreen extends React.Component {
 
     // Add item to either the ingredients list or tags list
     addItem = (list) => {
-        if (list === 'INGREDIENT') {
+        if (list === 'Ingredient') {
             let newId = (this.state.ingredients.length+1).toString();
             let newIngredients = this.state.ingredients.concat({ id: newId, amount: '0', amount2: ' ', unit: ' ', ingredient: '' });
             this.setState({ ingredients: newIngredients });
-        } else if (list === 'TAG') {
+        } else if (list === 'Tag') {
             let newId = (this.state.tags.length+1).toString();
             let newTags = this.state.tags.concat({ id: newId, title: '' });
             this.setState({ tags: newTags });
@@ -207,7 +210,7 @@ class CreateScreen extends React.Component {
                         list={this.state.ingredients} 
                         updateList={this.updateIngredient} 
                         addItem={this.addItem}
-                        type="INGREDIENT"
+                        type="Ingredient"
                     />
                     <View style={{ marginBottom: 40}} />
                     <EditInstructions instructions={this.state.instructions} handleTextInput={this.handleTextInput} />
@@ -216,9 +219,9 @@ class CreateScreen extends React.Component {
                         list={this.state.tags}
                         updateList={this.updateTags}
                         addItem={this.addItem}
-                        type="TAG"
+                        type="Tag"
                     />
-                    <View style={{ marginBottom: 20}} />
+                    <View style={{ marginBottom: 40}} />
                     <EditFavorite 
                         favorited={this.state.favorited} 
                         handleFavorited={() => this.setState({ favorited: !this.state.favorited})}

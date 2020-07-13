@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     input: {
         color: '#C4C4C4',
         fontSize: 16,
+        width: WIDTH * .8
     }
 })
 

@@ -24,13 +24,14 @@ const IngredientsView = ({ ingredients }) => {
     return (
         <View style={styles.container}>
             <FlatList 
+                style={{ left: WINDOW.width * .01 }}
                 data={ingredients}
                 keyExtractor={item => item.ingredient}
                 renderItem={item => renderAmount(item)}
                 scrollEnabled={false}
             /> 
             <FlatList 
-                style={{ position: 'absolute', left: WINDOW.width * .3 }}
+                style={{ position: 'absolute', left: WINDOW.width * .35 }}
                 data={ingredients}
                 keyExtractor={item => item.ingredient}
                 renderItem={item => renderIngredient(item)}
