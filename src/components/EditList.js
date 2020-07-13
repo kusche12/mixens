@@ -6,7 +6,7 @@ import EditSingleTag from './EditSingleTag';
 
 const EditList = ({ type, list, updateList, addItem }) => {
     const renderItem = (item, index) => {
-        if (type === 'INGREDIENT') {
+        if (type === 'Ingredient') {
             return <EditSingleIngredient item={item} index={index} key={index} updateIngredient={updateList} />
         } else {
             return <EditSingleTag item={item} index={index} key={index} updateTag={updateList} />
@@ -14,7 +14,7 @@ const EditList = ({ type, list, updateList, addItem }) => {
     }
     return (   
         <>
-            <Text style={styles.title}>{type}S</Text>
+            <Text style={styles.title}>{type.toUpperCase()}S</Text>
             <ScrollView>
                 {list.map((item, index) => { 
                     return renderItem(item, index);

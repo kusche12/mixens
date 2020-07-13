@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, ScrollView, SafeAreaView, Dimensions } from 'react-native';
+import { ScrollView, SafeAreaView, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import TagListView from '../components/TagListView';
 import getOrderedTags from '../api/orderedTags';

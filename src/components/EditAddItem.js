@@ -10,7 +10,7 @@ const EditAddItem = ({ item, addItem }) => {
             <TouchableOpacity onPress={() => addItem(item)}> 
                 <View style={styles.add}>
                     <AntDesign name="pluscircleo" size={20} color='#C4C4C4' />
-                    <Text style={styles.addText}>ADD {item}</Text>
+                    <Text style={styles.addText}>Add {item}</Text>
                 </View>
             </TouchableOpacity>
         </View>
