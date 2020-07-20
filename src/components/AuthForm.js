@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 
 const AuthForm = ({ signup, formHandler, handleSignup, handleSignin, navigation }) => {
     const [email, setEmail] = useState('');
@@ -13,19 +13,19 @@ const AuthForm = ({ signup, formHandler, handleSignup, handleSignin, navigation 
                 <TouchableOpacity onPress={() => 
                 { signup ? handleSignup(email, password, name) : handleSignin(email, password)} }>
                     <View style={styles.button}>
-                        <Text style={styles.textButton}>{button}</Text>
+                        <Text style={Platform.isPad ? styles.padTextButton : styles.textButton}>{button}</Text>
                     </View>
                 </TouchableOpacity>
                 {/* Switch between sign up and log in */}
                 <View style={styles.textContainer}>
-                    <Text style={styles.text}>{main}</Text>
+                    <Text style={Platform.isPad ? styles.padText : styles.text}>{main}   </Text>
                     <TouchableOpacity onPress={formHandler}>
-                        <Text style={[styles.text, styles.link]}>{link}</Text>
+                        <Text style={Platform.isPad ? [styles.padText, styles.forgot] : [styles.text, styles.forgot]}>{link}</Text>
                     </TouchableOpacity>
                 </View>
                 { !signup 
                 ? <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
-                    <Text style={[styles.text, styles.forgot]}>Forgot password?</Text>
+                    <Text style={Platform.isPad ? [styles.padText, styles.forgot] : [styles.text, styles.forgot]}>Forgot password?</Text>
                 </TouchableOpacity>
                 : null
                 }
@@ -34,20 +34,20 @@ const AuthForm = ({ signup, formHandler, handleSignup, handleSignin, navigation 
         );
     };
 
-
     return (
         <SafeAreaView>
-            <Text style={styles.title}>Save your mixes to the cloud!</Text> 
+            <Text style={Platform.isPad ? styles.padTitle : styles.title}>Save your mixes to the cloud!</Text> 
             <View style={{ height: 50 }} />
             <TextInput 
-                style={styles.input}
+                style={Platform.isPad ? styles.padInput : styles.input}
                 placeholder="Email"
                 value={email}
                 onChangeText={text => setEmail(text)}
+                autoCapitalize="none"
             />
             {signup 
             ? <TextInput 
-                style={styles.input}
+            style={Platform.isPad ? styles.padInput : styles.input}
                 placeholder="First & Last Name"
                 value={name}
                 onChangeText={text => setName(text)}
@@ -56,7 +56,7 @@ const AuthForm = ({ signup, formHandler, handleSignup, handleSignin, navigation 
             : null
             }
             <TextInput 
-                style={styles.input}
+                style={Platform.isPad ? styles.padInput : styles.input}
                 placeholder="Password"
                 secureTextEntry={true}
                 value={password}
@@ -77,11 +77,24 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: '#666666'
     },
+    padTitle: {
+        fontSize: 30,
+        fontWeight: '500',
+        marginBottom: 20,
+        color: '#666666'
+    },
     input: {
         color: '#C4C4C4',
         borderBottomWidth: 1,
         borderBottomColor: '#C4C4C4',
         fontSize: 20,
+        marginVertical: 15
+    },
+    padInput: {
+        color: '#C4C4C4',
+        borderBottomWidth: 1,
+        borderBottomColor: '#C4C4C4',
+        fontSize: 30,
         marginVertical: 15
     },
     button: {
@@ -95,13 +108,23 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '500'
     },
+    padTextButton: {
+        color: 'white',
+        fontSize: 26,
+        fontWeight: '500'
+    },
     textContainer: {
         marginTop: 20,
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'baseline',
     },
     text: {
         fontSize: 16,
+        color: '#666666'
+    },
+    padText: {
+        fontSize: 26,
         color: '#666666'
     },
     link: {
@@ -110,7 +133,6 @@ const styles = StyleSheet.create({
     },
     forgot: {
         color: '#64CAF6',
-        textAlign: 'center',
         marginTop: 10
     }
 });

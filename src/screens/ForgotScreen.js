@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   View,
+  Platform
 } from 'react-native';
 import firebase from 'firebase';
 import 'firebase/auth';
@@ -48,16 +49,16 @@ class ForgotScreen extends React.Component {
     return (
       <SafeAreaView>
         <View style={styles.container}>
-          <Text style={styles.title}>Forgot Password?</Text>
+          <Text style={Platform.isPad ? styles.padTitle : styles.title}>Forgot Password?</Text>
           <TextInput
-            style={styles.input}
+            style={Platform.isPad ? styles.padInput : styles.input}
             placeholder="Enter email"
             value={this.state.email}
             onChangeText={(text) => this.setState({ email: text })}
           />
           <TouchableOpacity onPress={this.passwordReset}>
             <View style={styles.button}>
-              <Text style={styles.textButton}>Reset Password</Text>
+              <Text style={Platform.isPad ? styles.padTextButton : styles.textButton}>Reset Password</Text>
             </View>
           </TouchableOpacity>
           <Text style={styles.error}>{this.state.errorMessage}</Text>
@@ -78,11 +79,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#666666',
   },
+  padTitle: {
+    fontSize: 30,
+    fontWeight: '500',
+    marginBottom: 10,
+    color: '#666666',
+  },
   input: {
     color: '#C4C4C4',
     borderBottomWidth: 1,
     borderBottomColor: '#C4C4C4',
     fontSize: 20,
+    marginVertical: 15,
+  },
+  padInput: {
+    color: '#C4C4C4',
+    borderBottomWidth: 1,
+    borderBottomColor: '#C4C4C4',
+    fontSize: 30,
     marginVertical: 15,
   },
   button: {
@@ -95,6 +109,11 @@ const styles = StyleSheet.create({
   textButton: {
     color: 'white',
     fontSize: 18,
+    fontWeight: '500',
+  },
+  padTextButton: {
+    color: 'white',
+    fontSize: 26,
     fontWeight: '500',
   },
   error: {
