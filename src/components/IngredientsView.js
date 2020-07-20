@@ -1,24 +1,24 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList, useWindowDimensions } from 'react-native';
+import { Text, View, StyleSheet, FlatList, useWindowDimensions, Platform } from 'react-native';
 
 const IngredientsView = ({ ingredients }) => {
     const WINDOW = useWindowDimensions();
 
     const renderAmount = ({ item }) => {
         return (
-            <View key={item.ingredient}>
+            <View style={Platform.isPad ? styles.padContainer : null}key={item.ingredient}>
                 <View style={styles.amount}>
-                    { item.amount !== '0' ? <Text style={styles.font1}>{item.amount}</Text> : null}
-                    { item.amount2 !== '' ? <Text style={styles.font2}>{item.amount2}</Text> : null}
+                    { item.amount !== '0' ? <Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.amount}</Text> : null}
+                    { item.amount2 !== '' ? <Text style={Platform.isPad ? styles.padFont2 : styles.font1}>{item.amount2}</Text> : null}
                     <Text> </Text>
-                    <Text style={styles.font2}>{item.unit}</Text>
+                    <Text style={Platform.isPad ? styles.padFont2 : styles.font1}>{item.unit}</Text>
                 </View>
             </View>
         );
     };
 
     const renderIngredient = ({ item }) => { 
-        return <Text style={styles.font1}>{item.ingredient}</Text> 
+        return <Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.ingredient}</Text> 
     };
     
     return (
@@ -31,7 +31,7 @@ const IngredientsView = ({ ingredients }) => {
                 scrollEnabled={false}
             /> 
             <FlatList 
-                style={{ position: 'absolute', left: WINDOW.width * .35 }}
+                style={Platform.isPad ? { position: 'absolute', left: WINDOW.width * .5}: { position: 'absolute', left: WINDOW.width * .35 }}
                 data={ingredients}
                 keyExtractor={item => item.ingredient}
                 renderItem={item => renderIngredient(item)}
@@ -47,6 +47,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
+    padContainer: {
+        paddingLeft: 250
+    },
     amount: {
         display: 'flex',
         flexDirection: 'row',
@@ -57,9 +60,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontStyle: 'italic'
     },
+    padFont1: {
+        color: '#333333',
+        fontSize: 28,
+        fontStyle: 'italic'
+    },
     font2: {
         color: '#333333',
         fontSize: 12,
+        fontStyle: 'italic'
+    },
+    padFont2: {
+        color: '#333333',
+        fontSize: 22,
         fontStyle: 'italic'
     }
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, Platform } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import IngredientsView from '../components/IngredientsView';
 import TagView from '../components/TagView';
@@ -27,19 +27,19 @@ class DetailScreen extends React.Component {
         const drink = this.props.navigation.getParam('drink');
         return (
             <ScrollView>
-            <View style={styles.container}>
+            <View style={Platform.isPad ? styles.padContainer : styles.container}>
             
                 { drink.img 
-                ? <Image source={{ uri: drink.img }} style={styles.image} />
-                : <Image source={require('./cocktail.png')} style={styles.image} />
+                ? <Image source={{ uri: drink.img }} style={Platform.isPad ? styles.padImage : styles.image} />
+                : <Image source={require('./cocktail.png')} style={Platform.isPad ? styles.padImage : styles.image} />
                 }
 
-                <Text style={styles.title}>{drink.title}</Text>
+                <Text style={Platform.isPad ? styles.padTitle : styles.title}>{drink.title}</Text>
                 <View style={styles.line} />
                 <IngredientsView ingredients={drink.ingredients} style={styles.ingredient} />
 
                 { drink.instructions != ''
-                ? <Text style={{marginTop: 24, marginBottom: 48}}>{drink.instructions}</Text> 
+                ? <Text style={Platform.isPad ? styles.padInstruction : styles.instruction}>{drink.instructions}</Text> 
                 : null
                 }
 
@@ -48,7 +48,7 @@ class DetailScreen extends React.Component {
                 : null
                 }
 
-                <Text style={styles.created}>Created on {drink.created}</Text>
+                <Text style={Platform.isPad ? styles.padCreated : styles.created}>Created on {drink.created}</Text>
             </View>
             </ScrollView>
         )
@@ -64,9 +64,22 @@ const styles = StyleSheet.create({
         paddingRight: 50,
         flex: 1
     },
+    padContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingTop: 100,
+        paddingLeft: 50,
+        paddingRight: 50,
+        flex: 1
+    },
     image: {
         height: 200,
         width: 200,
+        borderRadius: 10
+    },
+    padImage: {
+        height: 250,
+        width: 250,
         borderRadius: 10
     },
     title: {
@@ -76,9 +89,36 @@ const styles = StyleSheet.create({
         marginTop: 12,
         marginBottom: 12
     },
+    padTitle: {
+        color: '#333333',
+        fontSize: 36,
+        fontWeight: '500',
+        marginTop: 12,
+        marginBottom: 12
+    },
+    instruction: {
+        marginTop: 24, 
+        marginBottom: 48,
+        color: '#333333'
+    },
+    padInstruction: {
+        marginTop: 24, 
+        marginBottom: 48,
+        fontSize: 28,
+        color: '#333333',
+        paddingLeft: 250,
+        paddingRight: 150
+    },
     created: {
         color: '#C4C4C4',
         fontSize: 14,
+        fontStyle: 'italic',
+        marginTop: 12,
+        marginBottom: 10
+    },
+    padCreated: {
+        color: '#C4C4C4',
+        fontSize: 24,
         fontStyle: 'italic',
         marginTop: 12,
         marginBottom: 10
