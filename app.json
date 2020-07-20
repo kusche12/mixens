@@ -20,8 +20,8 @@
       "buildNumber": "1.0.2",
       "supportsTablet": false,
       "infoPlist": {
-        "NSCameraUsageDescription": "Allow Mixens to access your camera to upload customizable pictures to your individual drink recipes.",
-        "NSPhotoLibraryUsageDescription": "Allow Mixens to access your photo library to allow for customizable pictures to your individual drink recipes."
+        "NSCameraUsageDescription": "Allow Mixens to access your camera to upload customizable pictures to your individual drink recipes",
+        "NSPhotoLibraryUsageDescription": "Allow Mixens to access your photo library to allow for customizable pictures to your individual drink recipes"
       }
     },
     "android": {
