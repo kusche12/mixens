@@ -53,6 +53,10 @@ class CreateScreen extends React.Component {
     }
     // Drink is a creation
     focusHandler = () => {
+<<<<<<< HEAD
+=======
+        console.log('focus');
+>>>>>>> faf0a0b8b5fa5beb1195361813f5a873350fd996
         if (!this.state.id) {
             let newId = 0;
             if (this.props.drinks.length > 0) {
@@ -62,6 +66,11 @@ class CreateScreen extends React.Component {
             newId = '' + newId;
             this.setState({ id: newId });
         }
+<<<<<<< HEAD
+=======
+        console.log(this.state.id);
+
+>>>>>>> faf0a0b8b5fa5beb1195361813f5a873350fd996
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
     cancel = () => {
@@ -90,6 +99,36 @@ class CreateScreen extends React.Component {
                 img: null,
                 tags: [],
                 favorited: false,
+<<<<<<< HEAD
+            });
+            this.props.navigation.navigate('List');
+        } else {
+            this.props.navigation.goBack();
+        }
+    }
+    submit = () => {
+        if (this.state.title == '') {
+            Alert.alert(
+                "Hang on!",
+                "You must name your Mix before submitting",
+                []
+            );
+        } else {
+            Alert.alert(
+                "Submit my Mix",
+                "Are you sure you are done making edits to your Mix?",
+                [
+                    {
+                        text: "Submit my Mix",
+                        onPress: () => { this.submitHandler() }
+                    },
+                    {
+                        text: "Continue editing",
+                        onPress: () => console.log("Cancel Pressed")
+                    },
+                ]
+            );
+=======
             });
             this.props.navigation.navigate('List');
         } else {
@@ -119,6 +158,40 @@ class CreateScreen extends React.Component {
                 ]
             );
         }
+    };
+    submitHandler = async () => {
+        let newIngredients = deleteEmptyIngredients(this.state.ingredients);
+        this.setState({ ingredients: newIngredients });
+        let newTags = deleteEmptyTags(this.state.tags);
+        this.setState({ tags: newTags });
+        
+        if (this.state.created == '') { // New drink.
+            let now = new Date();
+            let newDate = dateFormat(now, 'mmmm dS, yyyy');
+            let stateWithDate = {...this.state};
+            stateWithDate.created = newDate
+            await this.props.createMix(stateWithDate);
+            if (this.props.user.loggedIn) {
+                await updateMixFB(stateWithDate, this.props.user.user.uid);
+            }
+            await this.setState({
+                id: null,
+                title: '',
+                instructions: '',
+                ingredients: [],
+                img: null,
+                tags: [],
+                favorited: false,
+            });
+        } else {
+            await this.props.updateMix(this.state);
+
+            if (this.props.user.loggedIn) {
+                await updateMixFB(this.state, this.props.user.user.uid);
+            }
+>>>>>>> faf0a0b8b5fa5beb1195361813f5a873350fd996
+        }
+        this.props.navigation.navigate('List');
     };
     submitHandler = async () => {
         let newIngredients = deleteEmptyIngredients(this.state.ingredients);

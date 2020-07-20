@@ -18,7 +18,10 @@
     "expo-constants": "~9.0.0",
     "expo-font": "~8.1.0",
     "expo-image-picker": "~8.1.0",
+<<<<<<< HEAD
     "expo-permissions": "^9.0.1",
+=======
+>>>>>>> faf0a0b8b5fa5beb1195361813f5a873350fd996
     "firebase": "7.9.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",

@@ -60,9 +60,18 @@ class DeleteAccountScreen extends React.Component {
             this.state.password
         );
         await user.reauthenticateWithCredential(credential)
+<<<<<<< HEAD
         .catch(err => {
             this.setState({ errorMessage: err.message });
         });
+=======
+        .then(() => {
+            console.log(credential);
+        }).catch(err => {
+            this.setState({ errorMessage: err.message });
+        });
+
+>>>>>>> faf0a0b8b5fa5beb1195361813f5a873350fd996
         await user.delete()
         .then(() => {
             firebase.database().ref('/users/' + this.props.user.user.uid).remove();
@@ -92,8 +101,13 @@ class DeleteAccountScreen extends React.Component {
 
     handleSignout = () => {
         firebase.auth().signOut()
+<<<<<<< HEAD
         .catch(err => {
             this.setState({ errorMessage: err.message });
+=======
+        .catch(function(error) {
+            console.log(error.message)
+>>>>>>> faf0a0b8b5fa5beb1195361813f5a873350fd996
         });
         this.props.navigation.goBack();
     }
