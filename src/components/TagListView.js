@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 
 const TagListView = ({ tag, index, navigation }) => {
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate('List', { tag })}>
             <View style={ index % 2 == 0 ? [styles.highlight, styles.container] : styles.container}>
-                <Text style={styles.text}>{tag[0]}</Text>
-                <Text style={[styles.text, styles.amount]}>({tag[1]})</Text>
+                <Text style={Platform.isPad ? styles.padText : styles.text}>{tag[0]}</Text>
+                <Text style={Platform.isPad ? [styles.padText, styles.amount] : [styles.text, styles.amount]}>({tag[1]})</Text>
             </View>
         </TouchableOpacity>
     );
@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
+        fontWeight: '400',
+        color: '#333333'
+    },
+    padText: {
+        fontSize: 30,
         fontWeight: '400',
         color: '#333333'
     },

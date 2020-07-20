@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { View, TextInput, StyleSheet, Dimensions, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import SearchInput from 'react-native-search-filter';
 
@@ -10,7 +10,7 @@ const SearchFilter = ({ text, handleInput }) => {
         <View style={styles.container}>
             <Ionicons name="md-search" size={26} color={"#666666"} style={styles.icon} />
             <SearchInput
-                style={styles.inputText}
+                style={Platform.isPad ? styles.padInputText : styles.inputText}
                 inputViewStyles={styles.input}
                 placeholder='Search...'
                 placeholderTextColor="#666666"
@@ -46,7 +46,11 @@ const styles = StyleSheet.create({
     inputText: {
         fontSize: 18,
         color: '#666666'
-    }
+    },
+    padInputText: {
+        fontSize: 26,
+        color: '#666666'
+    },
 });
 
 export default SearchFilter;

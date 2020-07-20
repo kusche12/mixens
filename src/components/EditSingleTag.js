@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Dimensions, Platform } from 'react-native';
 const WIDTH = Dimensions.get('window').width;
 
 const EditSingleTag = ({item, index, updateTag}) => {
@@ -7,7 +7,7 @@ const EditSingleTag = ({item, index, updateTag}) => {
     return (
         <View style={styles.container}>
             <TextInput 
-                style={styles.text} 
+                style={Platform.isPad ? styles.padText : styles.text} 
                 autoCapitalize="words" 
                 value={tag} 
                 onChangeText={text => setTag(text)}
@@ -30,6 +30,13 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingLeft: 20
     },
+    padText: {
+        fontSize: 26,
+        fontStyle: 'italic',
+        color: '#C4C4C4',
+        paddingVertical: 5,
+        paddingLeft: 20
+    }
 });
 
 export default EditSingleTag;
