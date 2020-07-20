@@ -7,7 +7,7 @@ import {
   Alert,
   Dimensions,
   Image,
-  TextInput,
+  Platform,
 } from 'react-native';
 import ProfileButton from '../components/ProfileButton';
 import firebase from 'firebase';
@@ -124,10 +124,10 @@ class DeleteAccountScreen extends React.Component {
     return (
       <SafeAreaView>
         <View style={styles.container}>
-          <Image source={require('./settings.png')} style={styles.image} />
+          <Image source={require('./settings.png')} style={Platform.isPad ? styles.padImage : styles.image} />
 
           {this.props.user.loggedIn && !this.state.renderAuthForm ? (
-            <Text style={styles.text}>{this.props.user.user.email}</Text>
+            <Text style={Platform.isPad ? styles.padText : styles.text}>{this.props.user.user.email}</Text>
           ) : null}
 
           {this.state.renderAuthForm ? (
@@ -171,8 +171,20 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#666666',
   },
+  padText: {
+    marginTop: 5,
+    fontSize: 30,
+    fontWeight: '500',
+    color: '#666666',
+  },
   image: {
     marginTop: 30,
+    width: WIDTH / 3,
+    height: HEIGHT / 5.5,
+    resizeMode: 'contain',
+  },
+  padImage: {
+    marginTop: 100,
     width: WIDTH / 3,
     height: HEIGHT / 5.5,
     resizeMode: 'contain',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { deleteMixFB } from '../api/FirebaseActions';
@@ -33,7 +33,7 @@ const DeleteMix = ({ navigation, deleteMix, mix, user }) => {
 
     return (
         <TouchableOpacity onPress={sendAlert}>
-            <Text style={styles.text}>DELETE MIX</Text>
+            <Text style={Platform.isPad ? styles.padText : styles.text}>DELETE MIX</Text>
         </TouchableOpacity>
     )
 }
@@ -45,6 +45,15 @@ const styles = StyleSheet.create({
         borderColor: '#f07a7a',
         borderRadius: 10,
         borderWidth: 1,
+        paddingVertical: 8,
+        paddingHorizontal: 30
+    },
+    padText: {
+        fontSize: 28,
+        color: "#f07a7a",
+        borderColor: '#f07a7a',
+        borderRadius: 10,
+        borderWidth: 2,
         paddingVertical: 8,
         paddingHorizontal: 30
     }

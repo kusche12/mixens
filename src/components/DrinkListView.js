@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 const DrinkListView = ({ drink, navigation }) => {
@@ -23,14 +23,14 @@ const DrinkListView = ({ drink, navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate('Detail', { drink })}>
             <View style={styles.container}>
                 { drink.img 
-                ? <Image source={{ uri: drink.img }} style={styles.image} />
-                : <Image source={require('./cocktail.png')} style={styles.image} />
+                ? <Image source={{ uri: drink.img }} style={Platform.isPad ? styles.padImage : styles.image} />
+                : <Image source={require('./cocktail.png')} style={Platform.isPad ? styles.padImage : styles.image} />
                 }
                 <View style={styles.text_container}>
-                    <Text style={styles.title}>{drink.title}</Text>
-                    <Text style={styles.desc}>{tags}</Text>
+                    <Text style={Platform.isPad ? styles.padTitle : styles.title}>{drink.title}</Text>
+                    <Text style={Platform.isPad ? styles.padDesc : styles.desc}>{tags}</Text>
                 </View>
-                {drink.favorited ?  <FontAwesome name="star" size={32} color="#FFD700" style={styles.star} /> : null}
+                {drink.favorited ?  <FontAwesome name="star" size={Platform.isPad ? 42 : 32} color="#FFD700" style={styles.star} /> : null}
             </View>
         </TouchableOpacity>
     );
@@ -52,6 +52,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         position: 'relative'
     },
+    padImage: {
+        height: 80,
+        width: 80,
+        borderRadius: 10,
+        position: 'relative'
+    },
     star: {
         position: 'absolute',
         zIndex: 100,
@@ -67,9 +73,19 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#333333'
     },
+    padTitle: {
+        fontSize: 30,
+        fontWeight: '500',
+        color: '#333333'
+    },
     desc: {
         color: '#888888',
         fontStyle: 'italic'
+    },
+    padDesc: {
+        color: '#888888',
+        fontStyle: 'italic',
+        fontSize: 20
     }
 });
 

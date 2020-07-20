@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Dimensions, TouchableWithoutFeedback, Platform } from 'react-native';
 import { Col, Grid } from 'react-native-easy-grid';
 import SegmentedPicker from 'react-native-segmented-picker';
 import PickerOptions from '../api/PickerOptions';
@@ -29,11 +29,11 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
                     <TouchableWithoutFeedback onPress={() => setShowPicker(!showPicker)}>
                         <View style={styles.amount}>
                         { item.amount !== '0' 
-                        ? <><Text style={styles.font1}>{item.amount}</Text><Text style={styles.font2}>{item.amount2}</Text></>
-                        : <Text style={styles.font1}>{item.amount2}</Text>}
-                        <Text style={styles.font2}> </Text>
-                        <Text style={styles.font2}>{item.unit}</Text>
-                        <Ionicons name="ios-arrow-down" size={16} color="#C4C4C4" style={styles.arrow} />
+                        ? <><Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.amount}</Text><Text style={Platform.isPad ? styles.padFont2 : styles.font2}>{item.amount2}</Text></>
+                        : <Text style={Platform.isPad ? styles.padFont2 : styles.font2}>{item.amount2}</Text>}
+                        <Text style={Platform.isPad ? styles.padFont2 : styles.font2}> </Text>
+                        <Text style={Platform.isPad ? styles.padFont2 : styles.font2}>{item.unit}</Text>
+                        <Ionicons name="ios-arrow-down" size={Platform.isPad ? 22 : 16} color="#C4C4C4" style={styles.arrow} />
                         </View>
                     </TouchableWithoutFeedback>
                 </Col>
@@ -42,7 +42,7 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
                 <Col size={5}>
                     <View style={styles.ingredient}>
                     <TextInput 
-                        style={styles.ingredientText} 
+                        style={Platform.isPad ? styles.padIngredientText : styles.ingredientText} 
                         autoCapitalize="words" 
                         value={type} 
                         onChangeText={(text) => setType(text)}
@@ -82,6 +82,11 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         color: '#C4C4C4'
     },
+    padIngredientText: {
+        fontSize: 26,
+        fontStyle: 'italic',
+        color: '#C4C4C4'
+    },
     ingredient: {
         paddingLeft: 10,
         borderLeftColor: '#C4C4C4',
@@ -93,9 +98,19 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontStyle: 'italic'
     },
+    padFont1: {
+        color: '#C4C4C4',
+        fontSize: 26,
+        fontStyle: 'italic'
+    },
     font2: {
         color: '#C4C4C4',
         fontSize: 12,
+        fontStyle: 'italic',
+    },
+    padFont2: {
+        color: '#C4C4C4',
+        fontSize: 20,
         fontStyle: 'italic',
     },
     arrow: {

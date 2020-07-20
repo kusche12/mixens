@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   Alert,
+  Platform
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -75,12 +76,12 @@ const EditImage = ({ img, updateImage, navigation }) => {
   return (
     <View style={{ alignItems: 'center' }}>
       {img ? (
-        <Image source={{ uri: img }} style={styles.image} />
+        <Image source={{ uri: img }} style={ Platform.isPad ? styles.ipadImage : styles.image} />
       ) : (
-        <Image source={require('./cocktail.png')} style={styles.image} />
+        <Image source={require('./cocktail.png')} style={ Platform.isPad ? styles.ipadImage : styles.image} />
       )}
       <TouchableOpacity onPress={sendAlert}>
-        <Text style={styles.text}>Change Image</Text>
+        <Text style={ Platform.isPad ? styles.ipadText : styles.text}>Change Image</Text>
       </TouchableOpacity>
     </View>
   );
@@ -92,11 +93,21 @@ const styles = StyleSheet.create({
     width: 125,
     borderRadius: 10,
   },
+  ipadImage: {
+    height: 250,
+    width: 250,
+    borderRadius: 10,
+  },
   text: {
     color: '#666666',
     fontWeight: '600',
     fontSize: 14,
   },
+  ipadText: {
+    color: '#666666',
+    fontWeight: '600',
+    fontSize: 20,
+  }
 });
 
 export default EditImage;

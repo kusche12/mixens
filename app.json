@@ -18,7 +18,7 @@
     "ios": {
       "bundleIdentifier": "com.kusche.mixens",
       "buildNumber": "1.0.2",
-      "supportsTablet": false,
+      "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "Allow Mixens to access your camera to upload customizable pictures to your individual drink recipes",
         "NSPhotoLibraryUsageDescription": "Allow Mixens to access your photo library to allow for customizable pictures to your individual drink recipes"
