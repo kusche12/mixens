@@ -30,9 +30,6 @@ class ForgotScreen extends React.Component {
     passwordReset = async => {
         this.setState({ errorMessage: null });
         firebase.auth().sendPasswordResetEmail(this.state.email)
-        .then(() => {
-            console.log('Successful password reset')
-        })
         .catch(err => {
             this.setState({ errorMessage: err.message });
         })

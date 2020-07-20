@@ -7,20 +7,17 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   // Save Specific Reducers
-  whitelist: [
-    'authReducer',
-    'drinkReducer'
-  ],
+  whitelist: ['authReducer', 'drinkReducer'],
 };
 
 // Middleware: Redux Persist Persisted Reducer
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Redux: Store
 const store = createStore(persistedReducer);
 
 // Middleware: Redux Persist Persister
-let persistor = persistStore(store); // IMPORTANT: .purge() is temporary. It dumps local storage every refresh, used for development only
+let persistor = persistStore(store);
 //persistor.purge();
 
 // Exports

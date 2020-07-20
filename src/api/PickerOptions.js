@@ -71,6 +71,8 @@ export default options = {
         { label: 'PINT' },
         { label: 'TSP' },
         { label: 'TBSP' },
+        { label: 'SHOT' },
+        { label: 'SPLASH' },
         { label: 'DASH' },
         { label: 'DROP' },
         { label: 'PINCH' },

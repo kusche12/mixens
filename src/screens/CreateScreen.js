@@ -53,7 +53,6 @@ class CreateScreen extends React.Component {
     }
     // Drink is a creation
     focusHandler = () => {
-        console.log('focus');
         if (!this.state.id) {
             let newId = 0;
             if (this.props.drinks.length > 0) {
@@ -63,8 +62,6 @@ class CreateScreen extends React.Component {
             newId = '' + newId;
             this.setState({ id: newId });
         }
-        console.log(this.state.id);
-
         this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
     };
     cancel = () => {
