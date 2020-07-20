@@ -43,7 +43,6 @@ class CreateScreen extends React.Component {
 
   // Drink is an edit
   componentDidMount() {
-    console.log('MOUNTED')
     const drink = this.props.navigation.getParam('drink');
     if (drink) {
       this.setState({
@@ -56,7 +55,6 @@ class CreateScreen extends React.Component {
   }
   // Drink is a creation
   focusHandler = () => {
-    console.log('FOCUSED')
     if (!this.state.id) {
       let newId = 0;
       if (this.props.drinks.length > 0) {
