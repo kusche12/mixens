@@ -18,7 +18,7 @@ const store = createStore(persistedReducer);
 
 // Middleware: Redux Persist Persister
 let persistor = persistStore(store);
-persistor.purge();
+//persistor.purge();
 
 // Exports
 export { store, persistor };
