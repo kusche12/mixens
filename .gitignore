@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+mixens-c29346c6-8a39-4dc7-95ff-a470e40748df-archive.ipa
 
 # macOS
 .DS_Store
