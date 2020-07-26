@@ -4,10 +4,22 @@ import EditAddItem from './EditAddItem';
 import EditSingleIngredient from './EditSingleIngredient';
 import EditSingleTag from './EditSingleTag';
 
-const EditList = ({ type, list, updateList, addItem, deleteItem }) => {
+const EditList = ({ type, list, updateList, addItem, deleteItem, updateIngredientType }) => {
+
+    const renderAddItemButton = () => {
+        if (type === 'Ingredient') {
+            return <EditAddItem item={type} addItem={addItem} />;
+        } else if (type === 'Tag' && list.length < 3) {
+            return <EditAddItem item={type} addItem={addItem} />;
+        } else {
+            return <View style={styles.line} />;
+        }
+    }
+
     const renderItem = (item, index) => {
         if (type === 'Ingredient') {
-            return <EditSingleIngredient item={item} index={index} key={index} updateIngredient={updateList} deleteItem={deleteItem} />
+            return <EditSingleIngredient item={item} index={index} key={index}
+                updateIngredient={updateList} updateIngredientType={updateIngredientType} deleteItem={deleteItem} />
         } else {
             return <EditSingleTag item={item} index={index} key={index} updateTag={updateList} deleteItem={deleteItem} />
         }
@@ -20,7 +32,7 @@ const EditList = ({ type, list, updateList, addItem, deleteItem }) => {
                     return renderItem(item, index);
                 })}
             </ScrollView>
-            <EditAddItem item={type} addItem={addItem} />
+            {renderAddItemButton()}
         </View>
     );
 };
@@ -42,6 +54,10 @@ const styles = StyleSheet.create({
     },
     container: {
         width: Dimensions.get('window').width * .9
+    },
+    line: {
+        borderTopWidth: 1,
+        borderTopColor: '#C4C4C4',
     }
 });
 

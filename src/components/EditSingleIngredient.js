@@ -7,9 +7,8 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width;
 
-const EditSingleIngredient = ({ item, updateIngredient, index, deleteItem }) => {
+const EditSingleIngredient = ({ item, updateIngredient, updateIngredientType, index, deleteItem }) => {
     const [showPicker, setShowPicker] = useState(false);
-    const [type, setType] = useState(item.ingredient);
 
     // Handle update for the amount and unit of the ingredient
     const onPickerConfirm = (selections) => {
@@ -44,16 +43,15 @@ const EditSingleIngredient = ({ item, updateIngredient, index, deleteItem }) => 
                         <TextInput
                             style={Platform.isPad ? styles.padIngredientText : styles.ingredientText}
                             autoCapitalize="words"
-                            value={type}
-                            onChangeText={(text) => setType(text)}
-                            onEndEditing={word => updateIngredient(item.amount, item.amount2, item.unit, word.nativeEvent.text, index, item.id)}
+                            value={item.ingredient}
+                            onChangeText={(text) => updateIngredientType(text, index, item.id)}
                         />
                     </View>
                 </Col>
                 <Col size={1}>
                     <View style={styles.delete}>
                         <TouchableWithoutFeedback onPress={() => deleteItem("Ingredient", item.id)}>
-                            <Feather name="trash" size={24} color="#C4C4C4" />
+                            <Feather name="x" size={Platform.isPad ? 26 : 24} color="#C4C4C4" />
                         </TouchableWithoutFeedback>
                     </View>
                 </Col>

@@ -194,6 +194,23 @@ class CreateScreen extends React.Component {
     this.setState({ ingredients: newIngredients });
   };
 
+  // Update ingredient type/text input
+  updateIngredientType = (type, index, newId) => {
+    console.log('update ingredient type');
+    console.log('item.id:' + newId);
+    console.log('index:' + index);
+
+    let newIngredients = [...this.state.ingredients];
+    newIngredients[index] = {
+      amount: this.state.ingredients[index].amount,
+      amount2: this.state.ingredients[index].amount2,
+      unit: this.state.ingredients[index].unit,
+      ingredient: type,
+      id: newId,
+    };
+    this.setState({ ingredients: newIngredients });
+  };
+
   // Update tags due to text input
   updateTags = (tag, index, id) => {
     let newTags = [...this.state.tags];
@@ -222,8 +239,6 @@ class CreateScreen extends React.Component {
 
   deleteItem = (list, id) => {
     if (list === 'Ingredient') {
-      console.log(id);
-      console.log(this.state.ingredients);
       let newIngredients = this.state.ingredients.filter(ing => ing.id !== id);
       this.setState({ ingredients: newIngredients });
     } else if (list === 'Tag') {
@@ -265,6 +280,7 @@ class CreateScreen extends React.Component {
           <EditList
             list={this.state.ingredients}
             updateList={this.updateIngredient}
+            updateIngredientType={this.updateIngredientType}
             addItem={this.addItem}
             deleteItem={this.deleteItem}
             type="Ingredient"
