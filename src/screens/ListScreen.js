@@ -14,8 +14,8 @@ class ListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'My Mixes',
-      headerMode: 'screen',
       cardStyle: { backgroundColor: '#FFFFFF' },
+      safeAreaInsets: { top: 44 },
       headerStyle: {
         backgroundColor: '#64CAF6',
       },

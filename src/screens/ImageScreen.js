@@ -12,6 +12,7 @@ class ImageScreen extends React.Component {
             headerStyle: {
                 backgroundColor: '#64CAF6'
             },
+            safeAreaInsets: { top: 44 },
             headerTintColor: '#FCFEFF',
         }
     };
@@ -24,18 +25,15 @@ class ImageScreen extends React.Component {
     };
 
     async componentDidMount() {
+        console.log('MOUNTED');
         const images = firebase.storage().ref().child('default');
         let mediaList = [];
-        await images.listAll()
-        .then(res => {
-            res.items.forEach((image, index) => {
-                image.getDownloadURL()
-                .then((url) => {
-                    mediaList.push({ photo: url, id: index });
-                    this.setState({ images: mediaList });
-                });
-            });
-        });
+        for (let i = 1; i < 17; i++) {
+            let imageName = 'Drink' + i + '.png';
+            let imageURL = await images.child(imageName).getDownloadURL();
+            mediaList.push({ photo: imageURL, id: i });
+            this.setState({ images: mediaList });
+        }
     };
 
     chooseImage = (image) => {
@@ -46,22 +44,22 @@ class ImageScreen extends React.Component {
 
     renderImage = (image) => {
         return (
-        <TouchableOpacity onPress={() => this.chooseImage(image.photo)}>
-            <Image source={{ uri: image.photo.toString() }} id={image.id} style={styles.image} />
-        </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.chooseImage(image.photo)}>
+                <Image source={{ uri: image.photo.toString() }} id={image.id} style={styles.image} />
+            </TouchableOpacity>
         );
     }
 
     render() {
         return (
             <SafeAreaView>
-                <FlatList 
+                <FlatList
                     data={this.state.images}
-                    keyExtractor={item => item.id }
-                    renderItem={({item}) => this.renderImage(item)}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => this.renderImage(item)}
                     numColumns={3}
                     style={styles.list}
-                /> 
+                />
             </SafeAreaView>
         );
     };
