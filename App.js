@@ -8,7 +8,9 @@ import Main from './src/navigation/Navigation';
 import Loading from './src/components/Loading';
 
 export default function App() {
-  if (!firebase.apps.length) { firebase.initializeApp(FirebaseSetup.firebaseConfig) };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(FirebaseSetup.firebaseConfig);
+  }
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       store.dispatch({ type: 'LOGIN', payload: user });
@@ -24,4 +26,4 @@ export default function App() {
       </PersistGate>
     </Provider>
   );
-};
+}

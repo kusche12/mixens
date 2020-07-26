@@ -23,6 +23,7 @@ class ForgotScreen extends React.Component {
       headerStyle: {
         backgroundColor: '#64CAF6',
       },
+      safeAreaInsets: { top: 44 },
       headerTintColor: '#FCFEFF',
     };
   };

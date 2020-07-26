@@ -3,20 +3,20 @@ import { View, Text, StyleSheet, TextInput, Dimensions, TouchableWithoutFeedback
 import { Col, Grid } from 'react-native-easy-grid';
 import SegmentedPicker from 'react-native-segmented-picker';
 import PickerOptions from '../api/PickerOptions';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width;
 
-const EditSingleIngredient = ({ item, updateIngredient, index }) => {
+const EditSingleIngredient = ({ item, updateIngredient, index, deleteItem }) => {
     const [showPicker, setShowPicker] = useState(false);
     const [type, setType] = useState(item.ingredient);
-    
+
     // Handle update for the amount and unit of the ingredient
-    const onPickerConfirm = ( selections ) => {
+    const onPickerConfirm = (selections) => {
         let newAmount = selections.column1.label;
         let newAmount2 = selections.column2.label;
         let newUnit = selections.column3.label;
-        
+
         updateIngredient(newAmount, newAmount2, newUnit, item.ingredient, index, item.id);
         setShowPicker(false);
     }
@@ -28,12 +28,12 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
                 <Col size={2}>
                     <TouchableWithoutFeedback onPress={() => setShowPicker(!showPicker)}>
                         <View style={styles.amount}>
-                        { item.amount !== '0' 
-                        ? <><Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.amount}</Text><Text style={Platform.isPad ? styles.padFont2 : styles.font2}>{item.amount2}</Text></>
-                        : <Text style={Platform.isPad ? styles.padFont2 : styles.font2}>{item.amount2}</Text>}
-                        <Text style={Platform.isPad ? styles.padFont2 : styles.font2}> </Text>
-                        <Text style={Platform.isPad ? styles.padFont2 : styles.font2}>{item.unit}</Text>
-                        <Ionicons name="ios-arrow-down" size={Platform.isPad ? 22 : 16} color="#C4C4C4" style={styles.arrow} />
+                            {item.amount !== '0'
+                                ? <><Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.amount}</Text><Text style={Platform.isPad ? styles.padFont2 : styles.font2}>{item.amount2}</Text></>
+                                : <Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.amount2}</Text>}
+                            <Text style={Platform.isPad ? styles.padFont2 : styles.font2}> </Text>
+                            <Text style={Platform.isPad ? styles.padFont2 : styles.font2}>{item.unit}</Text>
+                            <Ionicons name="ios-arrow-down" size={Platform.isPad ? 22 : 16} color="#C4C4C4" style={styles.arrow} />
                         </View>
                     </TouchableWithoutFeedback>
                 </Col>
@@ -41,13 +41,20 @@ const EditSingleIngredient = ({ item, updateIngredient, index }) => {
                 {/* Ingredient type */}
                 <Col size={5}>
                     <View style={styles.ingredient}>
-                    <TextInput 
-                        style={Platform.isPad ? styles.padIngredientText : styles.ingredientText} 
-                        autoCapitalize="words" 
-                        value={type} 
-                        onChangeText={(text) => setType(text)}
-                        onEndEditing={word => updateIngredient(item.amount, item.amount2, item.unit, word.nativeEvent.text, index, item.id)}
-                    />
+                        <TextInput
+                            style={Platform.isPad ? styles.padIngredientText : styles.ingredientText}
+                            autoCapitalize="words"
+                            value={type}
+                            onChangeText={(text) => setType(text)}
+                            onEndEditing={word => updateIngredient(item.amount, item.amount2, item.unit, word.nativeEvent.text, index, item.id)}
+                        />
+                    </View>
+                </Col>
+                <Col size={1}>
+                    <View style={styles.delete}>
+                        <TouchableWithoutFeedback onPress={() => deleteItem("Ingredient", item.id)}>
+                            <Feather name="trash" size={24} color="#C4C4C4" />
+                        </TouchableWithoutFeedback>
                     </View>
                 </Col>
             </Grid>
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'baseline',
         paddingVertical: 5
-    },  
+    },
     ingredientText: {
         fontSize: 18,
         fontStyle: 'italic',
@@ -91,6 +98,9 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         borderLeftColor: '#C4C4C4',
         borderLeftWidth: 1,
+        paddingVertical: 5
+    },
+    delete: {
         paddingVertical: 5
     },
     font1: {

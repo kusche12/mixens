@@ -19,12 +19,25 @@ class CreateScreen extends React.Component {
     return {
       cardStyle: { backgroundColor: '#FFFFFF' },
       headerStyle: {
-        backgroundColor: '#64CAF6'
+        backgroundColor: '#64CAF6',
       },
+      safeAreaInsets: { top: 44 },
       headerTintColor: '#FCFEFF',
-      headerLeft: () => <Button title="Cancel" onPress={navigation.getParam('cancel')} color="#FCFEFF" />,
-      headerRight: () => <Button title="Done" onPress={navigation.getParam('submit')} color="#FCFEFF" />,
-    }
+      headerLeft: () => (
+        <Button
+          title="Cancel"
+          onPress={navigation.getParam('cancel')}
+          color="#FCFEFF"
+        />
+      ),
+      headerRight: () => (
+        <Button
+          title="Done"
+          onPress={navigation.getParam('submit')}
+          color="#FCFEFF"
+        />
+      ),
+    };
   };
 
   constructor(props) {
@@ -37,21 +50,29 @@ class CreateScreen extends React.Component {
       img: null,
       tags: [],
       favorited: false,
-      created: ''
+      created: '',
     };
-  };
+  }
 
   // Drink is an edit
   componentDidMount() {
     const drink = this.props.navigation.getParam('drink');
     if (drink) {
       this.setState({
-        id: drink.id, title: drink.title, instructions: drink.instructions,
-        ingredients: drink.ingredients, img: drink.img, tags: drink.tags,
-        favorited: drink.favorited, created: drink.created
+        id: drink.id,
+        title: drink.title,
+        instructions: drink.instructions,
+        ingredients: drink.ingredients,
+        img: drink.img,
+        tags: drink.tags,
+        favorited: drink.favorited,
+        created: drink.created,
       });
     }
-    this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
+    this.props.navigation.setParams({
+      cancel: this.cancel,
+      submit: this.submit,
+    });
   }
   // Drink is a creation
   focusHandler = () => {
@@ -64,20 +85,25 @@ class CreateScreen extends React.Component {
       newId = '' + newId;
       this.setState({ id: newId });
     }
-    this.props.navigation.setParams({ cancel: this.cancel, submit: this.submit });
+    this.props.navigation.setParams({
+      cancel: this.cancel,
+      submit: this.submit,
+    });
   };
   cancel = () => {
     Alert.alert(
-      "Cancel",
-      "Changes to your Mix will not be saved. Do you want to proceed?",
+      'Cancel',
+      'Changes to your Mix will not be saved. Do you want to proceed?',
       [
         {
-          text: "Discard changes",
-          onPress: () => { this.cancelHandler() }
+          text: 'Discard changes',
+          onPress: () => {
+            this.cancelHandler();
+          },
         },
         {
-          text: "Continue editing",
-          onPress: () => console.log("Cancel Pressed")
+          text: 'Continue editing',
+          onPress: () => console.log('Cancel Pressed'),
         },
       ]
     );
@@ -97,26 +123,24 @@ class CreateScreen extends React.Component {
     } else {
       this.props.navigation.goBack();
     }
-  }
+  };
   submit = () => {
     if (this.state.title == '') {
-      Alert.alert(
-        "Hang on!",
-        "You must name your Mix before submitting",
-        []
-      );
+      Alert.alert('Hang on!', 'You must name your Mix before submitting', []);
     } else {
       Alert.alert(
-        "Submit my Mix",
-        "Are you sure you are done making edits to your Mix?",
+        'Submit my Mix',
+        'Are you sure you are done making edits to your Mix?',
         [
           {
-            text: "Submit my Mix",
-            onPress: () => { this.submitHandler() }
+            text: 'Submit my Mix',
+            onPress: () => {
+              this.submitHandler();
+            },
           },
           {
-            text: "Continue editing",
-            onPress: () => console.log("Cancel Pressed")
+            text: 'Continue editing',
+            onPress: () => console.log('Cancel Pressed'),
           },
         ]
       );
@@ -128,11 +152,12 @@ class CreateScreen extends React.Component {
     let newTags = deleteEmptyTags(this.state.tags);
     this.setState({ tags: newTags });
 
-    if (this.state.created == '') { // New drink.
+    if (this.state.created == '') {
+      // New drink.
       let now = new Date();
       let newDate = dateFormat(now, 'mmmm dS, yyyy');
       let stateWithDate = { ...this.state };
-      stateWithDate.created = newDate
+      stateWithDate.created = newDate;
       await this.props.createMix(stateWithDate);
       if (this.props.user.loggedIn) {
         await updateMixFB(stateWithDate, this.props.user.user.uid);
@@ -195,6 +220,18 @@ class CreateScreen extends React.Component {
     }
   };
 
+  deleteItem = (list, id) => {
+    if (list === 'Ingredient') {
+      console.log(id);
+      console.log(this.state.ingredients);
+      let newIngredients = this.state.ingredients.filter(ing => ing.id !== id);
+      this.setState({ ingredients: newIngredients });
+    } else if (list === 'Tag') {
+      let newTags = this.state.tags.filter(tag => tag.id !== id);
+      this.setState({ tags: newTags });
+    }
+  }
+
   handleTextInput = (value, type) => {
     if (type === 'title') {
       this.setState({ title: value });
@@ -229,6 +266,7 @@ class CreateScreen extends React.Component {
             list={this.state.ingredients}
             updateList={this.updateIngredient}
             addItem={this.addItem}
+            deleteItem={this.deleteItem}
             type="Ingredient"
           />
           <View style={{ marginBottom: 40 }} />
@@ -241,6 +279,7 @@ class CreateScreen extends React.Component {
             list={this.state.tags}
             updateList={this.updateTags}
             addItem={this.addItem}
+            deleteItem={this.deleteItem}
             type="Tag"
           />
           <View style={{ marginBottom: 40 }} />

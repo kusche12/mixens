@@ -4,19 +4,19 @@ import EditAddItem from './EditAddItem';
 import EditSingleIngredient from './EditSingleIngredient';
 import EditSingleTag from './EditSingleTag';
 
-const EditList = ({ type, list, updateList, addItem }) => {
+const EditList = ({ type, list, updateList, addItem, deleteItem }) => {
     const renderItem = (item, index) => {
         if (type === 'Ingredient') {
-            return <EditSingleIngredient item={item} index={index} key={index} updateIngredient={updateList} />
+            return <EditSingleIngredient item={item} index={index} key={index} updateIngredient={updateList} deleteItem={deleteItem} />
         } else {
-            return <EditSingleTag item={item} index={index} key={index} updateTag={updateList} />
+            return <EditSingleTag item={item} index={index} key={index} updateTag={updateList} deleteItem={deleteItem} />
         }
     }
-    return (   
+    return (
         <View style={styles.container}>
             <Text style={Platform.isPad ? styles.padTitle : styles.title}>{type.toUpperCase()}S</Text>
             <ScrollView>
-                {list.map((item, index) => { 
+                {list.map((item, index) => {
                     return renderItem(item, index);
                 })}
             </ScrollView>

@@ -1,4 +1,4 @@
-export default options = { 
+export default options = {
     column1: [
         { label: '0' },
         { label: '1' },
@@ -63,6 +63,7 @@ export default options = {
     ],
     column3: [
         { label: ' ' },
+        { label: 'PART' },
         { label: 'OZ' },
         { label: 'ML' },
         { label: 'CL' },
@@ -76,8 +77,8 @@ export default options = {
         { label: 'DASH' },
         { label: 'DROP' },
         { label: 'PINCH' },
-        { label: 'SLICES' },
-        { label: 'WEDGES' },
-        { label: 'PIECES' },
+        { label: 'SLICE' },
+        { label: 'WEDGE' },
+        { label: 'PIECE' },
     ]
 }
