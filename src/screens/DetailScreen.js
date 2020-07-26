@@ -37,7 +37,7 @@ class DetailScreen extends React.Component {
 
                     <Text style={Platform.isPad ? styles.padTitle : styles.title}>{drink.title}</Text>
                     <View style={styles.line} />
-                    <View style={styles.containerSmall}>
+                    <View style={Platform.isPad ? styles.padContainerSmall : styles.containerSmall}>
                         <IngredientsView ingredients={drink.ingredients} style={styles.ingredient} />
 
                         {drink.instructions != ''
@@ -69,10 +69,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 100,
         paddingHorizontal: 50,
-        flex: 1
     },
     containerSmall: {
         width: WIDTH * .6,
+        flexDirection: 'column',
+        alignItems: 'stretch',
+    },
+    padContainerSmall: {
         flexDirection: 'column',
         alignItems: 'stretch',
     },
