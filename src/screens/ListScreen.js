@@ -37,7 +37,6 @@ class ListScreen extends React.Component {
   render() {
     let tag = this.props.navigation.getParam('tag');
     let data = this.props.drinks;
-    console.log(data);
     if (tag) {
       data = getTaggedMixes(tag[0]);
     }
@@ -45,7 +44,7 @@ class ListScreen extends React.Component {
       <>
         <StatusBar barStyle="light-content" backgroundColor="#ffffff" />
         <ScrollView style={{ height: Dimensions.get('window').height }}>
-          {data.map((mix) => {
+          {data.sort((a, b) => a.title.localeCompare(b.title)).map((mix) => {
             return (
               <DrinkListView
                 drink={mix}
