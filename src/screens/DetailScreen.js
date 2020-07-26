@@ -15,11 +15,12 @@ class DetailScreen extends React.Component {
             headerStyle: {
                 backgroundColor: '#64CAF6'
             },
+            safeAreaInsets: { top: 44 },
             headerTintColor: '#FCFEFF',
-            headerRight: () => 
-            <TouchableOpacity onPress={() => navigation.navigate('Create', { drink: navigation.getParam('drink') })}>
-                <FontAwesome5 name="edit" size={24} style={{ marginRight: 10 }} color="#FCFEFF" />   
-            </TouchableOpacity>
+            headerRight: () =>
+                <TouchableOpacity onPress={() => navigation.navigate('Create', { drink: navigation.getParam('drink') })}>
+                    <FontAwesome5 name="edit" size={24} style={{ marginRight: 10 }} color="#FCFEFF" />
+                </TouchableOpacity>
         }
     }
 
@@ -27,50 +28,53 @@ class DetailScreen extends React.Component {
         const drink = this.props.navigation.getParam('drink');
         return (
             <ScrollView>
-            <View style={Platform.isPad ? styles.padContainer : styles.container}>
-            
-                { drink.img 
-                ? <Image source={{ uri: drink.img }} style={Platform.isPad ? styles.padImage : styles.image} />
-                : <Image source={require('./cocktail.png')} style={Platform.isPad ? styles.padImage : styles.image} />
-                }
+                <View style={Platform.isPad ? styles.padContainer : styles.container}>
 
-                <Text style={Platform.isPad ? styles.padTitle : styles.title}>{drink.title}</Text>
-                <View style={styles.line} />
-                <IngredientsView ingredients={drink.ingredients} style={styles.ingredient} />
+                    {drink.img
+                        ? <Image source={{ uri: drink.img }} style={Platform.isPad ? styles.padImage : styles.image} />
+                        : <Image source={require('./cocktail.png')} style={Platform.isPad ? styles.padImage : styles.image} />
+                    }
 
-                { drink.instructions != ''
-                ? <Text style={Platform.isPad ? styles.padInstruction : styles.instruction}>{drink.instructions}</Text> 
-                : null
-                }
+                    <Text style={Platform.isPad ? styles.padTitle : styles.title}>{drink.title}</Text>
+                    <View style={styles.line} />
+                    <View style={styles.containerSmall}>
+                        <IngredientsView ingredients={drink.ingredients} style={styles.ingredient} />
 
-                { drink.tags.length > 1 || drink.favorited
-                ? <TagView tags={drink.tags} favorited={drink.favorited} navigation={this.props.navigation} /> 
-                : null
-                }
+                        {drink.instructions != ''
+                            ? <Text style={Platform.isPad ? styles.padInstruction : styles.instruction}>{drink.instructions}</Text>
+                            : null
+                        }
+                    </View>
+                    {drink.tags.length > 1 || drink.favorited
+                        ? <TagView tags={drink.tags} favorited={drink.favorited} navigation={this.props.navigation} />
+                        : null
+                    }
 
-                <Text style={Platform.isPad ? styles.padCreated : styles.created}>Created on {drink.created}</Text>
-            </View>
+                    <Text style={Platform.isPad ? styles.padCreated : styles.created}>Created on {drink.created}</Text>
+                </View>
             </ScrollView>
         )
     }
 }
-    
+
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         alignItems: 'center',
         paddingTop: 30,
-        paddingLeft: 50,
-        paddingRight: 50,
-        flex: 1
+        paddingHorizontal: 50,
     },
     padContainer: {
         flexDirection: 'column',
         alignItems: 'center',
         paddingTop: 100,
-        paddingLeft: 50,
-        paddingRight: 50,
+        paddingHorizontal: 50,
         flex: 1
+    },
+    containerSmall: {
+        width: WIDTH * .6,
+        flexDirection: 'column',
+        alignItems: 'stretch',
     },
     image: {
         height: 200,
@@ -97,12 +101,12 @@ const styles = StyleSheet.create({
         marginBottom: 12
     },
     instruction: {
-        marginTop: 24, 
+        marginTop: 24,
         marginBottom: 48,
         color: '#333333'
     },
     padInstruction: {
-        marginTop: 24, 
+        marginTop: 24,
         marginBottom: 48,
         fontSize: 28,
         color: '#333333',
