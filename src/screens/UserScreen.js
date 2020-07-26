@@ -16,8 +16,9 @@ class UserScreen extends React.Component {
             headerMode: 'screen',
             cardStyle: { backgroundColor: '#FFFFFF' },
             headerStyle: {
-              backgroundColor: '#64CAF6'
+                backgroundColor: '#64CAF6'
             },
+            safeAreaInsets: { top: 44 },
             headerTintColor: '#FCFEFF',
         }
     }
@@ -34,61 +35,61 @@ class UserScreen extends React.Component {
         if (name === '') {
             this.setState({ errorMessage: 'You must include a name for your account' });
         } else {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((user) => {
-                // Save user's name and email
-                firebase.database().ref('/users/' + user.user.uid + '/username').set({
-                    name: name,
-                    email: email
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((user) => {
+                    // Save user's name and email
+                    firebase.database().ref('/users/' + user.user.uid + '/username').set({
+                        name: name,
+                        email: email
+                    });
+                    this.props.saveName(name);
+                    // Save user's drinks
+                    let mixes = this.props.mixes
+                    firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes);
+                })
+                .catch((error) => {
+                    let errorMessage = error.message;
+                    this.setState({ errorMessage });
                 });
-                this.props.saveName(name);
-                // Save user's drinks
-                let mixes = this.props.mixes
-                firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes); 
-            })
-            .catch((error) => {
-                let errorMessage = error.message;
-                this.setState({ errorMessage });
-        });
         }
     }
 
     handleSignin = (email, password) => {
-		this.setState({ errorMessage: null });
+        this.setState({ errorMessage: null });
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((user) => {
                 let mixes = this.props.mixes
-                firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes); 
+                firebase.database().ref('/users/' + user.user.uid).child('mixes').set(mixes);
             })
-			.catch((error) => {
-				this.setState({ errorMessage: error.message });
-        });
+            .catch((error) => {
+                this.setState({ errorMessage: error.message });
+            });
     }
-    
+
     render() {
         let user = this.props.user;
         let name = '';
         if (user.loggedIn) {
             name = user.name;
-        } 
+        }
         return (
             <SafeAreaView>
-            <View style={styles.container}>
-                {user.loggedIn
-                ? <SignoutForm 
-                    user={name}
-                    email={user.user.email}
-                    navigation={this.props.navigation}
-                />
-                : <AuthForm 
-                    signup={this.state.signup} 
-                    formHandler={() => this.setState({ signup: !this.state.signup })} 
-                    handleSignup={this.handleSignup} handleSignin={this.handleSignin}
-                    navigation={this.props.navigation}
-                /> 
-                }
-                <Text style={styles.error}>{this.state.errorMessage}</Text>
-            </View>
+                <View style={styles.container}>
+                    {user.loggedIn
+                        ? <SignoutForm
+                            user={name}
+                            email={user.user.email}
+                            navigation={this.props.navigation}
+                        />
+                        : <AuthForm
+                            signup={this.state.signup}
+                            formHandler={() => this.setState({ signup: !this.state.signup })}
+                            handleSignup={this.handleSignup} handleSignin={this.handleSignin}
+                            navigation={this.props.navigation}
+                        />
+                    }
+                    <Text style={styles.error}>{this.state.errorMessage}</Text>
+                </View>
             </SafeAreaView>
         );
     }
@@ -96,7 +97,7 @@ class UserScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: HEIGHT /6,
+        marginTop: HEIGHT / 6,
         paddingHorizontal: 50
     },
     error: {
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (state) => { 
+const mapStateToProps = (state) => {
     return {
         user: state.authReducer,
         mixes: state.drinkReducer

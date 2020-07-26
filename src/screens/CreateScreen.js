@@ -196,10 +196,6 @@ class CreateScreen extends React.Component {
 
   // Update ingredient type/text input
   updateIngredientType = (type, index, newId) => {
-    console.log('update ingredient type');
-    console.log('item.id:' + newId);
-    console.log('index:' + index);
-
     let newIngredients = [...this.state.ingredients];
     newIngredients[index] = {
       amount: this.state.ingredients[index].amount,
