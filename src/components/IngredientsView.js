@@ -1,15 +1,17 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList, useWindowDimensions, Platform } from 'react-native';
+import { Text, View, StyleSheet, FlatList, useWindowDimensions, Platform, Dimensions } from 'react-native';
+const WIDTH = Dimensions.get('window').width;
 
 const IngredientsView = ({ ingredients }) => {
     const WINDOW = useWindowDimensions();
 
     const renderAmount = ({ item }) => {
         return (
-            <View style={Platform.isPad ? styles.padContainer : null}key={item.ingredient}>
+            <View style={Platform.isPad ? styles.padContainer : null} key={item.ingredient}>
                 <View style={styles.amount}>
-                    { item.amount !== '0' ? <Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.amount}</Text> : null}
-                    { item.amount2 !== '' ? <Text style={Platform.isPad ? styles.padFont2 : styles.font1}>{item.amount2}</Text> : null}
+                    {item.amount !== '0' ? <Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.amount}</Text> : null}
+                    <Text> </Text>
+                    {item.amount2 !== '' ? <Text style={Platform.isPad ? styles.padFont2 : styles.font1}>{item.amount2}</Text> : null}
                     <Text> </Text>
                     <Text style={Platform.isPad ? styles.padFont2 : styles.font1}>{item.unit}</Text>
                 </View>
@@ -17,23 +19,23 @@ const IngredientsView = ({ ingredients }) => {
         );
     };
 
-    const renderIngredient = ({ item }) => { 
-        return <Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.ingredient}</Text> 
+    const renderIngredient = ({ item }) => {
+        return <Text style={Platform.isPad ? styles.padFont1 : styles.font1}>{item.ingredient}</Text>
     };
-    
+
     return (
         <View style={styles.container}>
-            <FlatList 
+            <FlatList
                 style={{ left: WINDOW.width * .01 }}
                 data={ingredients}
-                keyExtractor={item => item.ingredient}
+                keyExtractor={(item, index) => index}
                 renderItem={item => renderAmount(item)}
                 scrollEnabled={false}
-            /> 
-            <FlatList 
-                style={Platform.isPad ? { position: 'absolute', left: WINDOW.width * .5}: { position: 'absolute', left: WINDOW.width * .35 }}
+            />
+            <FlatList
+                style={Platform.isPad ? { position: 'absolute', left: WINDOW.width * .5 } : { position: 'absolute', left: WINDOW.width * .35 }}
                 data={ingredients}
-                keyExtractor={item => item.ingredient}
+                keyExtractor={(item, index) => index}
                 renderItem={item => renderIngredient(item)}
                 scrollEnabled={false}
             />
@@ -43,6 +45,7 @@ const IngredientsView = ({ ingredients }) => {
 
 const styles = StyleSheet.create({
     container: {
+        width: WIDTH * .6,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',

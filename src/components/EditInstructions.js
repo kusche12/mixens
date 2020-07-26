@@ -6,7 +6,7 @@ const EditInstructions = ({ instructions, handleTextInput }) => {
     return (
         <View style={styles.container}>
             <Text style={Platform.isPad ? styles.padTitle : styles.title}>INSTRUCTIONS</Text>
-            <TextInput 
+            <TextInput
                 placeholder="How do you make this mix?"
                 style={Platform.isPad ? styles.padInput : styles.input}
                 value={instructions}
