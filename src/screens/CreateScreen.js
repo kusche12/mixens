@@ -75,16 +75,25 @@ class CreateScreen extends React.Component {
     });
   }
   // Drink is a creation
-  focusHandler = () => {
+  focusHandler = async () => {
     if (!this.state.id) {
-      let newId = 0;
-      if (this.props.drinks.length > 0) {
-        let drinks = this.props.drinks;
-        newId = parseInt(drinks[drinks.length - 1].id) + 1;
+      let drinks = this.props.drinks;
+      // Find the largest drink ID, and add 1
+      if (drinks.length > 0) {
+        let newId = -1;
+        await drinks.forEach(drink => {
+          newId = Math.max(parseInt(drink.id, 10), newId);
+        });
+        newId++;
+        newId = '' + newId;
+        this.setState({ id: newId });
+
+        // First drink begins with ID of 0
+      } else {
+        this.setState({ id: '0' });
       }
-      newId = '' + newId;
-      this.setState({ id: newId });
     }
+
     this.props.navigation.setParams({
       cancel: this.cancel,
       submit: this.submit,
@@ -152,7 +161,7 @@ class CreateScreen extends React.Component {
     let newTags = deleteEmptyTags(this.state.tags);
     this.setState({ tags: newTags });
 
-    if (this.state.created == '') {
+    if (this.state.created === '') {
       // New drink.
       let now = new Date();
       let newDate = dateFormat(now, 'mmmm dS, yyyy');
@@ -217,7 +226,14 @@ class CreateScreen extends React.Component {
   // Add item to either the ingredients list or tags list
   addItem = (list) => {
     if (list === 'Ingredient') {
-      let newId = (this.state.ingredients.length + 1).toString();
+      let newId = -1;
+      let ingredients = this.state.ingredients;
+      ingredients.forEach(ing => {
+        newId = Math.max(parseInt(ing.id, 10), newId);
+      });
+      newId++;
+      newId = '' + newId;
+
       let newIngredients = this.state.ingredients.concat({
         id: newId,
         amount: '0',
@@ -226,9 +242,17 @@ class CreateScreen extends React.Component {
         ingredient: '',
       });
       this.setState({ ingredients: newIngredients });
+
     } else if (list === 'Tag') {
-      let newId = (this.state.tags.length + 1).toString();
-      let newTags = this.state.tags.concat({ id: newId, title: '' });
+      let newTagId = -1;
+      let tags = this.state.tags;
+      tags.forEach(tag => {
+        newTagId = Math.max(parseInt(tag.id, 10), newTagId);
+      });
+      newTagId++;
+      newTagId = '' + newTagId;
+
+      let newTags = this.state.tags.concat({ id: newTagId, title: '' });
       this.setState({ tags: newTags });
     }
   };

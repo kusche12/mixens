@@ -44,12 +44,12 @@ class ListScreen extends React.Component {
       <>
         <StatusBar barStyle="light-content" backgroundColor="#ffffff" />
         <ScrollView style={{ height: Dimensions.get('window').height }}>
-          {data.sort((a, b) => a.title.localeCompare(b.title)).map((mix) => {
+          {data.sort((a, b) => a.title.localeCompare(b.title)).map((mix, index) => {
             return (
               <DrinkListView
                 drink={mix}
                 navigation={this.props.navigation}
-                key={mix.id}
+                key={index}
               />
             );
           })}

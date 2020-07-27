@@ -7,7 +7,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/LOGO.png",
     "splash": {
@@ -23,7 +23,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.kusche.mixens",
-      "buildNumber": "1.0.4",
+      "buildNumber": "1.0.5",
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "Allow Mixens to access your camera to upload customizable pictures to your individual drink recipes",
@@ -32,7 +32,7 @@
     },
     "android": {
       "package": "com.kusche.mixens",
-      "versionCode": 4
+      "versionCode": 5
     },
     "description": "Create and save all of your own personal cocktail recipes with your own unique ingredients, pictures, and instructions!"
   }
