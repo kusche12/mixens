@@ -27,7 +27,7 @@ class ImageScreen extends React.Component {
     async componentDidMount() {
         const images = firebase.storage().ref().child('default');
         let mediaList = [];
-        for (let i = 1; i < 17; i++) {
+        for (let i = 1; i < 18; i++) {
             let imageName = 'Drink' + i + '.png';
             let imageURL = await images.child(imageName).getDownloadURL();
             mediaList.push({ photo: imageURL, id: i });

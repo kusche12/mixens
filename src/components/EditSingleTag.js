@@ -5,6 +5,11 @@ import { Feather } from '@expo/vector-icons';
 const WIDTH = Dimensions.get('window').width;
 
 const EditSingleTag = ({ item, index, updateTag, deleteItem }) => {
+    const updateHandler = (text) => {
+        if (text.length < 16) {
+            updateTag(text, index, item.id)
+        }
+    }
     return (
         <View style={styles.container}>
             <Grid>
@@ -13,7 +18,7 @@ const EditSingleTag = ({ item, index, updateTag, deleteItem }) => {
                         style={Platform.isPad ? styles.padText : styles.text}
                         autoCapitalize="words"
                         value={item.title}
-                        onChangeText={text => updateTag(text, index, item.id)}
+                        onChangeText={text => updateHandler(text)}
                     />
                 </Col>
                 <Col size={1}>
